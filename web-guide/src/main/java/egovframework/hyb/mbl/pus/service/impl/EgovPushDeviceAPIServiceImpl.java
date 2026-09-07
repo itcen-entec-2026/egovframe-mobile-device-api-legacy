@@ -96,10 +96,9 @@ public class EgovPushDeviceAPIServiceImpl extends EgovAbstractServiceImpl implem
 	 * 알림 설정 정보를 등록한다.
 	 * @param vo - 등록할 정보가 담긴 PushDeviceAPIVO
 	 * @return 등록 결과
-	 * @exception Exception
 	 */
 
-/*    public int insertVibrator(PushDeviceAPIVO vo) throws Exception {
+/*    public int insertVibrator(PushDeviceAPIVO vo) {
     	LOGGER.debug(vo.toString());
     	
     	return (Integer)PushDeviceAPIVO.insertVibrator(vo);    	
@@ -109,9 +108,8 @@ public class EgovPushDeviceAPIServiceImpl extends EgovAbstractServiceImpl implem
 	 * 알림 설정 정보 목록을 조회한다.
 	 * @param VO - 조회할 정보가 담긴 VibratorAPIVO
 	 * @return 알림 설정 정보 목록
-	 * @exception Exception
 	 */
-    public List<?> selectPushDeviceList(PushDeviceAPIDefaultVO searchVO) throws Exception {
+    public List<?> selectPushDeviceList(PushDeviceAPIDefaultVO searchVO) {
         return pushDeviceAPIDAO.selectPushDeviceList(searchVO);
     }
     
@@ -119,9 +117,8 @@ public class EgovPushDeviceAPIServiceImpl extends EgovAbstractServiceImpl implem
 	 * Push Notification을 위해 Device 정보를 등록한다.
 	 * @param vo - 등록할 정보가 담긴 PushAPIVO
 	 * @return 등록 결과
-	 * @exception Exception
 	 */
-    public int insertPushDevice(PushDeviceAPIVO vo) throws Exception {
+    public int insertPushDevice(PushDeviceAPIVO vo) {
     	LOGGER.debug(vo.toString());
     	
     	return (Integer)pushDeviceAPIDAO.insertPushDevice(vo);
@@ -131,9 +128,8 @@ public class EgovPushDeviceAPIServiceImpl extends EgovAbstractServiceImpl implem
 	 * Push Notification을 서버에 요청한다.
 	 * @param vo - 등록할 정보가 담긴 PushAPIVO
 	 * @return 등록 결과
-	 * @exception Exception
 	 */
-    public int insertPushInfo(PushDeviceAPIVO vo) throws Exception {
+    public int insertPushInfo(PushDeviceAPIVO vo) {
     	LOGGER.debug(vo.toString());
     	
     	// Android GCM, iOS APNS 푸쉬 메시지를 발송한다.
@@ -240,9 +236,9 @@ public class EgovPushDeviceAPIServiceImpl extends EgovAbstractServiceImpl implem
 	 * Push Notification 기기 상세 조회를 한다.
 	 * @param vo - 등록할 정보가 담긴 PushDeviceAPIVO
 	 * @return 조회 결과
-	 * @exception Exception
+	 * @throws@ Exception
 	 */
-    public PushDeviceAPIVO selectPushDevice(PushDeviceAPIVO vo) throws Exception {
+    public PushDeviceAPIVO selectPushDevice(PushDeviceAPIVO vo) {
         return pushDeviceAPIDAO.selectPushDevice(vo);
     }
     
@@ -250,9 +246,9 @@ public class EgovPushDeviceAPIServiceImpl extends EgovAbstractServiceImpl implem
 	 * Push Notification 송신 메세지 조회를 한다.
 	 * @param vo - 등록할 정보가 담긴 PushDeviceAPIVO
 	 * @return 조회 결과
-	 * @exception Exception
+	 * @throws@ Exception
 	 */
-    public List<?> selectPushMessageList(PushDeviceAPIVO VO) throws Exception {
+    public List<?> selectPushMessageList(PushDeviceAPIVO VO) {
         return pushDeviceAPIDAO.selectPushMessageList(VO);
     }
 
@@ -260,9 +256,8 @@ public class EgovPushDeviceAPIServiceImpl extends EgovAbstractServiceImpl implem
      * Push Notification 등록된 기기가 있는지 조회를 한다.
      * @param VO
      * @return
-     * @throws Exception
      */
-    public int selectPushDeviceCount(PushDeviceAPIVO vo) throws Exception {
+    public int selectPushDeviceCount(PushDeviceAPIVO vo) {
     	return pushDeviceAPIDAO.selectPushDeviceCount(vo);
     }
 
@@ -322,8 +317,6 @@ public class EgovPushDeviceAPIServiceImpl extends EgovAbstractServiceImpl implem
     		LOGGER.error("["+fnfe.getClass()+"] FileNotFoundException : " + fnfe.getMessage());
     	} catch (IOException ioe) {
     		LOGGER.error("["+ioe.getClass()+"] IOException : " + ioe.getMessage());
-    	} catch (Exception e) {
-    		LOGGER.error("["+e.getClass()+"] Exception : " + e.getMessage());
     	}
 
     	return result;

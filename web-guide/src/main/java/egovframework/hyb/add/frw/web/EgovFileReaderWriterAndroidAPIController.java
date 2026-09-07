@@ -1,5 +1,6 @@
 package egovframework.hyb.add.frw.web;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -13,11 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import egovframework.com.cmm.security.DeviceAPIAuthSupport;
 import egovframework.hyb.add.frw.service.EgovFileReaderWriterAndroidAPIService;
 import egovframework.hyb.add.frw.service.FileReaderWriterAndroidAPIVO;
 import egovframework.hyb.add.frw.service.FileReaderWriterAndroidAPIVOList;
-import egovframework.com.cmm.security.DeviceAPIAuthSupport;
 import egovframework.hyb.add.frw.service.impl.EgovFileMngAndroidUtil;
+import egovframework.rte.fdl.cmmn.exception.BaseRuntimeException;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -55,7 +57,6 @@ public class EgovFileReaderWriterAndroidAPIController {
 	 * @param fileVO
 	 *            - 조회할 정보가 담긴 FileReaderWriterAndroidAPIVO
 	 * @return FileReaderWriterAndroidAPIVOList
-	 * @exception Exception
 	 */
     @ApiOperation(value="파일 정보 목록조회", notes="[Android] 파일 정보 목록을 조회한다.", response=FileReaderWriterAndroidAPIVO.class, responseContainer="List")
     @ApiImplicitParams({
@@ -64,7 +65,7 @@ public class EgovFileReaderWriterAndroidAPIController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/frw/xml/fileInfoList.do")
 	public @ResponseBody
-	FileReaderWriterAndroidAPIVOList selectFileInfoListXml(FileReaderWriterAndroidAPIVO fileVO) throws Exception {
+	FileReaderWriterAndroidAPIVOList selectFileInfoListXml(FileReaderWriterAndroidAPIVO fileVO) {
 
 		List<FileReaderWriterAndroidAPIVO> fileInfoList = (List<FileReaderWriterAndroidAPIVO>) egovFileReaderWriterAndroidAPIService.selectFileInfoList(fileVO);
 
@@ -81,7 +82,6 @@ public class EgovFileReaderWriterAndroidAPIController {
 	 * @param fileVO
 	 *            - 삭제할 정보가 담긴 FileReaderWriterAndroidAPIVO
 	 * @return FileReaderWriterAndroidAPIVO
-	 * @exception Exception
 	 */
     @ApiOperation(value="파일 정보 삭제", notes="[Android] 파일 정보를 삭제한다.responseOK = {\"resultState\",\"OK\"}")
     @ApiImplicitParams({
@@ -90,7 +90,7 @@ public class EgovFileReaderWriterAndroidAPIController {
     })
 	@RequestMapping("/frw/xml/deleteFile.do")
 	public @ResponseBody
-	FileReaderWriterAndroidAPIVO deleteFile(FileReaderWriterAndroidAPIVO fileVO, HttpServletRequest request) throws Exception {
+	FileReaderWriterAndroidAPIVO deleteFile(FileReaderWriterAndroidAPIVO fileVO, HttpServletRequest request) {
 
 		FileReaderWriterAndroidAPIVO fileReaderWriterAndroidAPIVO = new FileReaderWriterAndroidAPIVO();
 
@@ -126,7 +126,6 @@ public class EgovFileReaderWriterAndroidAPIController {
 	 * @param fileVO
 	 *            - 저장할 정보가 담긴 FileReaderWriterAndroidAPIVO
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="파일 서버로 전송하여 등록", notes="[Android] 파일 서버로 전송하여 등록한다.\nresponseOK = \"ok\"")
     @ApiImplicitParams({
@@ -135,7 +134,7 @@ public class EgovFileReaderWriterAndroidAPIController {
     })
 	@RequestMapping(value="/frw/xml/fileUpload.do", method=RequestMethod.POST)
 	public @ResponseBody
-	String fileUpload(@RequestParam("file") MultipartFile file, FileReaderWriterAndroidAPIVO fileVO, HttpServletRequest request) throws Exception {
+	String fileUpload(@RequestParam("file") MultipartFile file, FileReaderWriterAndroidAPIVO fileVO, HttpServletRequest request) {
 
 		String result = "";
 		if (!file.isEmpty()) {
@@ -167,7 +166,6 @@ public class EgovFileReaderWriterAndroidAPIController {
 	 * @param fileVO
 	 *            - 전송할 파일 정보가 담긴 FileReaderWriterAndroidAPIVO
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="파일 다운로드", notes="[Android] 파일 다운로드 한다.")
     @ApiImplicitParams({
@@ -175,12 +173,16 @@ public class EgovFileReaderWriterAndroidAPIController {
     	@ApiImplicitParam(name = "fileSn", value = "파일연번", required = true, dataType = "int", paramType = "query"),
     })
 	@RequestMapping("/frw/xml/fileDownload.do")
-	public void fileDownload(HttpServletRequest request, HttpServletResponse response, FileReaderWriterAndroidAPIVO fileVO) throws Exception {
+	public void fileDownload(HttpServletRequest request, HttpServletResponse response, FileReaderWriterAndroidAPIVO fileVO) {
 
 		fileVO.setUuid(DeviceAPIAuthSupport.resolveDeviceUuid(request, fileVO.getUuid()));
 		FileReaderWriterAndroidAPIVO selectInfoVO = egovFileReaderWriterAndroidAPIService.selectFileInfo(fileVO);
 		if (selectInfoVO == null) {
-			response.sendError(HttpServletResponse.SC_FORBIDDEN, "File access denied.");
+			try {
+				response.sendError(HttpServletResponse.SC_FORBIDDEN, "File access denied.");
+			} catch (IOException e) {
+				throw new BaseRuntimeException(e);
+			}
 			return;
 		}
 		egovFileMngAndroidUtil.fileDownload(request, response, selectInfoVO);

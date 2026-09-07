@@ -45,7 +45,6 @@ public class EgovContactsAndroidAPIController {
 	 * @param contactVO
 	 *            - 조회할 정보가 담긴 ContactsAndroidAPIVO
 	 * @return ContactsAndroidAPIVOList
-	 * @exception Exception
 	 */
     @ApiOperation(value="연락처 정보 목록조회", notes="[Android] 연락처 정보 목록을 조회한다.", response=ContactsAndroidAPIVO.class, responseContainer="List")
     @ApiImplicitParams({
@@ -54,7 +53,7 @@ public class EgovContactsAndroidAPIController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/ctt/xml/contactsInfoList.do")
 	public @ResponseBody
-	ContactsAndroidAPIVOList selectContactsInfoListXml(ContactsAndroidAPIVO contactVO) throws Exception {
+	ContactsAndroidAPIVOList selectContactsInfoListXml(ContactsAndroidAPIVO contactVO) {
 
 		List<ContactsAndroidAPIVO> contactInfoList = (List<ContactsAndroidAPIVO>) egovContactsAndroidAPIService.selectContactsInfoList(contactVO);
 
@@ -71,7 +70,6 @@ public class EgovContactsAndroidAPIController {
 	 * @param contactVO
 	 *            - 연락처 정보가 담긴 ContactsAndroidAPIVO
 	 * @return ContactsAndroidAPIVO
-	 * @exception Exception
 	 */
     @ApiOperation(value="연락처 정보 Backup 요청", notes="[Android] 연락처 정보 Backup을 요청한다.\nresponseOK = {\"resultState\",\"OK\"}")
     @ApiImplicitParams({
@@ -80,7 +78,7 @@ public class EgovContactsAndroidAPIController {
     })
 	@RequestMapping("/ctt/xml/addContactsInfo.do")
 	public @ResponseBody
-	ContactsAndroidAPIVO addContactsInfoXml(ContactsAndroidAPIVO contactVO) throws Exception {
+	ContactsAndroidAPIVO addContactsInfoXml(ContactsAndroidAPIVO contactVO) {
 
 		JSONObject jsonObject = JSONObject.fromObject(contactVO.getContactsList().replaceAll("&quot;", "\""));
 		JSONArray jsonArray = jsonObject.getJSONArray("contactsList");
@@ -123,7 +121,6 @@ public class EgovContactsAndroidAPIController {
 	 * @param contactVO
 	 *            - 연락처 정보가 담긴 ContactsAndroidAPIVO
 	 * @return ContactsAndroidAPIVO
-	 * @exception Exception
 	 */
     @ApiOperation(value="연락처 세부정보 수정", notes="[Android] 연락처 세부정보를 등록한다.\nresponseOK = {\"resultState\",\"OK\"}")
     @ApiImplicitParams({
@@ -132,7 +129,7 @@ public class EgovContactsAndroidAPIController {
     })
 	@RequestMapping("/ctt/xml/updateContacts.do")
 	public @ResponseBody
-	ContactsAndroidAPIVO updateContactsXml(ContactsAndroidAPIVO contactVO) throws Exception {
+	ContactsAndroidAPIVO updateContactsXml(ContactsAndroidAPIVO contactVO) {
 
 		JSONObject jsonObject = JSONObject.fromObject(contactVO.getContactsList().replaceAll("&quot;", "\""));
 		JSONArray jsonArray = jsonObject.getJSONArray("contactsList");
@@ -171,7 +168,6 @@ public class EgovContactsAndroidAPIController {
 	 * @param contactVO
 	 *            - 삭제할 정보가 담긴 ContactsAndroidAPIVO
 	 * @return ContactsAndroidAPIVO
-	 * @exception Exception
 	 */
     @ApiOperation(value="연락처 세부정보 삭제", notes="[Android] 연락처 세부정보를 삭제한다.\nresponseOK = {\"resultState\",\"OK\"}")
     @ApiImplicitParams({
@@ -181,7 +177,7 @@ public class EgovContactsAndroidAPIController {
     })
 	@RequestMapping("/ctt/xml/deleteContacts.do")
 	public @ResponseBody
-	ContactsAndroidAPIVO deleteContactsXml(ContactsAndroidAPIVO contactVO) throws Exception {
+	ContactsAndroidAPIVO deleteContactsXml(ContactsAndroidAPIVO contactVO) {
 
 		ContactsAndroidAPIVO contactsAndroidAPIVO = new ContactsAndroidAPIVO();
 
@@ -204,7 +200,6 @@ public class EgovContactsAndroidAPIController {
 	 * @param fileVO
 	 *            - 조회할 정보가 담긴 ContactsAndroidAPIVO
 	 * @return ContactsAndroidAPIVOList
-	 * @exception Exception
 	 */
     @ApiOperation(value="백업된 연락처 총 개수 조회", notes="[Android] 백업된 연락처 총 개수를 조회한다.", response=ContactsAndroidAPIVO.class)
     @ApiImplicitParams({
@@ -212,7 +207,7 @@ public class EgovContactsAndroidAPIController {
     })
 	@RequestMapping("/ctt/xml/selectBackupCount.do")
 	public @ResponseBody
-	ContactsAndroidAPIVO selectContactsCountXml(ContactsAndroidAPIVO fileVO) throws Exception {
+	ContactsAndroidAPIVO selectContactsCountXml(ContactsAndroidAPIVO fileVO) {
 
 		int nCount = egovContactsAndroidAPIService.selectContactsCount(fileVO);
 

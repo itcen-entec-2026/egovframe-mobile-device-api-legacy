@@ -39,56 +39,49 @@ public interface EgovPushDeviceAPIService {
 	 * 알람 정보를 등록한다.
 	 * @param vo - 등록할 정보가 담긴 VibratorAPIVO
 	 * @return 등록 결과
-	 * @exception Exception
 	 */
-/*    int insertVibrator(PushDeviceAPIVO vo) throws Exception;*/
+/*    int insertVibrator(PushDeviceAPIVO vo);*/
  
     
     /**
 	 * Push Device 정보 목록을 조회한다.
 	 * @param VO - 조회할 정보가 담긴 PushDeviceAPIDefaultVO
 	 * @return 네트워크 정보 목록
-	 * @exception Exception
 	 */
-    List<?> selectPushDeviceList(PushDeviceAPIDefaultVO searchVO) throws Exception;
+    List<?> selectPushDeviceList(PushDeviceAPIDefaultVO searchVO);
 
 	/**
 	 * Push Notification을 위해 Device 정보를 등록한다.
 	 * @param vo - 등록할 정보가 담긴 PushAPIVO
 	 * @return 등록 결과
-	 * @exception Exception
 	 */
-    int insertPushDevice(PushDeviceAPIVO vo) throws Exception;
+    int insertPushDevice(PushDeviceAPIVO vo);
 
 	/**
 	 * Push Notification을 서버에 요청한다.
 	 * @param vo - 등록할 정보가 담긴 PushAPIVO
 	 * @return 등록 결과
-	 * @exception Exception
 	 */
-    int insertPushInfo(PushDeviceAPIVO vo) throws Exception;
+    int insertPushInfo(PushDeviceAPIVO vo);
     
 	/**
 	 * Push Notification 기기 상세 조회를 한다.
 	 * @param vo - 등록할 정보가 담긴 PushDeviceAPIVO
 	 * @return 조회 결과
-	 * @exception Exception
 	 */
-    public PushDeviceAPIVO selectPushDevice(PushDeviceAPIVO vo) throws Exception;
+    public PushDeviceAPIVO selectPushDevice(PushDeviceAPIVO vo);
 
     /**
 	 * Push Notification 송신 메세지 조회를 한다.
 	 * @param vo - 등록할 정보가 담긴 PushDeviceAPIVO
 	 * @return 조회 결과
-	 * @exception Exception
 	 */
-    List<?> selectPushMessageList(PushDeviceAPIVO vo) throws Exception;
+    List<?> selectPushMessageList(PushDeviceAPIVO vo);
 
     /**
      * Push Notification 등록된 기기가 있는지 조회를 한다.
      * @param VO
      * @return
-     * @throws Exception
      */
-    public int selectPushDeviceCount(PushDeviceAPIVO vo) throws Exception;
+    public int selectPushDeviceCount(PushDeviceAPIVO vo);
 }

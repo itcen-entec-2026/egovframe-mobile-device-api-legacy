@@ -17,6 +17,8 @@ package egovframework.hyb.add.acl.service;
 
 import java.util.List;
 
+import egovframework.rte.fdl.cmmn.exception.BaseRuntimeException;
+
 /**  
  * @Class Name : EgovAcceleratorAPIService.java
  * @Description : EgovAcceleratorAPIService Class
@@ -38,47 +40,43 @@ public interface EgovAcceleratorAndroidAPIService {
      * 가속도 정보를 등록한다.
      * @param vo - 등록할 정보가 담긴 AcceleratorAPIVO
      * @return 등록 결과
-     * @exception Exception
      */
-    int insertAcceleratorInfo(AcceleratorAndroidAPIVO vo) throws Exception;
+    int insertAcceleratorInfo(AcceleratorAndroidAPIVO vo);
     
     /**
      * 가속도 정보를 수정한다.
      * @param vo - 수정할 정보가 담긴 AcceleratorAPIVO
      * @return void형
-     * @exception Exception
      */
-    void updateAcceleratorInfo(AcceleratorAndroidAPIVO vo) throws Exception;
+    void updateAcceleratorInfo(AcceleratorAndroidAPIVO vo);
     
     /**
      * 가속도 정보를 삭제한다.
      * @param vo - 삭제할 정보가 담긴 AcceleratorAPIVO
      * @return 등록 결과 
-     * @exception Exception
      */
-    int deleteAcceleratorInfo(AcceleratorAndroidAPIVO vo) throws Exception;
+    int deleteAcceleratorInfo(AcceleratorAndroidAPIVO vo);
     
     /**
      * 가속도 정보를 조회한다.
      * @param vo - 조회할 정보가 담긴 AcceleratorAPIVO
      * @return 조회한 가속도 정보
-     * @exception Exception
+     * @throws BaseRuntimeException
+     * @throws@ Exception
      */
-    AcceleratorAndroidAPIVO selectAcceleratorInfo(AcceleratorAndroidAPIVO vo) throws Exception;
+    AcceleratorAndroidAPIVO selectAcceleratorInfo(AcceleratorAndroidAPIVO vo) throws BaseRuntimeException, Exception;
     
     /**
      * 가속도 정보 목록을 조회한다.
      * @param VO - 조회할 정보가 담긴 AcceleratorAPIDefaultVO
      * @return 가속도 정보 목록
-     * @exception Exception
      */
-    List<?> selectAcceleratorInfoList(AcceleratorAndroidAPIDefaultVO searchVO) throws Exception;
+    List<?> selectAcceleratorInfoList(AcceleratorAndroidAPIDefaultVO searchVO);
     
     /**
      * 가속도 정보 총 갯수를 조회한다.
      * @param VO - 조회할 정보가 담긴 AcceleratorAPIDefaultVO
      * @return 가속도 정보 총 갯수
-     * @exception
      */
     int selectAcceleratorInfoListTotCnt(AcceleratorAndroidAPIDefaultVO searchVO);
     

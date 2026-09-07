@@ -40,46 +40,40 @@ public interface EgovNetworkiOSAPIService {
 	 * 네트워크 정보를 등록한다.
 	 * @param vo - 등록할 정보가 담긴 NetworkAPIVO
 	 * @return 등록 결과
-	 * @exception Exception
 	 */
-    int insertNetworkInfo(NetworkiOSAPIVO vo) throws Exception;
+    int insertNetworkInfo(NetworkiOSAPIVO vo);
     
     /**
 	 * 네트워크 정보를 수정한다.
 	 * @param vo - 수정할 정보가 담긴 NetworkAPIVO
 	 * @return void형
-	 * @exception Exception
 	 */
-    int updateNetworkInfo(NetworkiOSAPIVO vo) throws Exception;
+    int updateNetworkInfo(NetworkiOSAPIVO vo);
     
     /**
 	 * 네트워크 정보를 삭제한다.
 	 * @param vo - 삭제할 정보가 담긴 NetworkAPIVO
 	 * @return void형 
-	 * @exception Exception
 	 */
-    int deleteNetworkInfo(NetworkiOSAPIVO vo) throws Exception;
+    int deleteNetworkInfo(NetworkiOSAPIVO vo);
     
     /**
 	 * 네트워크 정보를 조회한다.
 	 * @param vo - 조회할 정보가 담긴 NetworkAPIVO
 	 * @return 조회한 네트워크 정보
-	 * @exception Exception
 	 */
-    NetworkiOSAPIVO selectNetworkInfo(NetworkiOSAPIVO vo) throws Exception;
+    NetworkiOSAPIVO selectNetworkInfo(NetworkiOSAPIVO vo);
     
     /**
 	 * 네트워크 정보 목록을 조회한다.
 	 * @param VO - 조회할 정보가 담긴 NetworkAPIVO
 	 * @return 네트워크 정보 목록
-	 * @exception Exception
 	 */
-    List<?> selectNetworkInfoList(NetworkiOSAPIVO vo) throws Exception;
+    List<?> selectNetworkInfoList(NetworkiOSAPIVO vo);
     /**
 	 * 네트워크 정보 총 갯수를 조회한다.
 	 * @param VO - 조회할 정보가 담긴 NetworkAPIDefaultVO
 	 * @return 네트워크 정보 총 갯수
-	 * @exception
 	 */
     int selectNetworkInfoListTotCnt(NetworkiOSAPIVO vo);
     

@@ -55,10 +55,8 @@ public class EgovInterfaceiOSAPIServiceImpl extends EgovAbstractServiceImpl
      * @param vo
      *            - 로그인할 정보가 담긴 InterfaceiOSAPIVO
      * @return 로그인 결과
-     * @exception Exception
      */
-    public int selectInterfaceInfoListTotCnt(InterfaceiOSAPIVO vo)
-            throws Exception {
+    public int selectInterfaceInfoListTotCnt(InterfaceiOSAPIVO vo) {
         return interfaceAPIDAO.selectInterfaceInfoListTotCnt(vo);
     }
 
@@ -68,9 +66,8 @@ public class EgovInterfaceiOSAPIServiceImpl extends EgovAbstractServiceImpl
      * @param vo
      *            - 등록할 정보가 담긴 InterfaceiOSAPIVO
      * @return 등록 결과
-     * @exception Exception
      */
-    public int insertInterfaceInfo(InterfaceiOSAPIVO vo) throws Exception {
+    public int insertInterfaceInfo(InterfaceiOSAPIVO vo) {
         vo.setUserPw(DeviceAPIPasswordUtil.encode(vo.getUserPw()));
         return interfaceAPIDAO.insertInterfaceInfo(vo);
     }
@@ -81,10 +78,8 @@ public class EgovInterfaceiOSAPIServiceImpl extends EgovAbstractServiceImpl
      * @param vo
      *            - 로그인할 정보가 담긴 InterfaceiOSAPIVO
      * @return 로그인 결과
-     * @exception Exception
      */
-    public InterfaceiOSAPIVO selectInterfaceInfo(InterfaceiOSAPIVO vo)
-            throws Exception {
+    public InterfaceiOSAPIVO selectInterfaceInfo(InterfaceiOSAPIVO vo) {
         InterfaceiOSAPIVO stored = interfaceAPIDAO.selectInterfaceInfoByUserId(vo);
         if (stored == null) {
             return null;
@@ -102,9 +97,8 @@ public class EgovInterfaceiOSAPIServiceImpl extends EgovAbstractServiceImpl
      * @param vo
      *            - 탈퇴할 정보가 담긴 InterfaceiOSAPIVO
      * @return 회원탈퇴 결과
-     * @exception Exception
      */
-    public int deleteInterfaceInfo(InterfaceiOSAPIVO vo) throws Exception {
+    public int deleteInterfaceInfo(InterfaceiOSAPIVO vo) {
         InterfaceiOSAPIVO stored = interfaceAPIDAO.selectInterfaceInfoByUserId(vo);
         if (stored == null || !DeviceAPIPasswordUtil.matches(vo.getUserPw(), stored.getUserPw())) {
             return 0;

@@ -50,9 +50,8 @@ public class EgovStreamingMediaAPIServiceImpl extends EgovAbstractServiceImpl im
      * 미디어 목록을 조회한다.
      * @param VO - 조회할 정보가 담긴 StreamingMediaAPIVO
      * @return 조회 목록
-     * @exception Exception
      */
-    public List<?> selectMediaInfoList(StreamingMediaAPIDefaultVO vo) throws Exception {
+    public List<?> selectMediaInfoList(StreamingMediaAPIDefaultVO vo) {
         
         return mediaAPIDAO.selectMediaInfoList(vo);
     }
@@ -61,16 +60,15 @@ public class EgovStreamingMediaAPIServiceImpl extends EgovAbstractServiceImpl im
      * 미디어 파일을 조회한다.
      * @param VO - 조회할 정보가 담긴 StreamingMediaAPIFileVO
      * @return 파일 정보
-     * @exception Exception
      */
-    public StreamingMediaAPIFileVO selectMediaFileURL(StreamingMediaAPIFileVO vo) throws Exception {
+    public StreamingMediaAPIFileVO selectMediaFileURL(StreamingMediaAPIFileVO vo) {
         
         StreamingMediaAPIFileVO fileVO = mediaAPIDAO.selectMediaFileInfo(vo);
         return fileVO;       
     }
 
     @Override
-	public int updateMediaInfoRevivCo(StreamingMediaAPIVO vo) throws Exception {
+	public int updateMediaInfoRevivCo(StreamingMediaAPIVO vo) {
 		// TODO Auto-generated method stub
     	return mediaAPIDAO.updateMediaInfoRevivCo(vo);
 	}
@@ -79,9 +77,8 @@ public class EgovStreamingMediaAPIServiceImpl extends EgovAbstractServiceImpl im
      * 미디어 파일을 조회한다.
      * @param VO - 조회할 정보가 담긴 StreamingMediaAPIFileVO
      * @return 파일 정보
-     * @exception Exception
      */
-    public boolean selectMediaFileInf(HttpServletResponse response, StreamingMediaAPIFileVO vo) throws Exception {
+    public boolean selectMediaFileInf(HttpServletResponse response, StreamingMediaAPIFileVO vo) {
         File file = null;
         FileInputStream fis = null;
     
@@ -139,9 +136,6 @@ public class EgovStreamingMediaAPIServiceImpl extends EgovAbstractServiceImpl im
                 }catch(IOException e){
                 	LOGGER.error("[IOException] Try/Catch...IOException : " + e.getMessage());
                     errorFlag = false;
-                } catch (Exception e) {
-                	LOGGER.error("["+e.getClass()+"] Try/Catch... : " + e.getMessage());
-                    errorFlag = false;
                 }
             }
             if (in != null) {
@@ -149,9 +143,6 @@ public class EgovStreamingMediaAPIServiceImpl extends EgovAbstractServiceImpl im
                     in.close();
                   //2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 139-139
                 }catch(IOException e){
-                	LOGGER.error("["+e.getClass()+"] Try/Catch...PushNotification : " + e.getMessage());
-                    errorFlag = false;
-                } catch (Exception e) {
                 	LOGGER.error("["+e.getClass()+"] Try/Catch...PushNotification : " + e.getMessage());
                     errorFlag = false;
                 }
@@ -162,9 +153,6 @@ public class EgovStreamingMediaAPIServiceImpl extends EgovAbstractServiceImpl im
                   //2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 147-147
                 }catch(IOException e){
                 	LOGGER.error("[IOException] Try/Catch...IOException : " + e.getMessage());
-                    errorFlag = false;
-                } catch (Exception e) {
-                	LOGGER.error("["+e.getClass()+"] Try/Catch... : " + e.getMessage());
                     errorFlag = false;
                 }
             }

@@ -25,21 +25,19 @@ public interface EgovStreamingMediaAPIService {
      * 미디어 목록을 조회한다.
      * @param VO - 조회할 정보가 담긴 MediaAndroidAPIVO
      * @return 조회 목록
-     * @exception Exception
      */
-    public List<?> selectMediaInfoList(StreamingMediaAPIDefaultVO vo) throws Exception;
+    public List<?> selectMediaInfoList(StreamingMediaAPIDefaultVO vo);
     
     
     /**
      * 미디어 파일을 조회한다.
      * @param VO - 조회할 정보가 담긴 MediaAndroidAPIFileVO
      * @return 파일 정보
-     * @exception Exception
      */
-    public boolean selectMediaFileInf(HttpServletResponse response, StreamingMediaAPIFileVO vo) throws Exception;
+    public boolean selectMediaFileInf(HttpServletResponse response, StreamingMediaAPIFileVO vo);
 
     
-	public StreamingMediaAPIFileVO selectMediaFileURL(StreamingMediaAPIFileVO vo) throws Exception;
+	public StreamingMediaAPIFileVO selectMediaFileURL(StreamingMediaAPIFileVO vo);
     
-    public int updateMediaInfoRevivCo(StreamingMediaAPIVO vo) throws Exception;
+    public int updateMediaInfoRevivCo(StreamingMediaAPIVO vo);
 }

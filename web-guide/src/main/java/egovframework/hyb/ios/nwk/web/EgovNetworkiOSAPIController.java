@@ -19,16 +19,12 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -42,6 +38,7 @@ import egovframework.hyb.add.nwk.service.NetworkAndroidAPIXmlVO;
 import egovframework.hyb.ios.nwk.service.EgovNetworkiOSAPIService;
 import egovframework.hyb.ios.nwk.service.NetworkiOSAPIDefaultVO;
 import egovframework.hyb.ios.nwk.service.NetworkiOSAPIVO;
+import egovframework.rte.fdl.cmmn.exception.BaseRuntimeException;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -79,17 +76,13 @@ public class EgovNetworkiOSAPIController {
     /** propertiesService */
     @Resource(name = "propertiesService")
     protected EgovPropertyService propertiesService;
- 
-    private static final Logger LOGGER = LoggerFactory.getLogger(EgovNetworkiOSAPIController.class);
-    
+
     /**
 	 * 어플리케이션 실행 시, 서버 설정
 	 * @return boolean
-	 * @exception Exception
 	 */
     @RequestMapping("/nwk/htmlLoadiOS.do")
-    public ModelAndView htmlLoad(ModelMap model)
-            throws Exception {
+    public ModelAndView htmlLoad(ModelMap model) {
 		ModelAndView jsonView = new ModelAndView("jsonView");
 		
 		jsonView.addObject("serverUrl", propertiesService.getString("serverContext"));
@@ -103,14 +96,12 @@ public class EgovNetworkiOSAPIController {
 	 * @param searchVO - 조회할 정보가 담긴 NetworkAPIDefaultVO
 	 * @param model
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="Network 정보 목록조회", notes="[iOS] Network 정보 목록을 조회한다.", response=NetworkAndroidAPIXmlVO.class, responseContainer="List")
     @RequestMapping(value="/nwk/networkiOSInfoList.do")
     public ModelAndView selectNetworkInfoList(@ModelAttribute("searchNetworkiOSVO") NetworkiOSAPIDefaultVO searchNetworkVO,
     		NetworkiOSAPIVO sampleNetworkVO,
-    		ModelMap model)
-            throws Exception {
+    		ModelMap model) {
  
 		ModelAndView jsonView = new ModelAndView("jsonView");
 		List<?> networkInfoList = egovNetworkiOSAPIService.selectNetworkInfoList(sampleNetworkVO);
@@ -126,7 +117,6 @@ public class EgovNetworkiOSAPIController {
 	 * @param searchVO - 조회할 정보가 담긴 NetworkAPIDefaultVO
 	 * @param model
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="Network 세부정보 조회", notes="[iOS] Network 세부정보를 조회한다.", response=NetworkiOSAPIVO.class)
     @ApiImplicitParams({
@@ -135,8 +125,7 @@ public class EgovNetworkiOSAPIController {
     @RequestMapping(value="/nwk/networkiOSInfo.do")
     public ModelAndView selectNetworkInfo(
     		NetworkiOSAPIVO sampleNetworkVO,
-            BindingResult bindingResult, Model model, SessionStatus status)
-            throws Exception {
+            BindingResult bindingResult, Model model, SessionStatus status) {
  
 		ModelAndView jsonView = new ModelAndView("jsonView");
 		NetworkiOSAPIVO networkInfo = egovNetworkiOSAPIService.selectNetworkInfo(sampleNetworkVO);
@@ -152,7 +141,6 @@ public class EgovNetworkiOSAPIController {
 	 * @param searchVO - 등록할 정보가 담긴 NetworkAPIDefaultVO
 	 * @param status
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="Network 세부정보 등록", notes="[iOS] Network 세부정보를 등록한다.\nresponseOK = {\"resultState\",\"OK\"}")
     @ApiImplicitParams({
@@ -162,8 +150,7 @@ public class EgovNetworkiOSAPIController {
     @RequestMapping("/nwk/addNetworkiOSInfo.do")
     public ModelAndView insertNetworkInfo(
        	 	NetworkiOSAPIVO sampleNetworkVO,
-            BindingResult bindingResult, Model model, SessionStatus status) 
-    throws Exception {
+            BindingResult bindingResult, Model model, SessionStatus status) {
     	
     	/*if (bindingResult.hasErrors()) {
     		model.addAttribute("sampleVO", sampleVO);
@@ -189,7 +176,6 @@ public class EgovNetworkiOSAPIController {
 	 * @param sampleVO - 삭제할 정보가 담긴 VO
 	 * @param status
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="Network 세부정보 삭제", notes="[iOS] Network 세부정보를 삭제한다.\nresponseOK = {\"resultState\",\"OK\"}")
     @ApiImplicitParams({
@@ -197,8 +183,7 @@ public class EgovNetworkiOSAPIController {
     })
     @RequestMapping("/nwk/deleteNetworkiOSInfo.do")
     public ModelAndView deleteNetworkInfo(
-            NetworkiOSAPIVO sampleVO, SessionStatus status)
-            throws Exception {
+            NetworkiOSAPIVO sampleVO, SessionStatus status) {
     	
         ModelAndView jsonView = new ModelAndView("jsonView");
         
@@ -220,11 +205,10 @@ public class EgovNetworkiOSAPIController {
 	 * @param sampleVO - 삭제할 정보가 담긴 VO
 	 * @param status
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="Network MP3파일 다운로드", notes="[iOS] MP3파일을 다운로드 받는다.\nglobals.properties설정파일에 \"fileStorePath\"로 정의한 설정경로에서 \"owlband.mp3\"파일을 다운로드 한다.")
     @RequestMapping("/nwk/getMp3FileiOS.do")
-    public void getMp3File( HttpServletResponse response) throws Exception {
+    public void getMp3File( HttpServletResponse response) {
     	
     	String mp3FilePath = propertiesService.getString("fileStorePath");
     	File file = null;
@@ -234,7 +218,6 @@ public class EgovNetworkiOSAPIController {
 		ByteArrayOutputStream bStream = null;
 		
 		String filename = "owlband.mp3";
-		String charSet = "UTF-8";
 		//String contentDisposition = "attachment; filename*="+charSet+"''"+URLEncoder.encode(filename, charSet);
 		
 		try {
@@ -259,21 +242,15 @@ public class EgovNetworkiOSAPIController {
 			response.getOutputStream().flush();
 			response.getOutputStream().close();
 		//2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 236-236
-		}catch(NullPointerException e){
-			LOGGER.error("[NullPointerException e] Try/Catch...NullPointerException e : " + e.getMessage());
-		}catch(FileNotFoundException e){
-			LOGGER.error("[FileNotFoundException] Try/Catch...FileNotFoundException : " + e.getMessage());
-		}catch(Exception e) {
-			LOGGER.error("["+e.getClass()+"] Try/Catch... : " + e.getMessage());
+		}catch(IOException e){
+			throw new BaseRuntimeException(e);
 		} finally {
 			if (bStream != null) {
 				try {
 					bStream.close();
 				//2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 242-242	
 				}catch(IOException e){
-					LOGGER.error("[IOException] Try/Catch... : " + e.getMessage());
-				}catch (Exception e) {
-					LOGGER.error("["+e.getClass()+"] Try/Catch... : " + e.getMessage());
+					throw new BaseRuntimeException(e);
 				}
 			}
 			if (in != null) {
@@ -281,9 +258,7 @@ public class EgovNetworkiOSAPIController {
 					in.close();
 				//2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 249-249	
 				}catch(IOException e){
-					LOGGER.error("[IOException] Try/Catch... : " + e.getMessage());
-				}catch (Exception e) {
-					LOGGER.error("["+e.getClass()+"] Try/Catch... : " + e.getMessage());
+					throw new BaseRuntimeException(e);
 				}
 			}
 			if (fis != null) {
@@ -291,9 +266,7 @@ public class EgovNetworkiOSAPIController {
 					fis.close();
 				//2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 256-256	
 				}catch(IOException e){
-					LOGGER.error("[IOException] Try/Catch... : " + e.getMessage());
-				}catch (Exception e) {
-					LOGGER.error("["+e.getClass()+"] Try/Catch... : " + e.getMessage());
+					throw new BaseRuntimeException(e);
 				}
 			}
 		}

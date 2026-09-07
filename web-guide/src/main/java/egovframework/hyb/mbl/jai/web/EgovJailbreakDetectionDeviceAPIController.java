@@ -54,7 +54,6 @@ public class EgovJailbreakDetectionDeviceAPIController {
 	 * @param searchVO - 등록할 정보가 담긴JailbreakDetectionDeviceAPIDefaultVO
 	 * @param status
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="JailbreakDetection 세부정보 등록", notes="JailbreakDetection 세부정보를 등록한다.\nresponseOK = {\"resultState\",\"OK\"}")
     @ApiImplicitParams({
@@ -66,8 +65,7 @@ public class EgovJailbreakDetectionDeviceAPIController {
     @RequestMapping("/jai/addJailbreakDetectionDeviceInfo.do")
     public ModelAndView insertDeviceInfo(
     		@ModelAttribute("searchPushVO") 
-    		JailbreakDetectionDeviceAPIVO sampleVO, Model model) 
-    throws Exception {
+    		JailbreakDetectionDeviceAPIVO sampleVO, Model model) {
     	
     	ModelAndView jsonView = new ModelAndView("jsonView");
     	
@@ -89,13 +87,11 @@ public class EgovJailbreakDetectionDeviceAPIController {
 	 * @param searchVO - 조회할 정보가 담긴JailbreakDetectionDeviceAPIDefaultVO
 	 * @param model
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="JailbreakDetection 정보 목록조회", notes="JailbreakDetection 정보 목록을 조회한다.", response=JailbreakDetectionDeviceAPIVO.class, responseContainer="List")
     @RequestMapping(value="/jai/JailbreakDetectionInfoList.do")
     public ModelAndView selectJailbreakDetectionDevcieList(@ModelAttribute("searchVibratorVO") JailbreakDetectionDeviceAPIDefaultVO searchVO, 
-    		ModelMap model)
-            throws Exception {
+    		ModelMap model) {
  
 		ModelAndView jsonView = new ModelAndView("jsonView");
 		List<?> JailbreakDetectionDevcieList = egovjailbreakdetectiondeviceAPIService.selectJailbreakDetectionDevcieList(searchVO);

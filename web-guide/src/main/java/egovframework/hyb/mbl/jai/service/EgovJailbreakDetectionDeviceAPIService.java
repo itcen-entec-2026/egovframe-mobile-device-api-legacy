@@ -24,16 +24,14 @@ public interface EgovJailbreakDetectionDeviceAPIService {
 	 * JailbreakDetection을 위해JailbreakDetection 정보를 등록한다.
 	 * @param vo - 등록할 정보가 담긴 BarcodescannerAPIVO
 	 * @return 등록 결과
-	 * @exception Exception
 	 */
-    int insertJailbreakDetectionDevcie(JailbreakDetectionDeviceAPIVO vo) throws Exception;
+    int insertJailbreakDetectionDevcie(JailbreakDetectionDeviceAPIVO vo);
     
 	/**
 	 * JailbreakDetection을 위해 JailbreakDetection 정보를 서버에서 조회한다.
 	 * @param vo - 등록할 정보가 담긴 BarcodescannerAPIVO
 	 * @return 등록 결과
-	 * @exception Exception
 	 */
-	List<?> selectJailbreakDetectionDevcieList(JailbreakDetectionDeviceAPIDefaultVO searchVO) throws Exception;
+	List<?> selectJailbreakDetectionDevcieList(JailbreakDetectionDeviceAPIDefaultVO searchVO);
 
 }

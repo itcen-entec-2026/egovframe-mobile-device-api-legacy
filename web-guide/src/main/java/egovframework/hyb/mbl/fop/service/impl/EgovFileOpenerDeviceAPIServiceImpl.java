@@ -48,8 +48,6 @@ import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 @Service("EgovFileOpenerDeviceAPIService")
 public class EgovFileOpenerDeviceAPIServiceImpl extends EgovAbstractServiceImpl implements EgovFileOpenerDeviceAPIService {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(EgovFileOpenerDeviceAPIServiceImpl.class);
-
 	/** FileOpenerDeviceAPIDAO */
     @Resource(name="FileOpenerDeviceAPIDAO")
     private FileOpenerDeviceAPIDAO fileOpenerDeviceAPIDAO;
@@ -58,9 +56,8 @@ public class EgovFileOpenerDeviceAPIServiceImpl extends EgovAbstractServiceImpl 
 	 * 문서목록을 조회한다.
 	 * @param VO - 조회할 정보가 담긴 FileOpenerDeviceAPIVO
 	 * @return 문서 조회 목록 
-	 * @exception Exception
 	 */
-    public List<?> selectFileOpenerDocumentListInfo(FileOpenerDeviceAPIDefaultVO searchVO) throws Exception {
+    public List<?> selectFileOpenerDocumentListInfo(FileOpenerDeviceAPIDefaultVO searchVO) {
 		// TODO Auto-generated method stub
 		return fileOpenerDeviceAPIDAO.selectFileOpenerDocumentList(searchVO);
 	}

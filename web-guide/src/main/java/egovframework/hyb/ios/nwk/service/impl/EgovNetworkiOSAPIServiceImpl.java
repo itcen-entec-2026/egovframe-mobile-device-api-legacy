@@ -17,15 +17,14 @@ package egovframework.hyb.ios.nwk.service.impl;
 
 import java.util.List;
 
-import egovframework.hyb.ios.nwk.service.EgovNetworkiOSAPIService;
-import egovframework.hyb.ios.nwk.service.NetworkiOSAPIDefaultVO;
-import egovframework.hyb.ios.nwk.service.NetworkiOSAPIVO;
-
-import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
-
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+
+import egovframework.hyb.ios.nwk.service.EgovNetworkiOSAPIService;
+import egovframework.hyb.ios.nwk.service.NetworkiOSAPIVO;
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.exception.BaseRuntimeException;
 
 /**  
  * @Class Name : EgovSampleServiceImpl.java
@@ -56,9 +55,8 @@ public class EgovNetworkiOSAPIServiceImpl extends EgovAbstractServiceImpl implem
 	 * 네트워크 정보를 등록한다.
 	 * @param vo - 등록할 정보가 담긴 NetworkAPIVO
 	 * @return 등록 결과
-	 * @exception Exception
 	 */
-    public int insertNetworkInfo(NetworkiOSAPIVO vo) throws Exception {	
+    public int insertNetworkInfo(NetworkiOSAPIVO vo) {	
     	return (Integer)networkiOSAPIDAO.insertNetworkInfo(vo);  
     }
 
@@ -66,9 +64,8 @@ public class EgovNetworkiOSAPIServiceImpl extends EgovAbstractServiceImpl implem
 	 * 네트워크 정보를 수정한다.
 	 * @param vo - 수정할 정보가 담긴 NetworkAPIVO
 	 * @return void형
-	 * @exception Exception
 	 */
-    public int updateNetworkInfo(NetworkiOSAPIVO vo) throws Exception {
+    public int updateNetworkInfo(NetworkiOSAPIVO vo) {
     	return (Integer)networkiOSAPIDAO.updateNetworkInfo(vo);
     }
 
@@ -76,9 +73,8 @@ public class EgovNetworkiOSAPIServiceImpl extends EgovAbstractServiceImpl implem
 	 * 네트워크 정보를 삭제한다.
 	 * @param vo - 삭제할 정보가 담긴 NetworkAPIVO
 	 * @return void형 
-	 * @exception Exception
 	 */
-    public int deleteNetworkInfo(NetworkiOSAPIVO vo) throws Exception {
+    public int deleteNetworkInfo(NetworkiOSAPIVO vo) {
     	return (Integer)networkiOSAPIDAO.deleteNetworkInfo(vo);
     }
 
@@ -86,12 +82,12 @@ public class EgovNetworkiOSAPIServiceImpl extends EgovAbstractServiceImpl implem
 	 * 네트워크 정보를 조회한다.
 	 * @param vo - 조회할 정보가 담긴 NetworkAPIVO
 	 * @return 조회한 네트워크 정보
-	 * @exception Exception
 	 */
-    public NetworkiOSAPIVO selectNetworkInfo(NetworkiOSAPIVO vo) throws Exception {
+    public NetworkiOSAPIVO selectNetworkInfo(NetworkiOSAPIVO vo) {
     	NetworkiOSAPIVO resultVO = networkiOSAPIDAO.selectNetworkInfo(vo);
-        if (resultVO == null)
-            throw processException("info.nodata.msg");
+        if (resultVO == null) {
+            throw new BaseRuntimeException(processException("info.nodata.msg"));
+        }
         return resultVO;
     }
 
@@ -99,9 +95,8 @@ public class EgovNetworkiOSAPIServiceImpl extends EgovAbstractServiceImpl implem
 	 * 네트워크 정보 목록을 조회한다.
 	 * @param VO - 조회할 정보가 담긴 NetworkAPIVO
 	 * @return 네트워크 정보 목록
-	 * @exception Exception
 	 */
-    public List<?> selectNetworkInfoList(NetworkiOSAPIVO vo) throws Exception {
+    public List<?> selectNetworkInfoList(NetworkiOSAPIVO vo) {
         return networkiOSAPIDAO.selectNetworkInfoList(vo);
     }
 
@@ -109,7 +104,6 @@ public class EgovNetworkiOSAPIServiceImpl extends EgovAbstractServiceImpl implem
 	 * 네트워크 정보 총 갯수를 조회한다.
 	 * @param VO - 조회할 정보가 담긴 NetworkAPIVO
 	 * @return 네트워크 정보 총 갯수
-	 * @exception
 	 */
     public int selectNetworkInfoListTotCnt(NetworkiOSAPIVO vo) {
 		return networkiOSAPIDAO.selectNetworkInfoListTotCnt(vo);

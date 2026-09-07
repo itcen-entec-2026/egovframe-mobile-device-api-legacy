@@ -71,14 +71,12 @@ public class EgovCompassiOSAPIController {
 	 * @param searchVO - 조회할 정보가 담긴 CompassiOSAPIDefaultVO
 	 * @param model
 	 * @return "/cps/compassInfoList.do"
-	 * @exception Exception
 	 */
     @ApiOperation(value="디바이스 정보 목록조회", notes="[iOS] 디바이스 정보 목록을 조회한다.", response=CompassiOSAPIVO.class, responseContainer="List")
     @SuppressWarnings("unchecked")
 	@RequestMapping(value="/cps/compassInfoList.do")
     public ModelAndView selectCompassInfoXMLList(@ModelAttribute("searchVO") CompassiOSAPIDefaultVO searchVO, 
-    		ModelMap model)
-            throws Exception {
+    		ModelMap model) {
     	
     	ModelAndView jsonView = new ModelAndView("jsonView"); 
  
@@ -95,7 +93,6 @@ public class EgovCompassiOSAPIController {
 	 * @param searchVO - 목록 조회조건 정보가 담긴 CompassiOSAPIDefaultVO
 	 * @param status
 	 * @return "forward:/cps/addCompassInfo.do"
-	 * @exception Exception
 	 */
     @ApiOperation(value="Compass 세부정보 등록", notes="[iOS] Compass 세부정보를 등록한다.\nresponseOK = {\"resultState\",\"OK\"}")
     @ApiImplicitParams({
@@ -104,8 +101,7 @@ public class EgovCompassiOSAPIController {
     @RequestMapping("/cps/addCompassInfo.do")
     public ModelAndView addCompassInfoXml(
        	 	CompassiOSAPIVO compassVO,
-            BindingResult bindingResult, Model model, SessionStatus status) 
-    		throws Exception {
+            BindingResult bindingResult, Model model, SessionStatus status) {
     	
     	ModelAndView jsonView = new ModelAndView("jsonView"); 
 
@@ -126,14 +122,12 @@ public class EgovCompassiOSAPIController {
 	 * @param searchVO - 목록 조회조건 정보가 담긴 VO
 	 * @param status
 	 * @return "forward:/cps/withdrawal.do"
-	 * @exception Exception
 	 */
     @ApiOperation(value="Compass 세부정보 삭제", notes="[iOS] Compass 세부정보를 삭제한다.\nresponseOK = {\"resultState\",\"OK\"}")
     @RequestMapping("/cps/withdrawal.do")
     public ModelAndView withdrawalXml(
        	 	CompassiOSAPIVO compassVO,
-            BindingResult bindingResult, Model model, SessionStatus status) 
-    throws Exception {
+            BindingResult bindingResult, Model model, SessionStatus status) {
     	
     	ModelAndView jsonView = new ModelAndView("jsonView");
     	  	

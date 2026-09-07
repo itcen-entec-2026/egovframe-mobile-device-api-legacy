@@ -43,10 +43,9 @@ public class EgovJailbreakDetectionDeviceAPIServiceImpl extends EgovAbstractServ
 	 *JailbreakDetectionDeviceAPI을 위해  정보를 등록한다.
 	 * @param vo - 등록할 정보가 담긴 JailbreakDetectionAPIVO
 	 * @return 등록 결과
-	 * @exception Exception
 	 */
     @Override
-    public int insertJailbreakDetectionDevcie(JailbreakDetectionDeviceAPIVO vo) throws Exception {
+    public int insertJailbreakDetectionDevcie(JailbreakDetectionDeviceAPIVO vo) {
     	LOGGER.debug(vo.toString());
     	
     	return jailbreakdetectionDeviceAPIDAO.insertJailbreakDetectionDevcie(vo);    	
@@ -56,9 +55,8 @@ public class EgovJailbreakDetectionDeviceAPIServiceImpl extends EgovAbstractServ
 	 * JailbreakDetectionDeviceAPI 설정 정보 목록을 조회한다.
 	 * @param VO - 조회할 정보가 담긴 JailbreakDetectionAPIVO
 	 * @return 알림 설정 정보 목록
-	 * @exception Exception
 	 */
-    public List<?> selectJailbreakDetectionDevcieList(JailbreakDetectionDeviceAPIDefaultVO searchVO) throws Exception {
+    public List<?> selectJailbreakDetectionDevcieList(JailbreakDetectionDeviceAPIDefaultVO searchVO) {
         return jailbreakdetectionDeviceAPIDAO.selectJailbreakDetectionDevcieList(searchVO);
     }
 

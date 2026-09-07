@@ -69,15 +69,13 @@ public class EgovDeviceiOSAPIController {
 	 * @param vo - 조회할 정보가 담긴 DeviceiOSAPIVO
 	 * @param model
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="Device 정보 목록조회", notes="[iOS] Device 정보 목록을 조회한다.", response=DeviceiOSAPIVO.class, responseContainer="List")
     @ApiImplicitParams({
     	@ApiImplicitParam(name = "uuid", value = "기기식별코드", required = true, dataType = "string", paramType = "query"),
     })
     @RequestMapping(value="/dvc/deviceInfoList.do")
-    public ModelAndView selectDeviceList(DeviceiOSAPIVO vo)
-            throws Exception {
+    public ModelAndView selectDeviceList(DeviceiOSAPIVO vo) {
  
 		ModelAndView jsonView = new ModelAndView("jsonView");
 		List<?> deviceInfoList = egovDeviceiOSAPIService.selectDeviceInfoList(vo);
@@ -93,15 +91,13 @@ public class EgovDeviceiOSAPIController {
 	 * @param deviceiOSAPIVO - 조회할 정보가 담긴 DeviceiOSAPIVO
 	 * @param model
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="Device 세부정보 조회", notes="[iOS] Device 세부정보를 조회한다.", response=DeviceiOSAPIVO.class)
     @ApiImplicitParams({
         @ApiImplicitParam(name = "sn", value = "일련번호", required = true, dataType = "int", paramType = "query"),
     })
     @RequestMapping(value="/dvc/deviceInfo.do")
-    public ModelAndView selectDeviceInfo(DeviceiOSAPIVO vo, HttpServletRequest request)
-            throws Exception {
+    public ModelAndView selectDeviceInfo(DeviceiOSAPIVO vo, HttpServletRequest request) {
 
 		ModelAndView jsonView = new ModelAndView("jsonView");
 		DeviceiOSAPIVO deviceiOSAPIVO = egovDeviceiOSAPIService.selectDeviceInfo(vo);
@@ -120,15 +116,13 @@ public class EgovDeviceiOSAPIController {
 	 * @param searchVO - 등록할 정보가 담긴 DeviceiOSAPIVO
 	 * @param status
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="Device 세부정보 등록", notes="[iOS] Device 세부정보를 등록한다.\nresponseOK = {\"resultState\",\"OK\"}")
     @ApiImplicitParams({
         @ApiImplicitParam(name = "uuid", value = "기기식별코드", required = true, dataType = "string", paramType = "query"),
     })
     @RequestMapping("/dvc/addDeviceInfo.do")
-    public ModelAndView insertDeviceInfo(DeviceiOSAPIVO vo)
-    throws Exception {
+    public ModelAndView insertDeviceInfo(DeviceiOSAPIVO vo) {
     	
     	ModelAndView jsonView = new ModelAndView("jsonView");
     	
@@ -143,15 +137,13 @@ public class EgovDeviceiOSAPIController {
 	 * 디바이스 정보 목록을 삭제한다.
 	 * @param vo - 삭제할 정보가 담긴 DeviceiOSAPIVO
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="Device 세부정보 삭제", notes="[iOS] Device 세부정보를 삭제한다.\nresponseOK = {\"resultState\",\"OK\"}")
     @ApiImplicitParams({
     	@ApiImplicitParam(name = "sn", value = "일련번호", required = true, dataType = "int", paramType = "query"),
     })
     @RequestMapping("/dvc/deleteDeviceInfo.do")
-    public ModelAndView deleteDeviceInfo(DeviceiOSAPIVO vo, HttpServletRequest request)
-            throws Exception {
+    public ModelAndView deleteDeviceInfo(DeviceiOSAPIVO vo, HttpServletRequest request) {
 
     	DeviceiOSAPIVO deviceInfo = egovDeviceiOSAPIService.selectDeviceInfo(vo);
     	if (deviceInfo == null) {

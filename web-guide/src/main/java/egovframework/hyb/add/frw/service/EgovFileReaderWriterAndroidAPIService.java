@@ -27,57 +27,47 @@ public interface EgovFileReaderWriterAndroidAPIService {
      * 
      * @param fileVO
      *            - 파일 정보가 담긴 FileReaderWriterAndroidAPIVO
-     * @exception Exception
      */
-    public void insertFileInfo(FileReaderWriterAndroidAPIVO vo)
-            throws Exception;
+    public void insertFileInfo(FileReaderWriterAndroidAPIVO vo);
 
     /**
      * 업로드 된 파일의 상세 정보를 저장한다.
      * 
      * @param fileVO
      *            - 파일 정보가 담긴 FileReaderWriterAndroidAPIVO
-     * @exception Exception
      */
-    public void insertFileDetailInfo(FileReaderWriterAndroidAPIVO vo)
-            throws Exception;
+    public void insertFileDetailInfo(FileReaderWriterAndroidAPIVO vo);
 
     /**
      * 파일 정보리스트를 조회한다.
      * 
      * @param fileVO
      *            - 파일 정보가 담긴 FileReaderWriterAndroidAPIVO
-     * @exception Exception
      */
     public FileReaderWriterAndroidAPIVO selectFileInfo(
-            FileReaderWriterAndroidAPIVO vo) throws Exception;
+            FileReaderWriterAndroidAPIVO vo);
 
     /**
      * 파일 정보를 조회한다.
      * 
      * @param fileVO
      *            - 파일 정보가 담긴 FileReaderWriterAndroidAPIVO
-     * @exception Exception
      */
-    public List<?> selectFileInfoList(FileReaderWriterAndroidAPIVO vo)
-            throws Exception;
+    public List<?> selectFileInfoList(FileReaderWriterAndroidAPIVO vo);
 
     /**
      * 파일 정보를 삭제한다.
      * 
      * @param fileVO
      *            - 파일 정보가 담긴 FileReaderWriterAndroidAPIVO
-     * @exception Exception
      */
-    public int deleteFileInfo(FileReaderWriterAndroidAPIVO vo) throws Exception;
+    public int deleteFileInfo(FileReaderWriterAndroidAPIVO vo);
 
     /**
      * 파일 디테일 정보를 삭제한다.
      * 
      * @param fileVO
      *            - 파일 정보가 담긴 FileReaderWriterAndroidAPIVO
-     * @exception Exception
      */
-    public int deleteFileDetailInfo(FileReaderWriterAndroidAPIVO vo)
-            throws Exception;
+    public int deleteFileDetailInfo(FileReaderWriterAndroidAPIVO vo);
 }

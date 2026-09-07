@@ -70,13 +70,12 @@ public class EgovNetworkAndroidAPIController {
 	 * @param searchVO - 조회할 정보가 담긴 NetworkAPIDefaultVO
 	 * @param model
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="Network 정보 목록조회", notes="[iOS] Network 정보 목록을 조회한다.", response=NetworkAndroidAPIXmlVO.class, responseContainer="List")
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/nwk/networkAndroidInfoList.do")
 	public @ResponseBody
-	NetworkAndroidAPIXmlVO selectNetworkInfoList(@ModelAttribute("searchNetworkAndroidVO") NetworkAndroidAPIDefaultVO searchNetworkVO, ModelMap model) throws Exception {
+	NetworkAndroidAPIXmlVO selectNetworkInfoList(@ModelAttribute("searchNetworkAndroidVO") NetworkAndroidAPIDefaultVO searchNetworkVO, ModelMap model) {
 
 		List<NetworkAndroidAPIVO> networkInfoList = (List<NetworkAndroidAPIVO>) egovNetworkAndroidAPIService.selectNetworkInfoList(searchNetworkVO);
 
@@ -91,7 +90,6 @@ public class EgovNetworkAndroidAPIController {
 	 * @param searchVO - 조회할 정보가 담긴 NetworkAPIDefaultVO
 	 * @param model
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="Network 세부정보 조회", notes="[Android] Network 세부정보를 조회한다.")
     @ApiImplicitParams({
@@ -101,7 +99,7 @@ public class EgovNetworkAndroidAPIController {
 	public @ResponseBody
 	NetworkAndroidAPIXmlVO selectNetworkInfo(
 			NetworkAndroidAPIVO sampleNetworkVO,
-			BindingResult bindingResult, Model model, SessionStatus status) throws Exception {
+			BindingResult bindingResult, Model model, SessionStatus status) {
 
 		NetworkAndroidAPIVO networkInfo = egovNetworkAndroidAPIService.selectNetworkInfo(sampleNetworkVO);
 
@@ -116,7 +114,6 @@ public class EgovNetworkAndroidAPIController {
 	 * @param searchVO - 등록할 정보가 담긴 NetworkAPIDefaultVO
 	 * @param status
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="Network 세부정보 등록", notes="[Android] Network 세부정보를 등록한다.\nresponseOK = {\"successCode\",\"OK\"}")
     @ApiImplicitParams({
@@ -126,7 +123,7 @@ public class EgovNetworkAndroidAPIController {
 	@RequestMapping("/nwk/addNetworkAndroidInfo.do")
 	public @ResponseBody
 	NetworkAndroidAPIXmlVO insertNetworkInfo(NetworkAndroidAPIVO sampleNetworkVO,
-			BindingResult bindingResult, Model model, SessionStatus status) throws Exception {
+			BindingResult bindingResult, Model model, SessionStatus status) {
 
 		int success = egovNetworkAndroidAPIService.insertNetworkInfo(sampleNetworkVO);
 
@@ -150,7 +147,6 @@ public class EgovNetworkAndroidAPIController {
 	 * @param sampleVO - 삭제할 정보가 담긴 VO
 	 * @param status
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="Network 세부정보 삭제", notes="[Android] Network 세부정보를 삭제한다.\nresponseOK = {\"successCode\",\"OK\"}")
     @ApiImplicitParams({
@@ -158,8 +154,7 @@ public class EgovNetworkAndroidAPIController {
     })
 	@RequestMapping("/nwk/deleteNetworkAndroidInfo.do")
 	public @ResponseBody
-	NetworkAndroidAPIXmlVO deleteNetworkInfo(NetworkAndroidAPIVO sampleVO, SessionStatus status)
-			throws Exception {
+	NetworkAndroidAPIXmlVO deleteNetworkInfo(NetworkAndroidAPIVO sampleVO, SessionStatus status) {
 
 		int success = egovNetworkAndroidAPIService.deleteNetworkInfo(sampleVO);
 
@@ -183,11 +178,10 @@ public class EgovNetworkAndroidAPIController {
 	 * @param sampleVO - 삭제할 정보가 담긴 VO
 	 * @param status
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="Network MP3파일 다운로드", notes="[Android] MP3파일을 다운로드 받는다.\nglobals.properties설정파일에 \"fileStorePath\"로 정의한 설정경로에서 \"owlband.mp3\"파일을 다운로드 한다.")
 	@RequestMapping("/nwk/getMp3FileAndorid.do")
-	public void getMp3File(HttpServletResponse response) throws Exception {
+	public void getMp3File(HttpServletResponse response) {
 
 		String mp3FilePath = propertiesService.getString("fileStorePath");
 

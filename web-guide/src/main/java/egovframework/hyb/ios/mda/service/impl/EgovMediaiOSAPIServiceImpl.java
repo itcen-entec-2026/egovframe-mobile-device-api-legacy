@@ -22,12 +22,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 
-import egovframework.hyb.ios.mda.service.EgovMediaiOSAPIService;
-import egovframework.hyb.ios.mda.service.MediaiOSAPIFileVO;
-import egovframework.hyb.ios.mda.service.MediaiOSAPIVO;
-
-import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.sound.sampled.AudioInputStream;
@@ -35,6 +29,12 @@ import javax.sound.sampled.AudioInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import egovframework.hyb.ios.mda.service.EgovMediaiOSAPIService;
+import egovframework.hyb.ios.mda.service.MediaiOSAPIFileVO;
+import egovframework.hyb.ios.mda.service.MediaiOSAPIVO;
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.exception.BaseRuntimeException;
 
 /**  
  * @Class Name : EgovMediaiOSAPIServiceImpl.java
@@ -67,9 +67,8 @@ public class EgovMediaiOSAPIServiceImpl extends EgovAbstractServiceImpl implemen
 	 * 녹음 Media를 등록한다.
 	 * @param vo - 등록할 정보가 담긴 MediaiOSAPIVO
 	 * @return void형
-	 * @exception Exception
 	 */
-	public int insertMediaInfo(MediaiOSAPIVO vo, int fileSn) throws Exception {
+	public int insertMediaInfo(MediaiOSAPIVO vo, int fileSn) {
 		
 		MediaiOSAPIFileVO fileVO = new MediaiOSAPIFileVO();
 		fileVO.setUuid(vo.getUuid());
@@ -86,9 +85,8 @@ public class EgovMediaiOSAPIServiceImpl extends EgovAbstractServiceImpl implemen
 	 * 녹음 파일을 등록한다.
 	 * @param vo - 등록할 정보가 담긴 MediaiOSAPIFileVO
 	 * @return void형
-	 * @exception Exception
 	 */
-	public int insertMediaRecordFile(MediaiOSAPIFileVO vo) throws Exception {
+	public int insertMediaRecordFile(MediaiOSAPIFileVO vo) {
 		return mediaAPIDAO.insertMediaRecordFile(vo);
 	}
 	
@@ -96,10 +94,9 @@ public class EgovMediaiOSAPIServiceImpl extends EgovAbstractServiceImpl implemen
 	 * 미디어 정보를 조회한다.
 	 * @param VO - 조회할 정보가 담긴 MediaiOSAPIVO
 	 * @return 조회 목록
-	 * @exception Exception
 	 */
 		
-	public MediaiOSAPIFileVO selectMediaInfoDetail(MediaiOSAPIVO vo) throws Exception {
+	public MediaiOSAPIFileVO selectMediaInfoDetail(MediaiOSAPIVO vo) {
 		mediaAPIDAO.updateMediaInfoRevivCo(vo);
 		return mediaAPIDAO.selectMediaInfoDetail(vo);
 	}
@@ -108,9 +105,8 @@ public class EgovMediaiOSAPIServiceImpl extends EgovAbstractServiceImpl implemen
 	 * 미디어 목록을 조회한다.
 	 * @param VO - 조회할 정보가 담긴 MediaiOSAPIDefaultVO
 	 * @return 조회 목록
-	 * @exception Exception
 	 */
-	public List<?> selectMediaInfoList(MediaiOSAPIVO vo) throws Exception {
+	public List<?> selectMediaInfoList(MediaiOSAPIVO vo) {
 		
 		return mediaAPIDAO.selectMediaInfoList(vo);
 	}
@@ -120,9 +116,8 @@ public class EgovMediaiOSAPIServiceImpl extends EgovAbstractServiceImpl implemen
 	 * 미디어 파일을 조회한다.
 	 * @param VO - 조회할 정보가 담긴 MediaiOSAPIFileVO
 	 * @return 파일 정보
-	 * @exception Exception
 	 */
-	public boolean selectMediaFileInf(HttpServletResponse response, MediaiOSAPIFileVO vo) throws Exception {
+	public boolean selectMediaFileInf(HttpServletResponse response, MediaiOSAPIFileVO vo) {
 		File file = null;
 		FileInputStream fis = null;
 	
@@ -130,7 +125,11 @@ public class EgovMediaiOSAPIServiceImpl extends EgovAbstractServiceImpl implemen
 		ByteArrayOutputStream bStream = null;
 		MediaiOSAPIFileVO fileVO = mediaAPIDAO.selectMediaFileInfo(vo);
 		if (fileVO == null) {
-			response.sendError(HttpServletResponse.SC_FORBIDDEN, "File access denied.");
+			try {
+				response.sendError(HttpServletResponse.SC_FORBIDDEN, "File access denied.");
+			} catch (IOException e) {
+				throw new BaseRuntimeException(e);
+			}
 			return false;
 		}
 
@@ -210,11 +209,8 @@ public class EgovMediaiOSAPIServiceImpl extends EgovAbstractServiceImpl implemen
 		    out.write(byteOutputStream.toByteArray());
 		    */
 		//2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 207-207
-		}catch(NullPointerException e){
+		}catch(IOException e){
 			LOGGER.error("[IOException] Try/Catch...IOException : " + e.getMessage());
-			errorFlag = false;
-		}catch(Exception e) {
-			LOGGER.error("["+e.getClass()+"] Try/Catch... : " + e.getMessage());
 			errorFlag = false;
 		} finally {
 			if (bStream != null) {
@@ -223,9 +219,6 @@ public class EgovMediaiOSAPIServiceImpl extends EgovAbstractServiceImpl implemen
 				//2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 214-214
 				}catch(IOException e){
 					LOGGER.error("[IOException] Try/Catch...IOException : " + e.getMessage());
-					errorFlag = false;
-				} catch (Exception e) {
-					LOGGER.error("["+e.getClass()+"] Try/Catch... : " + e.getMessage());
 					errorFlag = false;
 				}
 			}
@@ -236,9 +229,6 @@ public class EgovMediaiOSAPIServiceImpl extends EgovAbstractServiceImpl implemen
 				}catch(IOException e){
 					LOGGER.error("[IOException] Try/Catch...IOException : " + e.getMessage());
 					errorFlag = false;
-				} catch (Exception e) {
-					LOGGER.error("["+e.getClass()+"] Try/Catch... : " + e.getMessage());
-					errorFlag = false;
 				}
 			}
 			if (fis != null) {
@@ -247,9 +237,6 @@ public class EgovMediaiOSAPIServiceImpl extends EgovAbstractServiceImpl implemen
 				//2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 230-230
 				}catch(IOException e){
 					LOGGER.error("[IOException] Try/Catch...IOException : " + e.getMessage());
-					errorFlag = false;
-				} catch (Exception e) {
-					LOGGER.error("["+e.getClass()+"] Try/Catch... : " + e.getMessage());
 					errorFlag = false;
 				}
 			}

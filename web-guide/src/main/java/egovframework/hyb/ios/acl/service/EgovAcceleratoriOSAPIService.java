@@ -39,47 +39,41 @@ public interface EgovAcceleratoriOSAPIService {
 	 * 가속도 정보를 등록한다.
 	 * @param vo - 등록할 정보가 담긴 AcceleratoriOSAPIVO
 	 * @return 등록 결과
-	 * @exception Exception
 	 */
-    int insertAcceleratorInfo(AcceleratoriOSAPIVO vo) throws Exception;
+    int insertAcceleratorInfo(AcceleratoriOSAPIVO vo);
     
     /**
 	 * 가속도 정보를 수정한다.
 	 * @param vo - 수정할 정보가 담긴 AcceleratoriOSAPIVO
 	 * @return void형
-	 * @exception Exception
 	 */
-    void updateAcceleratorInfo(AcceleratoriOSAPIVO vo) throws Exception;
+    void updateAcceleratorInfo(AcceleratoriOSAPIVO vo);
     
     /**
 	 * 가속도 정보를 삭제한다.
 	 * @param vo - 삭제할 정보가 담긴 AcceleratoriOSAPIVO
 	 * @return 등록 결과 
-	 * @exception Exception
 	 */
-    int deleteAcceleratorInfo(AcceleratoriOSAPIVO vo) throws Exception;
+    int deleteAcceleratorInfo(AcceleratoriOSAPIVO vo);
     
     /**
 	 * 가속도 정보를 조회한다.
 	 * @param vo - 조회할 정보가 담긴 AcceleratoriOSAPIVO
 	 * @return 조회한 가속도 정보
-	 * @exception Exception
 	 */
-    AcceleratoriOSAPIVO selectAcceleratorInfo(AcceleratoriOSAPIVO vo) throws Exception;
+    AcceleratoriOSAPIVO selectAcceleratorInfo(AcceleratoriOSAPIVO vo);
     
     /**
 	 * 가속도 정보 목록을 조회한다.
 	 * @param VO - 조회할 정보가 담긴 AcceleratoriOSAPIDefaultVO
 	 * @return 가속도 정보 목록
-	 * @exception Exception
 	 */
-    List<?> selectAcceleratorInfoList(AcceleratoriOSAPIDefaultVO searchVO) throws Exception;
+    List<?> selectAcceleratorInfoList(AcceleratoriOSAPIDefaultVO searchVO);
     
     /**
 	 * 가속도 정보 총 갯수를 조회한다.
 	 * @param VO - 조회할 정보가 담긴 AcceleratoriOSAPIDefaultVO
 	 * @return 가속도 정보 총 갯수
-	 * @exception
 	 */
     int selectAcceleratorInfoListTotCnt(AcceleratoriOSAPIDefaultVO searchVO);
     

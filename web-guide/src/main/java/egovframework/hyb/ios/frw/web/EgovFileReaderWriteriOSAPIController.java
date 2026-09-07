@@ -1,5 +1,6 @@
 package egovframework.hyb.ios.frw.web;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -18,6 +19,7 @@ import egovframework.com.cmm.security.DeviceAPIAuthSupport;
 import egovframework.hyb.ios.frw.service.EgovFileReaderWriteriOSAPIService;
 import egovframework.hyb.ios.frw.service.FileReaderWriteriOSAPIVO;
 import egovframework.hyb.ios.frw.service.impl.EgovFileMngiOSUtil;
+import egovframework.rte.fdl.cmmn.exception.BaseRuntimeException;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -55,14 +57,13 @@ public class EgovFileReaderWriteriOSAPIController {
 	 * 파일  정보 목록을 조회한다.
 	 * @param fileVO - 조회할 정보가 담긴 FileReaderWriteriOSAPIVO 
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="파일 정보 목록조회", notes="[iOS] 파일 정보 목록을 조회한다.", response=FileReaderWriteriOSAPIVO.class, responseContainer="List")
     @ApiImplicitParams({
     	@ApiImplicitParam(name = "uuid", value = "기기식별코드", required = true, dataType = "string", paramType = "query"),
     })
 	@RequestMapping("/frw/fileInfoList.do")
-	public ModelAndView selectFileInfoList(FileReaderWriteriOSAPIVO fileVO) throws Exception{
+	public ModelAndView selectFileInfoList(FileReaderWriteriOSAPIVO fileVO) {
 		ModelAndView jsonView = new ModelAndView("jsonView");
 		List<?> fileInfoList = egovFileReaderWriteriOSAPIService.selectFileInfoList(fileVO);
 		
@@ -76,7 +77,6 @@ public class EgovFileReaderWriteriOSAPIController {
 	 * 파일  정보  삭제를 요청 한다.
 	 * @param fileVO - 삭제할 정보가 담긴 FileReaderWriteriOSAPIVO 
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="파일 정보 삭제", notes="[iOS] 파일 정보를 삭제한다.responseOK = {\"resultState\",\"OK\"}")
     @ApiImplicitParams({
@@ -84,7 +84,7 @@ public class EgovFileReaderWriteriOSAPIController {
     	@ApiImplicitParam(name = "fileSn", value = "파일연번", required = true, dataType = "int", paramType = "query"),
     })
 	@RequestMapping("/frw/deleteFile.do")
-	public ModelAndView deleteFile(FileReaderWriteriOSAPIVO fileVO, HttpServletRequest request) throws Exception{
+	public ModelAndView deleteFile(FileReaderWriteriOSAPIVO fileVO, HttpServletRequest request) {
 
 		fileVO.setUuid(DeviceAPIAuthSupport.resolveDeviceUuid(request, fileVO.getUuid()));
 		FileReaderWriteriOSAPIVO fileReaderWriteriOSAPIVO = egovFileReaderWriteriOSAPIService.selectFileInfo(fileVO);
@@ -111,7 +111,6 @@ public class EgovFileReaderWriteriOSAPIController {
 	 * @param file -  MultipartFile 
 	 * @param fileVO - 저장할 정보가 담긴 FileReaderWriteriOSAPIVO 
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="파일 서버로 전송하여 등록", notes="[iOS] 파일 서버로 전송하여 등록한다.\nresponseOK = \"ok\"")
     @ApiImplicitParams({
@@ -119,7 +118,7 @@ public class EgovFileReaderWriteriOSAPIController {
         @ApiImplicitParam(name = "file", value = "이미지파일", required = true, dataType = "__file", paramType = "form"),
     })
 	@RequestMapping(value="/frw/fileUpload.do", method=RequestMethod.POST)
-	public @ResponseBody String fileUpload(@RequestParam("file") MultipartFile file, FileReaderWriteriOSAPIVO fileVO, HttpServletRequest request) throws Exception{
+	public @ResponseBody String fileUpload(@RequestParam("file") MultipartFile file, FileReaderWriteriOSAPIVO fileVO, HttpServletRequest request) {
 		
 		String result = "";
 		if (!file.isEmpty()) {
@@ -147,7 +146,6 @@ public class EgovFileReaderWriteriOSAPIController {
 	 * @param response - HttpServletResponse 
 	 * @param fileVO - 전송할 파일 정보가 담긴 FileReaderWriteriOSAPIVO 
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="파일 다운로드", notes="[iOS] 파일 다운로드 한다.")
     @ApiImplicitParams({
@@ -155,12 +153,16 @@ public class EgovFileReaderWriteriOSAPIController {
     	@ApiImplicitParam(name = "fileSn", value = "파일연번", required = true, dataType = "int", paramType = "query"),
     })
 	@RequestMapping("/frw/fileDownload.do")
-	public void fileDownload(HttpServletRequest request, HttpServletResponse response, FileReaderWriteriOSAPIVO fileVO) throws Exception{
+	public void fileDownload(HttpServletRequest request, HttpServletResponse response, FileReaderWriteriOSAPIVO fileVO) {
 
 		fileVO.setUuid(DeviceAPIAuthSupport.resolveDeviceUuid(request, fileVO.getUuid()));
 		FileReaderWriteriOSAPIVO fileReaderWriteriOSAPIVO = egovFileReaderWriteriOSAPIService.selectFileInfo(fileVO);
 		if (fileReaderWriteriOSAPIVO == null) {
-			response.sendError(HttpServletResponse.SC_FORBIDDEN, "File access denied.");
+			try {
+				response.sendError(HttpServletResponse.SC_FORBIDDEN, "File access denied.");
+			} catch (IOException e) {
+				throw new BaseRuntimeException(e);
+			}
 			return;
 		}
 		egovFileMngUtil.fileDownload(request, response, fileReaderWriteriOSAPIVO);

@@ -38,16 +38,14 @@ public interface EgovVibratorAndroidAPIService {
      * 알람 정보를 등록한다.
      * @param vo - 등록할 정보가 담긴 VibratorAPIVO
      * @return 등록 결과
-     * @exception Exception
      */
-    int insertVibrator(VibratorAndroidAPIXmlVO vo) throws Exception;
+    int insertVibrator(VibratorAndroidAPIXmlVO vo);
  
     
     /**
      * 알람 정보 목록을 조회한다.
      * @param VO - 조회할 정보가 담긴 VibratorAPIVO
      * @return 네트워크 정보 목록
-     * @exception Exception
      */
-    List<?> selectVibratorList(VibratorAndroidAPIDefaultVO searchVO) throws Exception;
+    List<?> selectVibratorList(VibratorAndroidAPIDefaultVO searchVO);
 }

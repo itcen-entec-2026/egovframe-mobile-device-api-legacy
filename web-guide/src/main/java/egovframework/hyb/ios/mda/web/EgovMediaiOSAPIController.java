@@ -75,11 +75,9 @@ public class EgovMediaiOSAPIController {
     /**
 	 * 어플리케이션 실행 시, 서버 설정
 	 * @return boolean
-	 * @exception Exception
 	 */
     @RequestMapping("/mda/htmlLoadiOS.do")
-	public @ResponseBody MediaiOSAPIXmlVO htmlLoad(SessionStatus status) 
-    throws Exception{
+	public @ResponseBody MediaiOSAPIXmlVO htmlLoad(SessionStatus status) {
 		
     	MediaiOSAPIXmlVO mediaiOSAPIXmlVO = new MediaiOSAPIXmlVO();
     	
@@ -95,11 +93,10 @@ public class EgovMediaiOSAPIController {
 	 * @param file - 녹음 파일 정보가 담긴 MultipartFile
 	 * @param fileVO - 등록 정보가 담긴 CameraiOSAPIVO
 	 * @return boolean
-	 * @exception Exception
 	 */
     @RequestMapping("/mda/mediaiOSRecordUpload.do")
 	public @ResponseBody boolean fileUpload(@RequestParam("file") MultipartFile file, MediaiOSAPIVO vo, 
-			HttpServletRequest request) throws Exception{
+			HttpServletRequest request) {
 		
 		if (!file.isEmpty()) {
 			
@@ -118,14 +115,13 @@ public class EgovMediaiOSAPIController {
 	 * 미디어 정보를 조회한다.
 	 * @param VO - 조회할 정보가 담긴 MediaiOSAPIVO
 	 * @return 조회 목록
-	 * @exception Exception
 	 */
     @ApiOperation(value="Media 세부정보 조회", notes="[iOS] Media 세부정보를 조회한다.")
     @ApiImplicitParams({
         @ApiImplicitParam(name = "sn", value = "일련번호", required = true, dataType = "int", paramType = "query"),
     })
     @RequestMapping("/mda/mediaiOSInfoDetail.do")
-	public @ResponseBody MediaiOSAPIXmlVO selectMediaInfoDetail(MediaiOSAPIVO vo) throws Exception {
+	public @ResponseBody MediaiOSAPIXmlVO selectMediaInfoDetail(MediaiOSAPIVO vo) {
 		
     	MediaiOSAPIFileVO mediaInfo = egovMediaiOSAPIService.selectMediaInfoDetail(vo);
     	
@@ -140,7 +136,6 @@ public class EgovMediaiOSAPIController {
 	 * 미디어 목록을 조회한다.
 	 * @param VO - 조회할 정보가 담긴 MediaiOSAPIVO
 	 * @return 조회 목록
-	 * @exception Exception
 	 */
     @ApiOperation(value="Media 정보 목록조회", notes="[iOS] Media 정보 목록을 조회한다.")
     @ApiImplicitParams({
@@ -148,7 +143,7 @@ public class EgovMediaiOSAPIController {
     })
     @SuppressWarnings("unchecked")
 	@RequestMapping("/mda/mediaiOSInfoList.do")
-	public @ResponseBody MediaiOSAPIXmlVO selectMediaInfoList(MediaiOSAPIVO vo) throws Exception {
+	public @ResponseBody MediaiOSAPIXmlVO selectMediaInfoList(MediaiOSAPIVO vo) {
 		
     	List<MediaiOSAPIVO> mediaList = (List<MediaiOSAPIVO>) egovMediaiOSAPIService.selectMediaInfoList(vo);
     	
@@ -165,7 +160,6 @@ public class EgovMediaiOSAPIController {
 	 * @param model
 	 * @param response
 	 * @return jsonView
-	 * @exception Exception
 	 */
     @ApiOperation(value="Media 파일 다운로드", notes="[iOS] Media 파일을 다운로드 한다.")
     @ApiImplicitParams({
@@ -174,7 +168,7 @@ public class EgovMediaiOSAPIController {
     @RequestMapping("/mda/getMediaiOS.do")
     public void getSoundFile(@RequestParam("sn") String sn,
             @RequestParam(value = "uuid", required = false) String uuid,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+            HttpServletRequest request, HttpServletResponse response) {
     	if(sn != null && !"".equals(sn)) {
     		MediaiOSAPIFileVO vo = new MediaiOSAPIFileVO();
 			vo.setSn(Integer.parseInt(sn));

@@ -40,45 +40,40 @@ public class EgovFileReaderWriteriOSAPIServiceImpl extends EgovAbstractServiceIm
 	/**
 	 * 파일  정보를 입력한다.
 	 * @param fileVO - 파일 정보가 담긴 FileReaderWriteriOSAPIVO 
-	 * @exception Exception
 	 */
-	public void insertFileInfo(FileReaderWriteriOSAPIVO vo) throws Exception {		
+	public void insertFileInfo(FileReaderWriteriOSAPIVO vo) {		
 		fileReaderWriterAPIDAO.insertFileInfo(vo);
 	}
 	
 	/**
 	 * 업로드 된 파일의 상세 정보를 저장한다.
 	 * @param fileVO - 파일 정보가 담긴 FileReaderWriteriOSAPIVO 
-	 * @exception Exception
 	 */
-	public void insertFileDetailInfo(FileReaderWriteriOSAPIVO vo) throws Exception {		
+	public void insertFileDetailInfo(FileReaderWriteriOSAPIVO vo) {		
 		fileReaderWriterAPIDAO.insertFileDetailInfo(vo);
 	}
 	
 	/**
 	 * 파일 정보리스트를 조회한다.
 	 * @param fileVO - 파일 정보가 담긴 FileReaderWriteriOSAPIVO 
-	 * @exception Exception
 	 */
-	public List<?> selectFileInfoList(FileReaderWriteriOSAPIVO vo) throws Exception {
+	public List<?> selectFileInfoList(FileReaderWriteriOSAPIVO vo) {
 		return fileReaderWriterAPIDAO.selectFileInfoList(vo);	
 	}
 	
 	/**
 	 * 파일 정보를 조회한다.
 	 * @param fileVO - 파일 정보가 담긴 FileReaderWriteriOSAPIVO 
-	 * @exception Exception
 	 */
-	public FileReaderWriteriOSAPIVO selectFileInfo(FileReaderWriteriOSAPIVO vo)throws Exception {
+	public FileReaderWriteriOSAPIVO selectFileInfo(FileReaderWriteriOSAPIVO vo) {
 		return fileReaderWriterAPIDAO.selectFileInfo(vo);
 	}
 	
 	/**
 	 * 파일 정보를 삭제한다.
 	 * @param fileVO - 파일 정보가 담긴 FileReaderWriteriOSAPIVO 
-	 * @exception Exception
 	 */
-	public void deleteFileInfo(FileReaderWriteriOSAPIVO vo) throws Exception {
+	public void deleteFileInfo(FileReaderWriteriOSAPIVO vo) {
 		fileReaderWriterAPIDAO.deleteFileInfo(vo);		
 	}
 	
@@ -86,9 +81,8 @@ public class EgovFileReaderWriteriOSAPIServiceImpl extends EgovAbstractServiceIm
 	/**
 	 * 파일 디테일 정보를 삭제한다.
 	 * @param fileVO - 파일 정보가 담긴 FileReaderWriteriOSAPIVO 
-	 * @exception Exception
 	 */
-	public void deleteFileDetailInfo(FileReaderWriteriOSAPIVO vo) throws Exception {
+	public void deleteFileDetailInfo(FileReaderWriteriOSAPIVO vo) {
 		fileReaderWriterAPIDAO.deleteFileDetailInfo(vo);		
 	}
 	

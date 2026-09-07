@@ -17,17 +17,17 @@ package egovframework.hyb.ios.acl.service.imp;
 
 import java.util.List;
 
-import egovframework.hyb.ios.acl.service.AcceleratoriOSAPIDefaultVO;
-import egovframework.hyb.ios.acl.service.AcceleratoriOSAPIVO;
-import egovframework.hyb.ios.acl.service.EgovAcceleratoriOSAPIService;
-
-import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
-
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import egovframework.hyb.ios.acl.service.AcceleratoriOSAPIDefaultVO;
+import egovframework.hyb.ios.acl.service.AcceleratoriOSAPIVO;
+import egovframework.hyb.ios.acl.service.EgovAcceleratoriOSAPIService;
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.exception.BaseRuntimeException;
 
 /**  
  * @Class Name : EgovAcceleratorAPIServiceImpl.java
@@ -59,9 +59,8 @@ public class EgovAcceleratoriOSAPIServiceImpl extends EgovAbstractServiceImpl im
 	 * 가속도 정보를 등록한다.
 	 * @param vo - 등록할 정보가 담긴 AcceleratoriOSAPIVO
 	 * @return 등록 결과
-	 * @exception Exception
 	 */
-    public int insertAcceleratorInfo(AcceleratoriOSAPIVO vo) throws Exception {
+    public int insertAcceleratorInfo(AcceleratoriOSAPIVO vo) {
     	LOGGER.debug(vo.toString());
     	
     	return acceleratoriOSAPIDAO.insertAcceleratorInfo(vo);    	
@@ -71,9 +70,8 @@ public class EgovAcceleratoriOSAPIServiceImpl extends EgovAbstractServiceImpl im
 	 * 가속도 정보를 수정한다.
 	 * @param vo - 수정할 정보가 담긴 AcceleratoriOSAPIVO
 	 * @return void형
-	 * @exception Exception
 	 */
-    public void updateAcceleratorInfo(AcceleratoriOSAPIVO vo) throws Exception {
+    public void updateAcceleratorInfo(AcceleratoriOSAPIVO vo) {
     	acceleratoriOSAPIDAO.updateAcceleratorInfo(vo);
     }
 
@@ -81,9 +79,8 @@ public class EgovAcceleratoriOSAPIServiceImpl extends EgovAbstractServiceImpl im
 	 * 가속도 정보를 삭제한다.
 	 * @param vo - 삭제할 정보가 담긴 AcceleratoriOSAPIVO
 	 * @return void형 
-	 * @exception Exception
 	 */
-    public int deleteAcceleratorInfo(AcceleratoriOSAPIVO vo) throws Exception {
+    public int deleteAcceleratorInfo(AcceleratoriOSAPIVO vo) {
     	return acceleratoriOSAPIDAO.deleteAcceleratorInfo(vo);
     }
 
@@ -91,12 +88,12 @@ public class EgovAcceleratoriOSAPIServiceImpl extends EgovAbstractServiceImpl im
 	 * 가속도 정보를 조회한다.
 	 * @param vo - 조회할 정보가 담긴 AcceleratoriOSAPIVO
 	 * @return 조회한 가속도 정보
-	 * @exception Exception
 	 */
-    public AcceleratoriOSAPIVO selectAcceleratorInfo(AcceleratoriOSAPIVO vo) throws Exception {
+    public AcceleratoriOSAPIVO selectAcceleratorInfo(AcceleratoriOSAPIVO vo) {
     	AcceleratoriOSAPIVO resultVO = acceleratoriOSAPIDAO.selectAcceleratorInfo(vo);
-        if (resultVO == null)
-            throw processException("info.nodata.msg");
+        if (resultVO == null) {
+            throw new BaseRuntimeException(processException("info.nodata.msg"));
+        }
         return resultVO;
     }
 
@@ -104,9 +101,8 @@ public class EgovAcceleratoriOSAPIServiceImpl extends EgovAbstractServiceImpl im
 	 * 가속도 정보 목록을 조회한다.
 	 * @param VO - 조회할 정보가 담긴 AcceleratoriOSAPIDefaultVO
 	 * @return 가속도 정보 목록
-	 * @exception Exception
 	 */
-    public List<?> selectAcceleratorInfoList(AcceleratoriOSAPIDefaultVO searchVO) throws Exception {
+    public List<?> selectAcceleratorInfoList(AcceleratoriOSAPIDefaultVO searchVO) {
         return acceleratoriOSAPIDAO.selectAcceleratorInfoList(searchVO);
     }
 
@@ -114,7 +110,6 @@ public class EgovAcceleratoriOSAPIServiceImpl extends EgovAbstractServiceImpl im
 	 * 가속도 정보 총 갯수를 조회한다.
 	 * @param VO - 조회할 정보가 담긴 AcceleratoriOSAPIDefaultVO
 	 * @return 가속도 정보 총 갯수
-	 * @exception
 	 */
     public int selectAcceleratorInfoListTotCnt(AcceleratoriOSAPIDefaultVO searchVO) {
 		return acceleratoriOSAPIDAO.selectAcceleratorInfoListTotCnt(searchVO);

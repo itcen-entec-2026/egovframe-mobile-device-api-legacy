@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import egovframework.rte.fdl.cmmn.exception.BaseRuntimeException;
 import egovframework.rte.fdl.cmmn.exception.EgovBizException;
 
 public final class DeviceAPIFileUploadValidator {
@@ -34,55 +35,54 @@ public final class DeviceAPIFileUploadValidator {
     private DeviceAPIFileUploadValidator() {
     }
 
-    public static void validateFrwUpload(MultipartFile file) throws EgovBizException {
+    public static void validateFrwUpload(MultipartFile file) {
         validateUpload(file, FRW_EXTENSIONS, "frw");
     }
 
-    public static void validateCmrUpload(MultipartFile file) throws EgovBizException {
+    public static void validateCmrUpload(MultipartFile file) {
         validateUpload(file, CMR_EXTENSIONS, "cmr");
     }
 
-    public static void validateMdaUpload(MultipartFile file) throws EgovBizException {
+    public static void validateMdaUpload(MultipartFile file) {
         validateUpload(file, MDA_EXTENSIONS, "mda");
     }
 
-    public static void assertSafeStoredFileName(String storedFileName) throws EgovBizException {
+    public static void assertSafeStoredFileName(String storedFileName) {
         if (storedFileName == null || storedFileName.trim().isEmpty()) {
-            throw new EgovBizException("Stored file name is invalid.");
+            throw new BaseRuntimeException("Stored file name is invalid.");
         }
         String trimmed = storedFileName.trim();
         if (trimmed.contains("..") || trimmed.contains("/") || trimmed.contains("\\") || trimmed.contains("\0")) {
-            throw new EgovBizException("Stored file name is invalid.");
+            throw new BaseRuntimeException("Stored file name is invalid.");
         }
     }
 
-    private static void validateUpload(MultipartFile file, Set<String> allowedExtensions, String module)
-            throws EgovBizException {
+    private static void validateUpload(MultipartFile file, Set<String> allowedExtensions, String module) {
         if (file == null || file.isEmpty()) {
-            throw new EgovBizException("Upload file is empty.");
+            throw new BaseRuntimeException("Upload file is empty.");
         }
         if (file.getSize() > MAX_FILE_SIZE_BYTES) {
-            throw new EgovBizException("Upload file exceeds allowed size.");
+            throw new BaseRuntimeException("Upload file exceeds allowed size.");
         }
 
         String originalFilename = file.getOriginalFilename();
         if (originalFilename == null || originalFilename.trim().isEmpty()) {
-            throw new EgovBizException("Upload file name is missing.");
+            throw new BaseRuntimeException("Upload file name is missing.");
         }
         if (originalFilename.contains("..") || originalFilename.contains("/") || originalFilename.contains("\\")) {
-            throw new EgovBizException("Upload file name is invalid.");
+            throw new BaseRuntimeException("Upload file name is invalid.");
         }
 
         String extension = extractExtension(originalFilename);
         if (!allowedExtensions.contains(extension)) {
-            throw new EgovBizException("Upload file extension is not allowed for " + module + ".");
+            throw new BaseRuntimeException("Upload file extension is not allowed for " + module + ".");
         }
 
         validateContentType(file);
         validateMagicBytes(file, extension);
     }
 
-    private static void validateContentType(MultipartFile file) throws EgovBizException {
+    private static void validateContentType(MultipartFile file) {
         String contentType = file.getContentType();
         if (contentType == null || contentType.trim().isEmpty()) {
             return;
@@ -93,11 +93,11 @@ public final class DeviceAPIFileUploadValidator {
             return;
         }
         if (DANGEROUS_CONTENT_TYPES.contains(normalized)) {
-            throw new EgovBizException("Upload content type is not allowed.");
+            throw new BaseRuntimeException("Upload content type is not allowed.");
         }
     }
 
-    private static void validateMagicBytes(MultipartFile file, String extension) throws EgovBizException {
+    private static void validateMagicBytes(MultipartFile file, String extension) {
         try {
             byte[] header = readHeader(file, HEADER_READ_SIZE);
             rejectDangerousContent(header);
@@ -106,25 +106,25 @@ public final class DeviceAPIFileUploadValidator {
                 return;
             }
             if (!matchesAllowedSignature(extension, header)) {
-                throw new EgovBizException("Upload file content does not match the declared extension.");
+                throw new BaseRuntimeException("Upload file content does not match the declared extension.");
             }
         } catch (IOException e) {
-            throw new EgovBizException("Unable to inspect upload file content.");
+            throw new BaseRuntimeException("Unable to inspect upload file content.", e);
         }
     }
 
-    private static void rejectDangerousContent(byte[] header) throws EgovBizException {
+    private static void rejectDangerousContent(byte[] header) {
         if (header.length >= 2 && header[0] == 'M' && header[1] == 'Z') {
-            throw new EgovBizException("Executable upload is not allowed.");
+            throw new BaseRuntimeException("Executable upload is not allowed.");
         }
         if (header.length >= 4 && header[0] == 0x7f && header[1] == 'E' && header[2] == 'L' && header[3] == 'F') {
-            throw new EgovBizException("Executable upload is not allowed.");
+            throw new BaseRuntimeException("Executable upload is not allowed.");
         }
 
         String prefix = new String(header, 0, Math.min(header.length, 12), StandardCharsets.US_ASCII)
                 .toLowerCase(Locale.ENGLISH);
         if (prefix.contains("<?php") || prefix.contains("<%@") || prefix.startsWith("#!/")) {
-            throw new EgovBizException("Script upload is not allowed.");
+            throw new BaseRuntimeException("Script upload is not allowed.");
         }
     }
 
@@ -226,7 +226,7 @@ public final class DeviceAPIFileUploadValidator {
                 try {
                     input.close();
                 } catch (IOException ignore) {
-                    // ignore close failure while inspecting upload header
+                	throw new BaseRuntimeException(ignore);
                 }
             }
         }

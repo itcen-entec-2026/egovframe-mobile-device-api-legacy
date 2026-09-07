@@ -43,9 +43,8 @@ public interface EgovGPSiOSAPIService {
      * @param vo
      *            - 등록할 정보가 담긴 GPSAPIVO
      * @return 등록 결과
-     * @exception Exception
      */
-    void insertGPSInfo(GPSiOSAPIVO vo) throws Exception;
+    void insertGPSInfo(GPSiOSAPIVO vo);
 
     /**
      * gps 정보를 삭제한다.
@@ -53,9 +52,8 @@ public interface EgovGPSiOSAPIService {
      * @param vo
      *            - 삭제할 정보가 담긴 GPSAPIVO
      * @return void형
-     * @exception Exception
      */
-    void deleteGPSInfo(GPSiOSAPIVO vo) throws Exception;
+    void deleteGPSInfo(GPSiOSAPIVO vo);
 
     /**
      * gps 정보 목록을 조회한다.
@@ -63,9 +61,8 @@ public interface EgovGPSiOSAPIService {
      * @param VO
      *            - 조회할 정보가 담긴 GPSAPIVO
      * @return gps 정보 목록
-     * @exception Exception
      */
-    List<?> selectGPSInfoList(GPSiOSAPIDefaultVO searchVO) throws Exception;
+    List<?> selectGPSInfoList(GPSiOSAPIDefaultVO searchVO);
 
     /**
      * gps 정보 총 갯수를 조회한다.
@@ -73,7 +70,6 @@ public interface EgovGPSiOSAPIService {
      * @param VO
      *            - 조회할 정보가 담긴 GPSAPIDefaultVO
      * @return gps 정보 총 갯수
-     * @exception
      */
     int selectGPSInfoListTotCnt(GPSiOSAPIDefaultVO searchVO);
 

@@ -69,13 +69,12 @@ public class EgovVibratorAndroidAPIController {
 	 * @param searchVO - 조회할 정보가 담긴 VibratorAPIDefaultVO
 	 * @param model
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="Vibrator 알림설정 정보 목록조회", notes="[Android] Vibrator 알림설정 정보 목록을 조회한다.", response=VibratorAndroidAPIVO.class, responseContainer="List")
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/vbr/VibratorAndroidInfoList.do")
 	public @ResponseBody
-	VibratorAndroidAPIXmlVO selectVibratorInfoList(@ModelAttribute("searchVibratorVO") VibratorAndroidAPIDefaultVO searchVO, ModelMap model) throws Exception {
+	VibratorAndroidAPIXmlVO selectVibratorInfoList(@ModelAttribute("searchVibratorVO") VibratorAndroidAPIDefaultVO searchVO, ModelMap model) {
 
 		List<VibratorAndroidAPIVO> vibratorInfoList = (List<VibratorAndroidAPIVO>) egovVibratorAndroidAPIService.selectVibratorList(searchVO);
 
@@ -90,7 +89,6 @@ public class EgovVibratorAndroidAPIController {
 	 * @param searchVO - 등록할 정보가 담긴 VibratorAPIDefaultVO
 	 * @param status
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="Vibrator 알림설정 정보 등록", notes="[Android] Vibrator 알림설정 정보를 등록한다.\nresponseOK = {\"message\",\"OK\"}")
     @ApiImplicitParams({
@@ -100,7 +98,7 @@ public class EgovVibratorAndroidAPIController {
 	public @ResponseBody
 	VibratorAndroidAPIXmlVO insertVibratorInfo(
 			VibratorAndroidAPIXmlVO vibratorVO,
-			BindingResult bindingResult, Model model, SessionStatus status) throws Exception {
+			BindingResult bindingResult, Model model, SessionStatus status) {
 
 		VibratorAndroidAPIXmlVO xmlVO = new VibratorAndroidAPIXmlVO();
 

@@ -72,7 +72,6 @@ public class EgovPushDeviceAPIController {
 	 * @param searchVO - 조회할 정보가 담긴 PushDeviceAPIDefaultVO
 	 * @param model
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value = "Push Notification 정보 목록조회", notes = "Push Notification 정보 목록을 조회한다.", response = PushDeviceAPIVO.class, responseContainer = "List")
     @ApiImplicitParams({
@@ -80,7 +79,7 @@ public class EgovPushDeviceAPIController {
     })
     @RequestMapping(value = "/pus/pushDeviceInfoList.do")
     public ModelAndView selectVibratorInfoList(@ModelAttribute("searchVO") PushDeviceAPIDefaultVO searchVO,
-            HttpServletRequest request, ModelMap model) throws Exception {
+            HttpServletRequest request, ModelMap model) {
 
         DeviceAPIAuthSupport.ensureDeviceAccess(request);
         searchVO.setUuid(DeviceAPIAuthSupport.resolveDeviceUuid(request, searchVO.getUuid()));
@@ -99,7 +98,6 @@ public class EgovPushDeviceAPIController {
 	 * @param searchVO - 등록할 정보가 담긴 PushDeviceAPIVO
 	 * @param status
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value = "Push Notification 세부정보 등록", notes = "Push Notification 세부정보를 등록한다.\nresponseOK = {\"resultState\",\"OK\"}")
     @ApiImplicitParams({
@@ -107,7 +105,7 @@ public class EgovPushDeviceAPIController {
     })
     @RequestMapping("/pus/addPushDeviceInfo.do")
     public ModelAndView insertDeviceInfo(PushDeviceAPIVO sampleVO, BindingResult bindingResult,
-            HttpServletRequest request, Model model, SessionStatus status) throws Exception {
+            HttpServletRequest request, Model model, SessionStatus status) {
 
         DeviceAPIAuthSupport.ensureDeviceAccess(request);
         sampleVO.setUuid(DeviceAPIAuthSupport.resolveDeviceUuid(request, sampleVO.getUuid()));
@@ -132,7 +130,6 @@ public class EgovPushDeviceAPIController {
 	 * @param searchVO - 등록할 정보가 담긴 PushDeviceAPIVO
 	 * @param status
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value = "Push Notification 발송메시지정보 등록", notes = "Push Notification 발송메시지정보를 등록한다.\nresponseOK = {\"resultState\",\"OK\"}")
     @ApiImplicitParams({
@@ -141,7 +138,7 @@ public class EgovPushDeviceAPIController {
     })
     @RequestMapping("/pus/requestPushInfo.do")
     public ModelAndView insertVibratorInfo(PushDeviceAPIVO sampleVO, BindingResult bindingResult,
-            HttpServletRequest request, Model model, SessionStatus status) throws Exception {
+            HttpServletRequest request, Model model, SessionStatus status) {
 
         DeviceAPIAuthSupport.ensureDeviceAccess(request);
         sampleVO.setUuid(DeviceAPIAuthSupport.resolveDeviceUuid(request, sampleVO.getUuid()));
@@ -165,7 +162,6 @@ public class EgovPushDeviceAPIController {
 	 * @param searchVO - 조회할 정보가 담긴 PushDeviceAPIDefaultVO
 	 * @param model
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value = "Push Notification 세부정보 조회", notes = "Push Notification 세부정보를 조회한다.", response = PushDeviceAPIVO.class)
     @ApiImplicitParams({
@@ -174,7 +170,7 @@ public class EgovPushDeviceAPIController {
     })
     @RequestMapping(value = "/pus/pushDeviceInfo.do")
     public ModelAndView selectVibratorInfo(@ModelAttribute("searchVO") PushDeviceAPIVO searchVO,
-            HttpServletRequest request, ModelMap model) throws Exception {
+            HttpServletRequest request, ModelMap model) {
 
         DeviceAPIAuthSupport.ensureDeviceAccess(request);
         searchVO.setUuid(DeviceAPIAuthSupport.resolveDeviceUuid(request, searchVO.getUuid()));
@@ -196,7 +192,6 @@ public class EgovPushDeviceAPIController {
 	 * @param searchVO - 조회할 정보가 담긴 PushDeviceAPIDefaultVO
 	 * @param model
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value = "Push Notification 송신메시지 세부정보 조회", notes = "Push Notification 송신메시지 세부정보를 조회한다.", response = PushDeviceAPIVO.class)
     @ApiImplicitParams({
@@ -204,7 +199,7 @@ public class EgovPushDeviceAPIController {
     })
     @RequestMapping(value = "/pus/PushMessageList.do")
     public ModelAndView selectPushMessageList(@ModelAttribute("searchVO") PushDeviceAPIVO searchVO,
-            HttpServletRequest request, ModelMap model) throws Exception {
+            HttpServletRequest request, ModelMap model) {
 
         DeviceAPIAuthSupport.ensureDeviceAccess(request);
         searchVO.setUuid(DeviceAPIAuthSupport.resolveDeviceUuid(request, searchVO.getUuid()));

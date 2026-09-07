@@ -80,7 +80,6 @@ public class EgovCameraAndroidAPIController {
      * @param file - 이미지 파일 정보가 담긴 MultipartFile
      * @param fileVO - 목록 조회조건 정보가 담긴 CameraAndroidAPIVO
      * @return boolean
-     * @exception Exception
      */
     @ApiOperation(value="Camera 이미지파일 등록", notes="[Android] Camera 이미지파일 등록한다.")
     @ApiImplicitParams({
@@ -88,7 +87,7 @@ public class EgovCameraAndroidAPIController {
     })
     @RequestMapping(value="/cmr/photoAlbumImageUpload.do", method=RequestMethod.POST)
     public @ResponseBody boolean fileUpload(@RequestParam("file") MultipartFile file, CameraAndroidAPIVO vo, 
-            HttpServletRequest request) throws Exception{
+            HttpServletRequest request) {
         
         if (!file.isEmpty()) {
             
@@ -108,7 +107,6 @@ public class EgovCameraAndroidAPIController {
      * @param file - 이미지 파일 정보가 담긴 MultipartFile
      * @param fileVO - 목록 조회조건 정보가 담긴 CameraAndroidAPIVO
      * @return boolean
-     * @exception Exception
      */
     @ApiOperation(value="Camera 이미지파일 수정", notes="[Android] Camera 이미지파일 수정한다.")
     @ApiImplicitParams({
@@ -116,7 +114,7 @@ public class EgovCameraAndroidAPIController {
     })
     @RequestMapping(value="/cmr/photoAlbumImageUpdate", method=RequestMethod.POST)
     public @ResponseBody boolean fileUpdate(@RequestParam("file") MultipartFile file, CameraAndroidAPIVO vo, 
-            HttpServletRequest request) throws Exception{
+            HttpServletRequest request) {
         
         if (!file.isEmpty()) {
             
@@ -135,7 +133,6 @@ public class EgovCameraAndroidAPIController {
      * 이미지 목록을 조회한다.
      * @param searchVO - 조회할 정보가 담긴 NetworkAPIDefaultVO
      * @return jsonView
-     * @exception Exception
      */
     @ApiOperation(value="Camera 이미지 목록조회", notes="[Android] Camera 이미지 목록을 조회한다.")
     @ApiImplicitParams({
@@ -145,8 +142,7 @@ public class EgovCameraAndroidAPIController {
 	@RequestMapping(value="/cmr/cameraPhotoAlbumList.do")
     public @ResponseBody CameraAndroidAPIXmlVO selectCameraPhotoAlbumList(
             @ModelAttribute("searchVO") CameraAndroidAPIDefaultVO searchVO,
-            SessionStatus status)
-            throws Exception {
+            SessionStatus status) {
 
         int firstIndex = (searchVO.getPageIndex()-1) * searchVO.getRecordCountPerPage();
         searchVO.setFirstIndex(firstIndex);
@@ -166,7 +162,6 @@ public class EgovCameraAndroidAPIController {
      * @param bindingResult
      * @param status
      * @return jsonView
-     * @exception Exception
      */
     @ApiOperation(value="Camera 이미지 세부정보 조회", notes="[Android] Camera 이미지 세부정보를 조회한다.")
     @ApiImplicitParams({
@@ -174,8 +169,7 @@ public class EgovCameraAndroidAPIController {
     })
     @RequestMapping(value="/cmr/cameraPhotoAlbumDetail.do")
     public @ResponseBody CameraAndroidAPIXmlVO selectPhotoAlbum(CameraAndroidAPIVO vo,
-            HttpServletRequest request, SessionStatus status)
-            throws Exception {
+            HttpServletRequest request, SessionStatus status) {
 
         vo.setUuid(DeviceAPIAuthSupport.resolveDeviceUuid(request, vo.getUuid()));
         CameraAndroidAPIVO cameraVO = egovCameraAndroidAPIService.selectCameraPhotoAlbum(vo);
@@ -192,7 +186,6 @@ public class EgovCameraAndroidAPIController {
      * @param model
      * @param response
      * @return jsonView
-     * @exception Exception
      */
     @ApiOperation(value="Camera 이미지 다운로드", notes="[Android] Camera 이미지 다운로드 한다.")
     @ApiImplicitParams({
@@ -201,7 +194,7 @@ public class EgovCameraAndroidAPIController {
     @RequestMapping("/cmr/getImage.do")
     public void getImageInf(@RequestParam("fileSn") String fileSn,
             @RequestParam(value = "uuid", required = false) String uuid,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+            HttpServletRequest request, HttpServletResponse response) {
 
         if (fileSn != null && !"".equals(fileSn)) {
             CameraAndroidAPIFileVO vo = new CameraAndroidAPIFileVO();
@@ -215,7 +208,6 @@ public class EgovCameraAndroidAPIController {
      * 이미지를 삭제한다.
      * @param sn - 조회할 정보가 담긴 String
      * @return jsonView
-     * @exception Exception
      */
     @ApiOperation(value="Camera 이미지정보 삭제", notes="[Android] Camera 이미지정보를 삭제한다.")
     @ApiImplicitParams({
@@ -223,8 +215,7 @@ public class EgovCameraAndroidAPIController {
     })
     @RequestMapping(value="/cmr/deleteCameraPhotoAlbum.do")
     public @ResponseBody CameraAndroidAPIXmlVO deleteCameraPhotoAlbum(CameraAndroidAPIVO vo,
-            HttpServletRequest request, SessionStatus status)
-            throws Exception {
+            HttpServletRequest request, SessionStatus status) {
 
         CameraAndroidAPIXmlVO cameraAndroidAPIXmlVO = new CameraAndroidAPIXmlVO();
         vo.setUuid(DeviceAPIAuthSupport.resolveDeviceUuid(request, vo.getUuid()));
@@ -247,7 +238,6 @@ public class EgovCameraAndroidAPIController {
      * @param bindingResult
      * @param status
      * @return jsonView
-     * @exception Exception
      */
     @ApiOperation(value="Camera 이미지 제목 중복 조회", notes="[Android] Camera 이미지 제목 중복을 조회한다.")
     @ApiImplicitParams({
@@ -255,8 +245,7 @@ public class EgovCameraAndroidAPIController {
     })
     @RequestMapping(value="/cmr/cameraPhotoAlbumCheck.do")
     public @ResponseBody CameraAndroidAPIXmlVO selectPhotoAlbumPhoSj( CameraAndroidAPIVO vo,
-            SessionStatus status)
-            throws Exception {
+            SessionStatus status) {
         
         CameraAndroidAPIFileVO cameraVO = egovCameraAndroidAPIService.selectCameraPhotoAlbumPhotoSj(vo);
         

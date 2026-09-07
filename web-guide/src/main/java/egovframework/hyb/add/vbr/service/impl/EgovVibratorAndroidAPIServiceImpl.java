@@ -54,9 +54,8 @@ public class EgovVibratorAndroidAPIServiceImpl extends EgovAbstractServiceImpl i
      * 알림 설정 정보를 등록한다.
      * @param vo - 등록할 정보가 담긴 VibratorAPIVO
      * @return 등록 결과
-     * @exception Exception
      */
-    public int insertVibrator(VibratorAndroidAPIXmlVO xmlVO) throws Exception {
+    public int insertVibrator(VibratorAndroidAPIXmlVO xmlVO) {
         
         VibratorAndroidAPIVO vo =  new VibratorAndroidAPIVO();
         vo.setUuid(xmlVO.getUuid());
@@ -69,9 +68,8 @@ public class EgovVibratorAndroidAPIServiceImpl extends EgovAbstractServiceImpl i
      * 알림 설정 정보 목록을 조회한다.
      * @param VO - 조회할 정보가 담긴 VibratorAPIVO
      * @return 알림 설정 정보 목록
-     * @exception Exception
      */
-    public List<?> selectVibratorList(VibratorAndroidAPIDefaultVO searchVO) throws Exception {
+    public List<?> selectVibratorList(VibratorAndroidAPIDefaultVO searchVO) {
         return vibratorAPIDAO.selectVibratorList(searchVO);
     }
 }

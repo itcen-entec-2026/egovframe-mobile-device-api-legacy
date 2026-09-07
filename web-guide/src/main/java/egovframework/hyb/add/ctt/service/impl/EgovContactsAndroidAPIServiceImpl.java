@@ -41,10 +41,8 @@ public class EgovContactsAndroidAPIServiceImpl extends EgovAbstractServiceImpl i
      * 
      * @param contactVo
      *            - 연락처 정보가 담긴 ContactsAndroidAPIVO
-     * @exception Exception
      */
-    public void insertContactsInfo(final ContactsAndroidAPIVO contactVo)
-            throws Exception {
+    public void insertContactsInfo(final ContactsAndroidAPIVO contactVo) {
         contactsAPIDAO.insertContactsInfo(contactVo);
     }
 
@@ -53,10 +51,8 @@ public class EgovContactsAndroidAPIServiceImpl extends EgovAbstractServiceImpl i
      * 
      * @param contactVo
      *            - 연락처 정보가 담긴 ContactsAndroidAPIVO
-     * @exception Exception
      */
-    public void updateContactsInfo(final ContactsAndroidAPIVO contactVo)
-            throws Exception {
+    public void updateContactsInfo(final ContactsAndroidAPIVO contactVo) {
         contactsAPIDAO.updateContactsInfo(contactVo);
     }
 
@@ -65,10 +61,8 @@ public class EgovContactsAndroidAPIServiceImpl extends EgovAbstractServiceImpl i
      * 
      * @param contactVo
      *            - 연락처 정보가 담긴 ContactsAndroidAPIVO
-     * @exception Exception
      */
-    public List<?> selectContactsInfoList(final ContactsAndroidAPIVO contactVo)
-            throws Exception {
+    public List<?> selectContactsInfoList(final ContactsAndroidAPIVO contactVo) {
         return contactsAPIDAO.selectFileInfoList(contactVo);
     }
 
@@ -77,10 +71,9 @@ public class EgovContactsAndroidAPIServiceImpl extends EgovAbstractServiceImpl i
      * 
      * @param contactVo
      *            - 연락처 정보가 담긴 ContactsAndroidAPIVO
-     * @exception Exception
      */
     public ContactsAndroidAPIVO selectContactsInfo(
-            final ContactsAndroidAPIVO contactVo) throws Exception {
+            final ContactsAndroidAPIVO contactVo) {
 		String name = contactVo.getName();
     	String telNoCompare = contactVo.getTelNo();
     	if (!"".equals(name) || name != null) {
@@ -99,10 +92,8 @@ public class EgovContactsAndroidAPIServiceImpl extends EgovAbstractServiceImpl i
      * 
      * @param contactVo
      *            - 연락처 정보가 담긴 ContactsAndroidAPIVO
-     * @exception Exception
      */
-    public int deleteContactsInfo(final ContactsAndroidAPIVO contactVo)
-            throws Exception {
+    public int deleteContactsInfo(final ContactsAndroidAPIVO contactVo) {
         return contactsAPIDAO.deleteContactsInfo(contactVo);
     }
 
@@ -111,10 +102,8 @@ public class EgovContactsAndroidAPIServiceImpl extends EgovAbstractServiceImpl i
      * 
      * @param contactVo
      *            - 연락처 정보가 담긴 ContactsAndroidAPIVO
-     * @exception Exception
      */
-    public int selectContactsCount(final ContactsAndroidAPIVO contactVo)
-            throws Exception {
+    public int selectContactsCount(final ContactsAndroidAPIVO contactVo) {
         return contactsAPIDAO.selectContactsTotCnt(contactVo);
     }
 

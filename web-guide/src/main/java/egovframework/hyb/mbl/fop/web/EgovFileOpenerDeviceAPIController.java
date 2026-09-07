@@ -75,13 +75,11 @@ public class EgovFileOpenerDeviceAPIController {
 	 * @param searchVO - 조회할 정보가 담긴 ResourceUpdateDeviceAPIDefaultVO
 	 * @param model
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="FileOpener 정보 목록조회", notes="FileOpener 정보 목록을 조회한다.", response=FileOpenerDeviceAPIVO.class, responseContainer="List")
     @RequestMapping(value="/fop/FileOpenerDocumentList.do")
     public ModelAndView selectDocumentList(@ModelAttribute("fileOpenerDviceAPIVO") FileOpenerDeviceAPIDefaultVO searchVO, 
-    		ModelMap model)
-            throws Exception {
+    		ModelMap model) {
  
 		ModelAndView jsonView = new ModelAndView("jsonView");
 		
@@ -99,7 +97,6 @@ public class EgovFileOpenerDeviceAPIController {
 	 * @param response - HttpServletResponse 
 	 * @param fileVO - 전송할 파일 정보가 담긴 ResourceUpdateDeviceAPIVO 
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="FileOpener 파일 다운로드", notes="FileOpener 파일을 다운로드한다.", response=FileOpenerDeviceAPIVO.class)
     @ApiImplicitParams({
@@ -107,7 +104,7 @@ public class EgovFileOpenerDeviceAPIController {
         @ApiImplicitParam(name = "streFileNm", value = "저장파일명", required = true, dataType = "string", paramType = "query"),
     })
 	@RequestMapping("/fop/FileOpenerfileDownload.do")
-	public void fileDownload(HttpServletRequest request, HttpServletResponse response, FileOpenerDeviceAPIVO fileVO) throws Exception{
+	public void fileDownload(HttpServletRequest request, HttpServletResponse response, FileOpenerDeviceAPIVO fileVO) {
 		DeviceAPIFileUploadValidator.assertSafeStoredFileName(fileVO.getStreFileNm());
 		log.debug("fileVO.getOrignlFileNm() = "+fileVO.getOrignlFileNm());
 		log.debug(">>> fileVO.getStreFileNm() = "+fileVO.getStreFileNm());

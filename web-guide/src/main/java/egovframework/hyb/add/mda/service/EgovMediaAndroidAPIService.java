@@ -40,40 +40,35 @@ public interface EgovMediaAndroidAPIService {
      * 녹음 Media를 등록한다.
      * @param vo - 등록할 정보가 담긴 MediaAndroidAPIVO
      * @return void형
-     * @exception Exception
      */
-    public int insertMediaInfo(MediaAndroidAPIVO vo, int fileSn) throws Exception;
+    public int insertMediaInfo(MediaAndroidAPIVO vo, int fileSn);
     
     /**
      * 녹음 파일을 등록한다.
      * @param vo - 등록할 정보가 담긴 MediaAndroidAPIFileVO
      * @return void형
-     * @exception Exception
      */
-    public int insertMediaRecordFile(MediaAndroidAPIFileVO vo) throws Exception;
+    public int insertMediaRecordFile(MediaAndroidAPIFileVO vo);
     
     /**
      * 미디어 정보를 조회한다.
      * @param VO - 조회할 정보가 담긴 MediaAndroidAPIVO
      * @return 조회 목록
-     * @exception Exception
      */
-    public MediaAndroidAPIFileVO selectMediaInfoDetail(MediaAndroidAPIVO vo) throws Exception;
+    public MediaAndroidAPIFileVO selectMediaInfoDetail(MediaAndroidAPIVO vo);
     
     /**
      * 미디어 목록을 조회한다.
      * @param VO - 조회할 정보가 담긴 MediaAndroidAPIVO
      * @return 조회 목록
-     * @exception Exception
      */
-    public List<?> selectMediaInfoList(MediaAndroidAPIVO vo) throws Exception;
+    public List<?> selectMediaInfoList(MediaAndroidAPIVO vo);
     
     
     /**
      * 미디어 파일을 조회한다.
      * @param VO - 조회할 정보가 담긴 MediaAndroidAPIFileVO
      * @return 파일 정보
-     * @exception Exception
      */
-    public boolean selectMediaFileInf(HttpServletResponse response, MediaAndroidAPIFileVO vo) throws Exception;
+    public boolean selectMediaFileInf(HttpServletResponse response, MediaAndroidAPIFileVO vo);
 }

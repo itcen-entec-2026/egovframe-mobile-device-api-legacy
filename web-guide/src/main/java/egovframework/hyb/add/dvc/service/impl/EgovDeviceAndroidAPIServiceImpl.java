@@ -25,6 +25,7 @@ import egovframework.hyb.add.dvc.service.DeviceAndroidAPIDefaultVO;
 import egovframework.hyb.add.dvc.service.DeviceAndroidAPIVO;
 import egovframework.hyb.add.dvc.service.EgovDeviceAndroidAPIService;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.exception.BaseRuntimeException;
 
 /**  
  * @Class Name : EgovDeviceAPIServiceImpl.java
@@ -53,9 +54,8 @@ public class EgovDeviceAndroidAPIServiceImpl extends EgovAbstractServiceImpl imp
      * 디바이스 정보를 등록한다.
      * @param vo - 등록할 정보가 담긴 DeviceAPIVO
      * @return 등록 결과
-     * @exception Exception
      */
-    public int insertDeviceInfo(DeviceAndroidAPIVO vo) throws Exception {        
+    public int insertDeviceInfo(DeviceAndroidAPIVO vo) {        
         return deviceAPIDAO.insertDeviceInfo(vo);        
     }
 
@@ -63,9 +63,8 @@ public class EgovDeviceAndroidAPIServiceImpl extends EgovAbstractServiceImpl imp
      * 디바이스 정보를 수정한다.
      * @param vo - 수정할 정보가 담긴 DeviceAPIVO
      * @return void형
-     * @exception Exception
      */
-    public void updateDeviceInfo(DeviceAndroidAPIVO vo) throws Exception {
+    public void updateDeviceInfo(DeviceAndroidAPIVO vo) {
         deviceAPIDAO.updateDeviceInfo(vo);
     }
 
@@ -73,9 +72,8 @@ public class EgovDeviceAndroidAPIServiceImpl extends EgovAbstractServiceImpl imp
      * 디바이스 정보를 삭제한다.
      * @param vo - 삭제할 정보가 담긴 DeviceAPIVO
      * @return void형 
-     * @exception Exception
      */
-    public int deleteDeviceInfo(DeviceAndroidAPIVO vo) throws Exception {
+    public int deleteDeviceInfo(DeviceAndroidAPIVO vo) {
         return deviceAPIDAO.deleteDeviceInfo(vo);
     }
 
@@ -83,12 +81,14 @@ public class EgovDeviceAndroidAPIServiceImpl extends EgovAbstractServiceImpl imp
      * 디바이스 정보를 조회한다.
      * @param vo - 조회할 정보가 담긴 DeviceAPIVO
      * @return 조회한 디바이스 정보
-     * @exception Exception
+     * @throws BaseRuntimeException
+     * @throws@ Exception
      */
-    public DeviceAndroidAPIVO selectDeviceInfo(DeviceAndroidAPIVO vo) throws Exception {
+    public DeviceAndroidAPIVO selectDeviceInfo(DeviceAndroidAPIVO vo) throws BaseRuntimeException, Exception {
         DeviceAndroidAPIVO resultVO = deviceAPIDAO.selectDeviceInfo(vo);
-        if (resultVO == null)
+        if (resultVO == null) {
             throw processException("info.nodata.msg");
+        }
         return resultVO;
     }
 
@@ -96,9 +96,8 @@ public class EgovDeviceAndroidAPIServiceImpl extends EgovAbstractServiceImpl imp
      * 디바이스 정보 목록을 조회한다.
      * @param VO - 조회할 정보가 담긴 DeviceAPIDefaultVO
      * @return 디바이스 정보 목록
-     * @exception Exception
      */
-    public List<?> selectDeviceInfoList(DeviceAndroidAPIDefaultVO searchVO) throws Exception {
+    public List<?> selectDeviceInfoList(DeviceAndroidAPIDefaultVO searchVO) {
         return deviceAPIDAO.selectDeviceInfoList(searchVO);
     }
 
@@ -106,7 +105,6 @@ public class EgovDeviceAndroidAPIServiceImpl extends EgovAbstractServiceImpl imp
      * 디바이스 정보 총 갯수를 조회한다.
      * @param VO - 조회할 정보가 담긴 DeviceAPIDefaultVO
      * @return 디바이스 정보 총 갯수
-     * @exception
      */
     public int selectDeviceInfoListTotCnt(DeviceAndroidAPIDefaultVO searchVO) {
         return deviceAPIDAO.selectDeviceInfoListTotCnt(searchVO);

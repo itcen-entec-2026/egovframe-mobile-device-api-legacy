@@ -41,18 +41,16 @@ public class EgovContactsiOSAPIServiceImpl extends EgovAbstractServiceImpl imple
 	/**
 	 * 연락처  정보를 입력한다.
 	 * @param vo - 연락처 정보가 담긴 ContactsiOSAPIVO 
-	 * @exception Exception
 	 */
-	public void insertContactsInfo(ContactsiOSAPIVO vo) throws Exception {	
+	public void insertContactsInfo(ContactsiOSAPIVO vo) {	
 		contactsAPIDAO.insertContactsInfo(vo);
 	}
 	
 	/**
 	 * 연락처  정보를 수정한다.
 	 * @param vo - 연락처 정보가 담긴 ContactsiOSAPIVO 
-	 * @exception Exception
 	 */
-	public void updateContactsInfo(ContactsiOSAPIVO vo) throws Exception {	
+	public void updateContactsInfo(ContactsiOSAPIVO vo) {	
 		contactsAPIDAO.updateContactsInfo(vo);
 	}
 
@@ -60,27 +58,24 @@ public class EgovContactsiOSAPIServiceImpl extends EgovAbstractServiceImpl imple
 	/**
 	 * 연락처 정보리스트를 조회한다.
 	 * @param vo - 연락처 정보가 담긴 ContactsiOSAPIVO 
-	 * @exception Exception
 	 */
-	public List<?> selectContactsInfoList(ContactsiOSAPIVO vo) throws Exception {
+	public List<?> selectContactsInfoList(ContactsiOSAPIVO vo) {
 		return contactsAPIDAO.selectFileInfoList(vo);	
 	}
 	
 	/**
 	 * 연락처 정보를 조회한다.
 	 * @param vo - 연락처 정보가 담긴 ContactsiOSAPIVO 
-	 * @exception Exception
 	 */
-	public ContactsiOSAPIVO selectContactsInfo(ContactsiOSAPIVO vo)throws Exception {
+	public ContactsiOSAPIVO selectContactsInfo(ContactsiOSAPIVO vo) {
 		return contactsAPIDAO.selectContactsInfo(vo);
 	}
 	
 	/**
 	 * 연락처 정보를 삭제한다.
 	 * @param vo - 연락처 정보가 담긴 ContactsiOSAPIVO 
-	 * @exception Exception
 	 */
-	public int deleteContactsInfo(ContactsiOSAPIVO vo) throws Exception {
+	public int deleteContactsInfo(ContactsiOSAPIVO vo) {
 		return contactsAPIDAO.deleteContactsInfo(vo);		
 	}
 	
@@ -88,9 +83,8 @@ public class EgovContactsiOSAPIServiceImpl extends EgovAbstractServiceImpl imple
 	/**
 	 * 백업된 연락처  총 갯수를 조회한다.
 	 * @param vo - 연락처 정보가 담긴 ContactsiOSAPIVO 
-	 * @exception Exception
 	 */
-	public int selectContactsCount(ContactsiOSAPIVO vo) throws Exception {
+	public int selectContactsCount(ContactsiOSAPIVO vo) {
 		return contactsAPIDAO.selectContactsTotCnt(vo);		
 	}
 

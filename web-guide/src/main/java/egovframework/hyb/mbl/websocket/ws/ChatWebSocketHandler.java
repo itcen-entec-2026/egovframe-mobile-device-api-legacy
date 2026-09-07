@@ -1,5 +1,6 @@
 package egovframework.hyb.mbl.websocket.ws;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -10,6 +11,8 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+
+import egovframework.rte.fdl.cmmn.exception.BaseRuntimeException;
 
 /**
 * @
@@ -48,21 +51,21 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 	
 	@Override
 	public void afterConnectionEstablished(
-			WebSocketSession session) throws Exception {
+			WebSocketSession session) {
 		log(session.getId() + " 연결 됨");
 		users.put(session.getId(), session);
 	}
 
 	@Override
 	public void afterConnectionClosed(
-			WebSocketSession session, CloseStatus status) throws Exception {
+			WebSocketSession session, CloseStatus status) {
 		log(session.getId() + " 연결 종료됨");
 		users.remove(session.getId());
 	}
 
 	@Override
 	protected void handleTextMessage(
-			WebSocketSession session, TextMessage message) throws Exception {
+			WebSocketSession session, TextMessage message) {
 		log(session.getId() + "로부터 메시지 수신: " + message.getPayload());
 		
 		// 2024.05.02  NSR 보안조치 ( XSS 방지 메소드 구현 및 소켓 메시지에 적용 )
@@ -70,14 +73,18 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 
 		for (WebSocketSession s : users.values()) {
 			// 2024.05.02  NSR 보안조치 ( XSS 방지 메소드 구현 및 소켓 메시지에 적용 )
-			s.sendMessage(new TextMessage(filteredMessage));
+			try {
+				s.sendMessage(new TextMessage(filteredMessage));
+			} catch (IOException e) {
+				throw new BaseRuntimeException(e);
+			}
 			log(s.getId() + "에 메시지 발송: " + filteredMessage);
 		}
 	}
 
 	@Override
 	public void handleTransportError(
-			WebSocketSession session, Throwable exception) throws Exception {
+			WebSocketSession session, Throwable exception) {
 		log(session.getId() + " 익셉션 발생: " + exception.getMessage());
 	}
 

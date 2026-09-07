@@ -44,10 +44,9 @@ public class EgovBarcodescannerDeviceAPIServiceimpl extends EgovAbstractServiceI
 	 *barcodescannerDeviceAPI을 위해  정보를 등록한다.
 	 * @param vo - 등록할 정보가 담긴 BarcodescannerAPIVO
 	 * @return 등록 결과
-	 * @exception Exception
 	 */
     @Override
-    public int insertBarcodescannerDevcie(BarcodescannerAPIVO vo) throws Exception {
+    public int insertBarcodescannerDevcie(BarcodescannerAPIVO vo) {
     	LOGGER.debug(vo.toString());
     	
     	return barcodescannerDeviceAPIDAO.insertBarcodescannerDevcie(vo);    	
@@ -57,9 +56,8 @@ public class EgovBarcodescannerDeviceAPIServiceimpl extends EgovAbstractServiceI
 	 * BarcodescannerDeviceAPI 설정 정보 목록을 조회한다.
 	 * @param VO - 조회할 정보가 담긴 VibratorAPIVO
 	 * @return 알림 설정 정보 목록
-	 * @exception Exception
 	 */
-    public List<?> selectBarcodescannerList(BarcodescannerAPIDefaultVO searchVO) throws Exception {
+    public List<?> selectBarcodescannerList(BarcodescannerAPIDefaultVO searchVO) {
         return barcodescannerDeviceAPIDAO.selectBarcodescannerDevcieList(searchVO);
     }
 

@@ -17,6 +17,8 @@ package egovframework.hyb.add.dvc.service;
 
 import java.util.List;
 
+import egovframework.rte.fdl.cmmn.exception.BaseRuntimeException;
+
 /**  
  * @Class Name : EgovDeviceAPIService.java
  * @Description : EgovDeviceAPIService Class
@@ -38,47 +40,43 @@ public interface EgovDeviceAndroidAPIService {
      * 디바이스 정보를 등록한다.
      * @param vo - 등록할 정보가 담긴 DeviceAPIVO
      * @return 등록 결과
-     * @exception Exception
      */
-    int insertDeviceInfo(DeviceAndroidAPIVO vo) throws Exception;
+    int insertDeviceInfo(DeviceAndroidAPIVO vo);
     
     /**
      * 디바이스 정보를 수정한다.
      * @param vo - 수정할 정보가 담긴 DeviceAPIVO
      * @return void형
-     * @exception Exception
      */
-    void updateDeviceInfo(DeviceAndroidAPIVO vo) throws Exception;
+    void updateDeviceInfo(DeviceAndroidAPIVO vo);
     
     /**
      * 디바이스 정보를 삭제한다.
      * @param vo - 삭제할 정보가 담긴 DeviceAPIVO
      * @return 등록 결과 
-     * @exception Exception
      */
-    int deleteDeviceInfo(DeviceAndroidAPIVO vo) throws Exception;
+    int deleteDeviceInfo(DeviceAndroidAPIVO vo);
     
     /**
      * 디바이스 정보를 조회한다.
      * @param vo - 조회할 정보가 담긴 DeviceAPIVO
      * @return 조회한 디바이스 정보
-     * @exception Exception
+     * @throws BaseRuntimeException
+     * @throws@ Exception
      */
-    DeviceAndroidAPIVO selectDeviceInfo(DeviceAndroidAPIVO vo) throws Exception;
+    DeviceAndroidAPIVO selectDeviceInfo(DeviceAndroidAPIVO vo) throws BaseRuntimeException, Exception;
     
     /**
      * 디바이스 정보 목록을 조회한다.
      * @param VO - 조회할 정보가 담긴 DeviceAPIDefaultVO
      * @return 디바이스 정보 목록
-     * @exception Exception
      */
-    List<?> selectDeviceInfoList(DeviceAndroidAPIDefaultVO searchVO) throws Exception;
+    List<?> selectDeviceInfoList(DeviceAndroidAPIDefaultVO searchVO);
     
     /**
      * 디바이스 정보 총 갯수를 조회한다.
      * @param VO - 조회할 정보가 담긴 DeviceAPIDefaultVO
      * @return 디바이스 정보 총 갯수
-     * @exception
      */
     int selectDeviceInfoListTotCnt(DeviceAndroidAPIDefaultVO searchVO);
     

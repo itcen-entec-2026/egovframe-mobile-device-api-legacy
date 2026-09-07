@@ -39,40 +39,35 @@ public interface EgovDeviceiOSAPIService {
 	 * 디바이스 정보를 등록한다.
 	 * @param vo - 등록할 정보가 담긴 DeviceiOSAPIVO
 	 * @return 등록 결과
-	 * @exception Exception
 	 */
-    void insertDeviceInfo(DeviceiOSAPIVO vo) throws Exception;
+    void insertDeviceInfo(DeviceiOSAPIVO vo);
     
 
     /**
 	 * 디바이스 정보를 삭제한다.
 	 * @param vo - 삭제할 정보가 담긴 DeviceiOSAPIVO
 	 * @return void형 
-	 * @exception Exception
 	 */
-    void deleteDeviceInfo(DeviceiOSAPIVO vo) throws Exception;
+    void deleteDeviceInfo(DeviceiOSAPIVO vo);
     
     /**
 	 * 디바이스 정보를 조회한다.
 	 * @param vo - 조회할 정보가 담긴 DeviceiOSAPIVO
 	 * @return 조회한 디바이스 정보
-	 * @exception Exception
 	 */
-    DeviceiOSAPIVO selectDeviceInfo(DeviceiOSAPIVO vo) throws Exception;
+    DeviceiOSAPIVO selectDeviceInfo(DeviceiOSAPIVO vo);
     
     /**
 	 * 디바이스 정보 목록을 조회한다.
 	 * @param VO - 조회할 정보가 담긴 DeviceiOSAPIVO
 	 * @return 디바이스 정보 목록
-	 * @exception Exception
 	 */
-    List<?> selectDeviceInfoList(DeviceiOSAPIVO vo) throws Exception;
+    List<?> selectDeviceInfoList(DeviceiOSAPIVO vo);
     
     /**
 	 * 디바이스 정보 총 갯수를 조회한다.
 	 * @param VO - 조회할 정보가 담긴 NetworkAPIDefaultVO
 	 * @return 디바이스 정보 총 갯수
-	 * @exception
 	 */
     int selectDeviceInfoListTotCnt(DeviceiOSAPIVO vo);
     

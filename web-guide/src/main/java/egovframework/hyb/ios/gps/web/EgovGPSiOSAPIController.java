@@ -73,13 +73,12 @@ public class EgovGPSiOSAPIController {
      *            - 조회할 정보가 담긴 GPSAPIDefaultVO
      * @param model
      * @return ModelAndView
-     * @exception Exception
      */
     @ApiOperation(value="GPS 정보 목록조회", notes="[iOS] GPS 정보 목록을 조회한다.", response=GPSiOSAPIDefaultVO.class, responseContainer="List")
     @RequestMapping(value = "/gps/gpsInfoList.do")
     public ModelAndView selectGPSInfoList(
             @ModelAttribute("searchVO") GPSiOSAPIDefaultVO searchVO,
-            ModelMap model) throws Exception {
+            ModelMap model) {
 
         ModelAndView jsonView = new ModelAndView("jsonView");
         List<?> gpsInfoList = egovGPSAPIService.selectGPSInfoList(searchVO);
@@ -97,7 +96,6 @@ public class EgovGPSiOSAPIController {
      *            - 등록할 정보가 담긴 GPSAPIDefaultVO
      * @param status
      * @return ModelAndView
-     * @exception Exception
      */
     @ApiOperation(value="GPS 세부정보 등록", notes="[iOS] GPS 세부정보를 등록한다.\nresponseOK = {\"resultState\",\"OK\"}")
     @ApiImplicitParams({
@@ -107,7 +105,7 @@ public class EgovGPSiOSAPIController {
     public ModelAndView insertGPSInfo(
             @ModelAttribute("searchVO") GPSiOSAPIDefaultVO searchVO,
             GPSiOSAPIVO sampleVO, BindingResult bindingResult, Model model,
-            SessionStatus status) throws Exception {
+            SessionStatus status) {
 
         /*
          * if (bindingResult.hasErrors()) { model.addAttribute("sampleVO",
@@ -131,7 +129,6 @@ public class EgovGPSiOSAPIController {
      *            - 삭제할 정보가 담긴 VO
      * @param status
      * @return ModelAndView
-     * @exception Exception
      */
     @ApiOperation(value="GPS 세부정보 삭제", notes="[iOS] GPS 세부정보를 삭제한다.\nresponseOK = {\"resultState\",\"OK\"}")
     @ApiImplicitParams({
@@ -140,7 +137,7 @@ public class EgovGPSiOSAPIController {
     @RequestMapping("/gps/deleteGPSInfo.do")
     public ModelAndView deleteGPSInfo(GPSiOSAPIVO sampleVO,
             @ModelAttribute("searchVO") GPSiOSAPIDefaultVO searchVO,
-            SessionStatus status) throws Exception {
+            SessionStatus status) {
 
         egovGPSAPIService.deleteGPSInfo(sampleVO);
 

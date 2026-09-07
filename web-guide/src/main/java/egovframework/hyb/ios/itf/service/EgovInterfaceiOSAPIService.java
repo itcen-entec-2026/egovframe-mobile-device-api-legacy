@@ -41,9 +41,8 @@ public interface EgovInterfaceiOSAPIService {
      * @param vo
      *            - 가입 정보가 담긴 InterfaceiOSAPIVO
      * @return 해당 ID로 가입된 갯수
-     * @exception Exception
      */
-    int selectInterfaceInfoListTotCnt(InterfaceiOSAPIVO vo) throws Exception;
+    int selectInterfaceInfoListTotCnt(InterfaceiOSAPIVO vo);
 
     /**
      * 회원 정보를 등록한다.
@@ -51,9 +50,8 @@ public interface EgovInterfaceiOSAPIService {
      * @param vo
      *            - 등록할 정보가 담긴 InterfaceiOSAPIVO
      * @return 등록 결과
-     * @exception Exception
      */
-    int insertInterfaceInfo(InterfaceiOSAPIVO vo) throws Exception;
+    int insertInterfaceInfo(InterfaceiOSAPIVO vo);
 
     /**
      * 로그인을 한다.
@@ -61,10 +59,8 @@ public interface EgovInterfaceiOSAPIService {
      * @param vo
      *            - 로그인할 정보가 담긴 InterfaceiOSAPIVO
      * @return 로그인 결과
-     * @exception Exception
      */
-    InterfaceiOSAPIVO selectInterfaceInfo(InterfaceiOSAPIVO vo)
-            throws Exception;
+    InterfaceiOSAPIVO selectInterfaceInfo(InterfaceiOSAPIVO vo);
 
     /**
      * 회원탈퇴를 한다.
@@ -72,7 +68,6 @@ public interface EgovInterfaceiOSAPIService {
      * @param vo
      *            - 탈퇴할 정보가 담긴 InterfaceiOSAPIVO
      * @return 회원탈퇴 결과
-     * @exception Exception
      */
-    int deleteInterfaceInfo(InterfaceiOSAPIVO vo) throws Exception;
+    int deleteInterfaceInfo(InterfaceiOSAPIVO vo);
 }

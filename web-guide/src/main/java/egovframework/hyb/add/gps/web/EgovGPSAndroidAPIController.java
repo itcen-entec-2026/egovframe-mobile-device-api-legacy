@@ -67,13 +67,12 @@ public class EgovGPSAndroidAPIController {
 	 * @param searchVO
 	 *            - 조회할 정보가 담긴 GPSAndroidAPIDefaultVO
 	 * @return GPSAndroidAPIVOList
-	 * @exception Exception
 	 */
     @ApiOperation(value="GPS 정보 목록조회", notes="[Android] GPS 정보 목록을 조회한다.", response=GPSAndroidAPIDefaultVO.class, responseContainer="List")
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/gps/xml/gpsInfoList.do")
 	public @ResponseBody
-	GPSAndroidAPIVOList selectGPSInfoListXml(GPSAndroidAPIDefaultVO searchVO) throws Exception {
+	GPSAndroidAPIVOList selectGPSInfoListXml(GPSAndroidAPIDefaultVO searchVO) {
 
 		List<GPSAndroidAPIVO> gpsInfoList = (List<GPSAndroidAPIVO>) egovGPSAPIService.selectGPSInfoList(searchVO);
 		GPSAndroidAPIVOList gpsAndroidAPIVOList = new GPSAndroidAPIVOList();
@@ -88,7 +87,6 @@ public class EgovGPSAndroidAPIController {
 	 * @param insertVO
 	 *            - 등록할 정보가 담긴 GPSAndroidAPIVO
 	 * @return GPSAndroidAPIVO
-	 * @exception Exception
 	 */
     
 	@RequestMapping("/gps/xml/addGPSInfo.do")
@@ -97,7 +95,7 @@ public class EgovGPSAndroidAPIController {
         @ApiImplicitParam(name = "uuid", value = "기기식별코드", required = true, dataType = "string", paramType = "query"),
     })
 	public @ResponseBody
-	GPSAndroidAPIVO insertGPSInfo(GPSAndroidAPIVO insertVO) throws Exception {
+	GPSAndroidAPIVO insertGPSInfo(GPSAndroidAPIVO insertVO) {
 		egovGPSAPIService.insertGPSInfo(insertVO);
 
 		GPSAndroidAPIVO gpsAndroidAPIVO = new GPSAndroidAPIVO();
@@ -112,7 +110,6 @@ public class EgovGPSAndroidAPIController {
 	 * @param deleteVO
 	 *            - 삭제할 정보가 담긴 VO
 	 * @return GPSAndroidAPIVO
-	 * @exception Exception
 	 */
     @ApiOperation(value="GPS 세부정보 삭제", notes="[Android] GPS 세부정보를 삭제한다.\nresponseOK = {\"resultState\",\"OK\"}")
     @ApiImplicitParams({
@@ -120,7 +117,7 @@ public class EgovGPSAndroidAPIController {
     })
 	@RequestMapping("/gps/xml/deleteGPSInfo.do")
 	public @ResponseBody
-	GPSAndroidAPIVO deleteGPSInfo(GPSAndroidAPIVO deleteVO) throws Exception {
+	GPSAndroidAPIVO deleteGPSInfo(GPSAndroidAPIVO deleteVO) {
 
 		int nCount = egovGPSAPIService.deleteGPSInfo(deleteVO);
 

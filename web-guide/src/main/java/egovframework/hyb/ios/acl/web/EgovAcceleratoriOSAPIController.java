@@ -72,12 +72,11 @@ public class EgovAcceleratoriOSAPIController {
 	 * @param searchVO - 조회할 정보가 담긴 AcceleratoriOSAPIDefaultVO
 	 * @param model
 	 * @return "/acl/acceleratorInfoList.do"
-	 * @exception Exception
 	 */
     @ApiOperation(value="Accelerator 정보 목록조회", notes="[iOS] Accelerator 정보 목록을 조회한다.", response=AcceleratoriOSAPIVO.class, responseContainer="List")
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/acl/acceleratorInfoList.do")
-	public ModelAndView selectAcceleratorInfoXMLList(@ModelAttribute("searchVO") AcceleratoriOSAPIDefaultVO searchVO, ModelMap model) throws Exception {
+	public ModelAndView selectAcceleratorInfoXMLList(@ModelAttribute("searchVO") AcceleratoriOSAPIDefaultVO searchVO, ModelMap model) {
 		ModelAndView jsonView = new ModelAndView("jsonView");
 
 		List<AcceleratoriOSAPIVO> acceleratorInfoList = (List<AcceleratoriOSAPIVO>) egovAcceleratoriOSAPIService.selectAcceleratorInfoList(searchVO);
@@ -93,7 +92,6 @@ public class EgovAcceleratoriOSAPIController {
 	 * @param searchVO - 목록 조회조건 정보가 담긴 AcceleratoriOSAPIDefaultVO
 	 * @param status
 	 * @return "forward:/acl/addAcceleratorInfo.do"
-	 * @exception Exception
 	 */
     @ApiOperation(value="Accelerator 세부정보 등록", notes="[iOS] Accelerator 세부정보를 등록한다.\nresponseOK = {\"resultState\",\"OK\"}")
     @ApiImplicitParams({
@@ -101,7 +99,7 @@ public class EgovAcceleratoriOSAPIController {
     })
 	@RequestMapping("/acl/addAcceleratorInfo.do")
 	public ModelAndView addAcceleratorInfoXml(AcceleratoriOSAPIVO acceleratorVO, BindingResult bindingResult,
-			Model model, SessionStatus status) throws Exception {
+			Model model, SessionStatus status) {
     	
 		ModelAndView jsonView = new ModelAndView("jsonView");
 
@@ -124,12 +122,11 @@ public class EgovAcceleratoriOSAPIController {
 	 * @param searchVO - 목록 조회조건 정보가 담긴 VO
 	 * @param status
 	 * @return "forward:/acl/withdrawal.do"
-	 * @exception Exception
 	 */
     @ApiOperation(value="Accelerator 정보 삭제", notes="[iOS] Accelerator 정보를 삭제한다.(useYn=N으로변경)\nresponseOK = {\"resultState\",\"OK\"}")
 	@RequestMapping("/acl/withdrawal.do")
 	public ModelAndView withdrawalXml(AcceleratoriOSAPIVO acceleratorVO, BindingResult bindingResult, Model model,
-			SessionStatus status) throws Exception {
+			SessionStatus status) {
 		ModelAndView jsonView = new ModelAndView("jsonView");
 
 		int cnt = egovAcceleratoriOSAPIService.deleteAcceleratorInfo(acceleratorVO);

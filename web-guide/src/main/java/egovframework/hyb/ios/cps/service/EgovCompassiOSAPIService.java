@@ -39,47 +39,41 @@ public interface EgovCompassiOSAPIService {
 	 * 방향 정보를 등록한다.
 	 * @param vo - 등록할 정보가 담긴 CompassiOSAPIVO
 	 * @return 등록 결과
-	 * @exception Exception
 	 */
-    int insertCompassInfo(CompassiOSAPIVO vo) throws Exception;
+    int insertCompassInfo(CompassiOSAPIVO vo);
     
     /**
 	 * 방향 정보를 수정한다.
 	 * @param vo - 수정할 정보가 담긴 CompassiOSAPIVO
 	 * @return void형
-	 * @exception Exception
 	 */
-    void updateCompassInfo(CompassiOSAPIVO vo) throws Exception;
+    void updateCompassInfo(CompassiOSAPIVO vo);
     
     /**
 	 * 방향 정보를 삭제한다.
 	 * @param vo - 삭제할 정보가 담긴 CompassiOSAPIVO
 	 * @return 등록 결과 
-	 * @exception Exception
 	 */
-    int deleteCompassInfo(CompassiOSAPIVO vo) throws Exception;
+    int deleteCompassInfo(CompassiOSAPIVO vo);
     
     /**
 	 * 방향 정보를 조회한다.
 	 * @param vo - 조회할 정보가 담긴 CompassiOSAPIVO
 	 * @return 조회한 방향 정보
-	 * @exception Exception
 	 */
-    CompassiOSAPIVO selectCompassInfo(CompassiOSAPIVO vo) throws Exception;
+    CompassiOSAPIVO selectCompassInfo(CompassiOSAPIVO vo);
     
     /**
 	 * 방향 정보 목록을 조회한다.
 	 * @param VO - 조회할 정보가 담긴 CompassiOSAPIDefaultVO
 	 * @return 방향 정보 목록
-	 * @exception Exception
 	 */
-    List<?> selectCompassInfoList(CompassiOSAPIDefaultVO searchVO) throws Exception;
+    List<?> selectCompassInfoList(CompassiOSAPIDefaultVO searchVO);
     
     /**
 	 * 방향 정보 총 갯수를 조회한다.
 	 * @param VO - 조회할 정보가 담긴 CompassiOSAPIDefaultVO
 	 * @return 방향 정보 총 갯수
-	 * @exception
 	 */
     int selectCompassInfoListTotCnt(CompassiOSAPIDefaultVO searchVO);
     
