@@ -81,13 +81,11 @@ public class EgovAcceleratorAndroidAPIServiceImpl extends EgovAbstractServiceImp
      * 가속도 정보를 조회한다.
      * @param vo - 조회할 정보가 담긴 AcceleratorAPIVO
      * @return 조회한 가속도 정보
-     * @throws BaseRuntimeException
-     * @throws@ Exception
      */
-    public AcceleratorAndroidAPIVO selectAcceleratorInfo(AcceleratorAndroidAPIVO vo) throws BaseRuntimeException, Exception {
+    public AcceleratorAndroidAPIVO selectAcceleratorInfo(AcceleratorAndroidAPIVO vo) {
         AcceleratorAndroidAPIVO resultVO = acceleratorAPIDAO.selectAcceleratorInfo(vo);
         if (resultVO == null){
-            throw processException("info.nodata.msg");
+            throw new BaseRuntimeException(processException("info.nodata.msg"));
         }
         return resultVO;
     }

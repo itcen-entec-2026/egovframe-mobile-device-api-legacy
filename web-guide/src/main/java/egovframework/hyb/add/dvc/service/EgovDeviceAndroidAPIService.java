@@ -61,10 +61,8 @@ public interface EgovDeviceAndroidAPIService {
      * 디바이스 정보를 조회한다.
      * @param vo - 조회할 정보가 담긴 DeviceAPIVO
      * @return 조회한 디바이스 정보
-     * @throws BaseRuntimeException
-     * @throws@ Exception
      */
-    DeviceAndroidAPIVO selectDeviceInfo(DeviceAndroidAPIVO vo) throws BaseRuntimeException, Exception;
+    DeviceAndroidAPIVO selectDeviceInfo(DeviceAndroidAPIVO vo);
     
     /**
      * 디바이스 정보 목록을 조회한다.

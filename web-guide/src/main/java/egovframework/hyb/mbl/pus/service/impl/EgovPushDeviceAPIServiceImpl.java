@@ -236,7 +236,6 @@ public class EgovPushDeviceAPIServiceImpl extends EgovAbstractServiceImpl implem
 	 * Push Notification 기기 상세 조회를 한다.
 	 * @param vo - 등록할 정보가 담긴 PushDeviceAPIVO
 	 * @return 조회 결과
-	 * @throws@ Exception
 	 */
     public PushDeviceAPIVO selectPushDevice(PushDeviceAPIVO vo) {
         return pushDeviceAPIDAO.selectPushDevice(vo);
@@ -246,7 +245,6 @@ public class EgovPushDeviceAPIServiceImpl extends EgovAbstractServiceImpl implem
 	 * Push Notification 송신 메세지 조회를 한다.
 	 * @param vo - 등록할 정보가 담긴 PushDeviceAPIVO
 	 * @return 조회 결과
-	 * @throws@ Exception
 	 */
     public List<?> selectPushMessageList(PushDeviceAPIVO VO) {
         return pushDeviceAPIDAO.selectPushMessageList(VO);

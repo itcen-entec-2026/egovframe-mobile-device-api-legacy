@@ -61,10 +61,8 @@ public interface EgovCompassAndroidAPIService {
      * 방향 정보를 조회한다.
      * @param vo - 조회할 정보가 담긴 CompassAPIVO
      * @return 조회한 방향 정보
-     * @throws BaseRuntimeException
-     * @throws@ Exception
      */
-    CompassAndroidAPIVO selectCompassInfo(CompassAndroidAPIVO vo) throws BaseRuntimeException, Exception;
+    CompassAndroidAPIVO selectCompassInfo(CompassAndroidAPIVO vo);
     
     /**
      * 방향 정보 목록을 조회한다.

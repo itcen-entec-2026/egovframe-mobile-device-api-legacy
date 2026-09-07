@@ -73,8 +73,6 @@ public class EgovDeviceAndroidAPIController {
      * @param searchVO - 조회할 정보가 담긴 DeviceAPIDefaultVO
      * @param model
      * @return "/dvc/xml/deviceInfoList.do"
-     * @throws@ Exception 
-     * @throws BaseRuntimeException 
      */
     @ApiOperation(value="Device 세부정보 조회", notes="[Android] Device 세부정보를 조회한다.", response=DeviceAndroidAPIVO.class)
     @ApiImplicitParams({
@@ -82,7 +80,7 @@ public class EgovDeviceAndroidAPIController {
     })
     @RequestMapping(value="/dvc/xml/deviceInfo.do")
     public @ResponseBody DeviceAndroidAPIVO selectDeviceInfoXML(@ModelAttribute("searchVO") DeviceAndroidAPIVO searchVO,
-            HttpServletRequest request, ModelMap model) throws BaseRuntimeException, Exception {
+            HttpServletRequest request, ModelMap model) {
 
         DeviceAndroidAPIVO deviceInfo = egovDeviceAndroidAPIService.selectDeviceInfo(searchVO);
         if (deviceInfo != null) {
@@ -150,8 +148,6 @@ public class EgovDeviceAndroidAPIController {
      * @param searchVO - 목록 조회조건 정보가 담긴 VO
      * @param status
      * @return "forward:/dvc/xml/withdrawal.do"
-     * @throws@ Exception 
-     * @throws BaseRuntimeException 
      */
     @ApiOperation(value="Device 세부정보 삭제", notes="[Android] Device 세부정보를 삭제한다.\nresponseOK = {\"resultState\",\"OK\"}")
     @ApiImplicitParams({
@@ -161,7 +157,7 @@ public class EgovDeviceAndroidAPIController {
     public @ResponseBody DeviceAndroidAPIVO withdrawalXml(
                 DeviceAndroidAPIVO deviceVO,
             HttpServletRequest request,
-            BindingResult bindingResult, Model model, SessionStatus status) throws BaseRuntimeException, Exception {
+            BindingResult bindingResult, Model model, SessionStatus status) {
 
         DeviceAndroidAPIVO deviceInfo = egovDeviceAndroidAPIService.selectDeviceInfo(deviceVO);
         if (deviceInfo == null) {

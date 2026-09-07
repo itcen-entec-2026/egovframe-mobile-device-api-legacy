@@ -61,10 +61,8 @@ public interface EgovAcceleratorAndroidAPIService {
      * 가속도 정보를 조회한다.
      * @param vo - 조회할 정보가 담긴 AcceleratorAPIVO
      * @return 조회한 가속도 정보
-     * @throws BaseRuntimeException
-     * @throws@ Exception
      */
-    AcceleratorAndroidAPIVO selectAcceleratorInfo(AcceleratorAndroidAPIVO vo) throws BaseRuntimeException, Exception;
+    AcceleratorAndroidAPIVO selectAcceleratorInfo(AcceleratorAndroidAPIVO vo);
     
     /**
      * 가속도 정보 목록을 조회한다.

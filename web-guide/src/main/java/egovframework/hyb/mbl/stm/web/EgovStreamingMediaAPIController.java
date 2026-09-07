@@ -68,7 +68,6 @@ public class EgovStreamingMediaAPIController {
 	 * 미디어 목록을 조회한다.
 	 * @param VO - 조회할 정보가 담긴 StreamingMediaAPIVO
 	 * @return 조회 목록
-	 * @throws@ Exception
 	 */
     @ApiOperation(value="StreamingMedia 정보 목록조회", notes="StreamingMedia 정보 목록을 조회한다.", response=StreamingMediaAPIVO.class, responseContainer="List")
 	@RequestMapping("/stm/mediaInfoList.do")
