@@ -40,47 +40,41 @@ public interface EgovNetworkAndroidAPIService {
      * 네트워크 정보를 등록한다.
      * @param vo - 등록할 정보가 담긴 NetworkAPIVO
      * @return 등록 결과
-     * @exception Exception
      */
-    public int insertNetworkInfo(NetworkAndroidAPIVO vo) throws Exception;
+    public int insertNetworkInfo(NetworkAndroidAPIVO vo);
     
     /**
      * 네트워크 정보를 수정한다.
      * @param vo - 수정할 정보가 담긴 NetworkAPIVO
      * @return void형
-     * @exception Exception
      */
-    public int updateNetworkInfo(NetworkAndroidAPIVO vo) throws Exception;
+    public int updateNetworkInfo(NetworkAndroidAPIVO vo);
     
     /**
      * 네트워크 정보를 삭제한다.
      * @param vo - 삭제할 정보가 담긴 NetworkAPIVO
      * @return void형 
-     * @exception Exception
      */
-    public int deleteNetworkInfo(NetworkAndroidAPIVO vo) throws Exception;
+    public int deleteNetworkInfo(NetworkAndroidAPIVO vo);
     
     /**
      * 네트워크 정보를 조회한다.
      * @param vo - 조회할 정보가 담긴 NetworkAPIVO
      * @return 조회한 네트워크 정보
-     * @exception Exception
      */
-    public NetworkAndroidAPIVO selectNetworkInfo(NetworkAndroidAPIVO vo) throws Exception;
+    public NetworkAndroidAPIVO selectNetworkInfo(NetworkAndroidAPIVO vo);
     
     /**
      * 네트워크 정보 목록을 조회한다.
      * @param VO - 조회할 정보가 담긴 NetworkAPIVO
      * @return 네트워크 정보 목록
-     * @exception Exception
      */
-    public List<?> selectNetworkInfoList(NetworkAndroidAPIDefaultVO searchNetworkVO) throws Exception;
+    public List<?> selectNetworkInfoList(NetworkAndroidAPIDefaultVO searchNetworkVO);
     
     /**
      * 미디어 파일을 조회한다.
      * @param mp3FilePath
      * @return 파일 정보
-     * @exception Exception
      */
-    public boolean selectMediaFileInf(HttpServletResponse response, String mp3FilePath) throws Exception;
+    public boolean selectMediaFileInf(HttpServletResponse response, String mp3FilePath);
 }

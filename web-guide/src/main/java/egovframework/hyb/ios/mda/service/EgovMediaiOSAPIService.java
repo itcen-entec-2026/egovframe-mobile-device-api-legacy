@@ -41,40 +41,35 @@ public interface EgovMediaiOSAPIService {
 	 * 녹음 Media를 등록한다.
 	 * @param vo - 등록할 정보가 담긴 MediaiOSAPIVO
 	 * @return void형
-	 * @exception Exception
 	 */
-	public int insertMediaInfo(MediaiOSAPIVO vo, int fileSn) throws Exception;
+	public int insertMediaInfo(MediaiOSAPIVO vo, int fileSn);
 	
 	/**
 	 * 녹음 파일을 등록한다.
 	 * @param vo - 등록할 정보가 담긴 MediaiOSAPIFileVO
 	 * @return void형
-	 * @exception Exception
 	 */
-	public int insertMediaRecordFile(MediaiOSAPIFileVO vo) throws Exception;
+	public int insertMediaRecordFile(MediaiOSAPIFileVO vo);
 	
 	/**
 	 * 미디어 정보를 조회한다.
 	 * @param VO - 조회할 정보가 담긴 MediaiOSAPIVO
 	 * @return 조회 목록
-	 * @exception Exception
 	 */
-	public MediaiOSAPIFileVO selectMediaInfoDetail(MediaiOSAPIVO vo) throws Exception;
+	public MediaiOSAPIFileVO selectMediaInfoDetail(MediaiOSAPIVO vo);
 	
 	/**
 	 * 미디어 목록을 조회한다.
 	 * @param VO - 조회할 정보가 담긴 MediaiOSAPIVO
 	 * @return 조회 목록
-	 * @exception Exception
 	 */
-	public List<?> selectMediaInfoList(MediaiOSAPIVO vo) throws Exception;
+	public List<?> selectMediaInfoList(MediaiOSAPIVO vo);
 	
 	
 	/**
 	 * 미디어 파일을 조회한다.
 	 * @param VO - 조회할 정보가 담긴 MediaiOSAPIFileVO
 	 * @return 파일 정보
-	 * @exception Exception
 	 */
-	public boolean selectMediaFileInf(HttpServletResponse response, MediaiOSAPIFileVO vo) throws Exception;
+	public boolean selectMediaFileInf(HttpServletResponse response, MediaiOSAPIFileVO vo);
 }

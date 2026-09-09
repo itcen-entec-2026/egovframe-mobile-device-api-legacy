@@ -10,21 +10,22 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-import egovframework.com.cmm.security.DeviceAPIFileUploadValidator;
-import egovframework.hyb.ios.mda.service.EgovMediaiOSAPIService;
-import egovframework.hyb.ios.mda.service.MediaiOSAPIFileVO;
-
-import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
-import egovframework.rte.fdl.cmmn.exception.EgovBizException;
-import egovframework.rte.fdl.idgnr.EgovIdGnrService;
-import egovframework.rte.fdl.property.EgovPropertyService;
-
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import egovframework.com.cmm.security.DeviceAPIFileUploadValidator;
+import egovframework.hyb.ios.mda.service.EgovMediaiOSAPIService;
+import egovframework.hyb.ios.mda.service.MediaiOSAPIFileVO;
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.exception.BaseRuntimeException;
+import egovframework.rte.fdl.cmmn.exception.EgovBizException;
+import egovframework.rte.fdl.cmmn.exception.FdlException;
+import egovframework.rte.fdl.idgnr.EgovIdGnrService;
+import egovframework.rte.fdl.property.EgovPropertyService;
 
 /**  
  * @Class Name : EgovFileTransfer.java
@@ -61,7 +62,7 @@ public class EgovMediaiOSFileMngUtil extends EgovAbstractServiceImpl {
 	private EgovIdGnrService egovFileIdGnrService;
 	
 	
-	public MediaiOSAPIFileVO writeUploadedFile(MultipartFile file) throws Exception{
+	public MediaiOSAPIFileVO writeUploadedFile(MultipartFile file) {
 
 		DeviceAPIFileUploadValidator.validateMdaUpload(file);
 
@@ -75,7 +76,11 @@ public class EgovMediaiOSFileMngUtil extends EgovAbstractServiceImpl {
 		
 		MediaiOSAPIFileVO fileVO = new MediaiOSAPIFileVO();
 		
-		fileVO.setFileSn(egovFileIdGnrService.getNextIntegerId());
+		try {
+			fileVO.setFileSn(egovFileIdGnrService.getNextIntegerId());
+		} catch (FdlException e) {
+			throw new BaseRuntimeException(e);
+		}
 		fileVO.setFileStreCours(filePath);
 		fileVO.setStreFileNm(newName);
 		fileVO.setOrignlFileNm(originFileName);
@@ -98,24 +103,15 @@ public class EgovMediaiOSFileMngUtil extends EgovAbstractServiceImpl {
 					
 				}
 			//2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 95-95
-			}catch(NullPointerException e){
-				LOGGER.error("[NullPointerException] Try/Catch...NullPointerException : " + e.getMessage());
-				throw new EgovBizException("Fail to create file : " + e.getMessage());
-			}catch(FileNotFoundException e){
-				LOGGER.error("[FileNotFoundException] Try/Catch...FileNotFoundException : " + e.getMessage());
-				throw new EgovBizException("Fail to find file : " + e.getMessage());
-			}catch (Exception e) {
-				LOGGER.error("["+e.getClass()+"] Try/Catch... : " + e.getMessage());
-				throw new EgovBizException("Fail to upload file : " + e.getMessage());
+			}catch(IOException e){
+				throw new BaseRuntimeException(e);
 			}finally{
 				try {
 					if(out != null){
 						out.close();
 					}
-					
 				} catch (IOException e) {
-					LOGGER.debug("Fail to close fileoutputstrem : {}", e.getMessage());
-					
+					throw new BaseRuntimeException(e);
 				}
 			}
 		}
@@ -137,11 +133,7 @@ public class EgovMediaiOSFileMngUtil extends EgovAbstractServiceImpl {
 		    rtnStr = sdfCurrent.format(ts.getTime());
 		//2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 126-126
 		} catch(NullPointerException e){
-			LOGGER.error("[NullPointerException] Try/Catch... : " + e.getMessage());
-		} catch (Exception e) {
-		    //e.printStackTrace();			
-		    //throw new RuntimeException(e);	// 보안점검 후속조치
-			LOGGER.error("["+e.getClass()+"] Try/Catch... : " + e.getMessage());
+			throw new BaseRuntimeException(e);
 		}
 
 		return rtnStr;

@@ -38,8 +38,7 @@ public interface EgovResourceUpdateDeviceAPIService {
 	 * Push Device 정보 목록을 조회한다.
 	 * @param VO - 조회할 정보가 담긴 PushDeviceAPIDefaultVO
 	 * @return 네트워크 정보 목록
-	 * @exception Exception
 	 */
-	ResourceUpdateDeviceAPIVO selectResourceUpdateVersionInfo(ResourceUpdateDeviceAPIVO searchVO) throws Exception;
+	ResourceUpdateDeviceAPIVO selectResourceUpdateVersionInfo(ResourceUpdateDeviceAPIVO searchVO);
 
 }

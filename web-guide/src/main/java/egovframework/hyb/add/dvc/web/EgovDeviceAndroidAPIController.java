@@ -34,6 +34,7 @@ import egovframework.hyb.add.dvc.service.DeviceAndroidAPIVO;
 import egovframework.hyb.add.dvc.service.DeviceAndroidAPIVOList;
 import egovframework.com.cmm.security.DeviceAPIAuthSupport;
 import egovframework.hyb.add.dvc.service.EgovDeviceAndroidAPIService;
+import egovframework.rte.fdl.cmmn.exception.BaseRuntimeException;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -72,7 +73,6 @@ public class EgovDeviceAndroidAPIController {
      * @param searchVO - 조회할 정보가 담긴 DeviceAPIDefaultVO
      * @param model
      * @return "/dvc/xml/deviceInfoList.do"
-     * @exception Exception
      */
     @ApiOperation(value="Device 세부정보 조회", notes="[Android] Device 세부정보를 조회한다.", response=DeviceAndroidAPIVO.class)
     @ApiImplicitParams({
@@ -80,8 +80,7 @@ public class EgovDeviceAndroidAPIController {
     })
     @RequestMapping(value="/dvc/xml/deviceInfo.do")
     public @ResponseBody DeviceAndroidAPIVO selectDeviceInfoXML(@ModelAttribute("searchVO") DeviceAndroidAPIVO searchVO,
-            HttpServletRequest request, ModelMap model)
-            throws Exception {
+            HttpServletRequest request, ModelMap model) {
 
         DeviceAndroidAPIVO deviceInfo = egovDeviceAndroidAPIService.selectDeviceInfo(searchVO);
         if (deviceInfo != null) {
@@ -95,7 +94,6 @@ public class EgovDeviceAndroidAPIController {
      * @param searchVO - 조회할 정보가 담긴 DeviceAPIDefaultVO
      * @param model
      * @return "/dvc/xml/deviceInfoList.do"
-     * @exception Exception
      */
     @ApiOperation(value="Device 정보 목록조회", notes="[Android] Device 정보 목록을 조회한다.", response=DeviceAndroidAPIVO.class, responseContainer="List")
     @ApiImplicitParams({
@@ -104,8 +102,7 @@ public class EgovDeviceAndroidAPIController {
     @SuppressWarnings("unchecked")
 	@RequestMapping(value="/dvc/xml/deviceInfoList.do")
     public @ResponseBody DeviceAndroidAPIVOList selectDeviceInfoXMLList(@ModelAttribute("searchVO") DeviceAndroidAPIDefaultVO searchVO, 
-            ModelMap model)
-            throws Exception {
+            ModelMap model) {
         
         List<DeviceAndroidAPIVO> deviceInfoList = (List<DeviceAndroidAPIVO>) egovDeviceAndroidAPIService.selectDeviceInfoList(searchVO);
         
@@ -122,7 +119,6 @@ public class EgovDeviceAndroidAPIController {
      * @param searchVO - 목록 조회조건 정보가 담긴 DeviceAPIDefaultVO
      * @param status
      * @return "forward:/dvc/xml/addDeviceInfo.do"
-     * @exception Exception
      */
     @ApiOperation(value="Device 세부정보 등록", notes="[Android] Device 세부정보를 등록한다.\nresponseOK = {\"resultState\",\"OK\"}")
     @ApiImplicitParams({
@@ -131,8 +127,7 @@ public class EgovDeviceAndroidAPIController {
     @RequestMapping("/dvc/xml/addDeviceInfo.do")
     public @ResponseBody DeviceAndroidAPIVO addDeviceInfoXml(
                 DeviceAndroidAPIVO deviceVO,
-            BindingResult bindingResult, Model model, SessionStatus status) 
-            throws Exception {
+            BindingResult bindingResult, Model model, SessionStatus status) {
 
         DeviceAndroidAPIVO deviceAPIVO = new DeviceAndroidAPIVO();
 
@@ -153,7 +148,6 @@ public class EgovDeviceAndroidAPIController {
      * @param searchVO - 목록 조회조건 정보가 담긴 VO
      * @param status
      * @return "forward:/dvc/xml/withdrawal.do"
-     * @exception Exception
      */
     @ApiOperation(value="Device 세부정보 삭제", notes="[Android] Device 세부정보를 삭제한다.\nresponseOK = {\"resultState\",\"OK\"}")
     @ApiImplicitParams({
@@ -163,8 +157,7 @@ public class EgovDeviceAndroidAPIController {
     public @ResponseBody DeviceAndroidAPIVO withdrawalXml(
                 DeviceAndroidAPIVO deviceVO,
             HttpServletRequest request,
-            BindingResult bindingResult, Model model, SessionStatus status) 
-    throws Exception {
+            BindingResult bindingResult, Model model, SessionStatus status) {
 
         DeviceAndroidAPIVO deviceInfo = egovDeviceAndroidAPIService.selectDeviceInfo(deviceVO);
         if (deviceInfo == null) {

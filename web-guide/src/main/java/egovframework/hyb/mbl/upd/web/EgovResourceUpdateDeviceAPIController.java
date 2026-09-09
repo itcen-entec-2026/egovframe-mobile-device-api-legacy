@@ -72,7 +72,6 @@ public class EgovResourceUpdateDeviceAPIController {
 	 * @param searchVO - 조회할 정보가 담긴 ResourceUpdateDeviceAPIDefaultVO
 	 * @param model
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="WebResourceUpdate 정보 목록조회", notes="WebResourceUpdate 정보 목록을 조회한다.", response=ResourceUpdateDeviceAPIVO.class, responseContainer="List")
     @ApiImplicitParams({
@@ -81,8 +80,7 @@ public class EgovResourceUpdateDeviceAPIController {
     })
     @RequestMapping(value="/upd/ResourceUpdateVersionInfo.do")
     public ModelAndView selectVibratorInfoList(@ModelAttribute("resourceUpdateDeviceAPIDefaultVO") ResourceUpdateDeviceAPIVO searchVO, 
-    		ModelMap model)
-            throws Exception {
+    		ModelMap model) {
  
 		ModelAndView jsonView = new ModelAndView("jsonView");
 		ResourceUpdateDeviceAPIVO resourceUpdateDeviceAPIVO = egovResourceUpdateDeviceAPIService.selectResourceUpdateVersionInfo(searchVO);
@@ -99,7 +97,6 @@ public class EgovResourceUpdateDeviceAPIController {
 	 * @param response - HttpServletResponse 
 	 * @param fileVO - 전송할 파일 정보가 담긴 ResourceUpdateDeviceAPIVO 
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="WebResourceUpdate 파일 다운로드", notes="WebResourceUpdate 파일을 다운로드한다.", response=FileOpenerDeviceAPIVO.class)
     @ApiImplicitParams({
@@ -107,7 +104,7 @@ public class EgovResourceUpdateDeviceAPIController {
         @ApiImplicitParam(name = "streFileNm", value = "저장파일명", required = true, dataType = "string", paramType = "query"),
     })
 	@RequestMapping("/upd/ResourceUpdatefileDownload.do")
-	public void fileDownload(HttpServletRequest request, HttpServletResponse response, ResourceUpdateDeviceAPIVO fileVO) throws Exception{
+	public void fileDownload(HttpServletRequest request, HttpServletResponse response, ResourceUpdateDeviceAPIVO fileVO) {
 		log.debug(">>> fileVO.getOrignlFileNm() = "+fileVO.getOrignlFileNm());
 		log.debug(">>> fileVO.getStreFileNm() = "+fileVO.getStreFileNm());
 		egovFileMngUtil.fileDownload(request, response, fileVO.getOrignlFileNm(), fileVO.getStreFileNm());

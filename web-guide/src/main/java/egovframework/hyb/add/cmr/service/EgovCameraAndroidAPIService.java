@@ -40,63 +40,55 @@ public interface EgovCameraAndroidAPIService {
      * 이미지를 등록한다.
      * @param vo - 등록할 정보가 담긴 CameraAPIVO
      * @return void형
-     * @exception Exception
      */
-    public int insertCameraPhotoAlbum(CameraAndroidAPIVO vo, int fileSn) throws Exception;
+    public int insertCameraPhotoAlbum(CameraAndroidAPIVO vo, int fileSn);
     
     /**
      * 이미지 파일을 등록한다.
      * @param vo - 등록할 정보가 담긴 CameraAPIVO
      * @return void형
-     * @exception Exception
      */
-    public int insertCameraPhotoAlbumFile(CameraAndroidAPIFileVO vo) throws Exception;
+    public int insertCameraPhotoAlbumFile(CameraAndroidAPIFileVO vo);
     
     /**
      * 이미지를 수정한다.
      * @param vo - 등록할 정보가 담긴 CameraAPIVO
      * @return void형
-     * @exception Exception
      */
-    public int updateCameraPhotoAlbumFile(CameraAndroidAPIVO vo, int fileSn) throws Exception;
+    public int updateCameraPhotoAlbumFile(CameraAndroidAPIVO vo, int fileSn);
     
     /**
      * 이미지를 삭제한다.
      * @param vo - 삭제할 정보가 담긴 CameraAPIVO
      * @return void형 
-     * @exception Exception
      */
-    public boolean deleteCameraPhotoAlbum(CameraAndroidAPIVO vo) throws Exception;
+    public boolean deleteCameraPhotoAlbum(CameraAndroidAPIVO vo);
     
     /**
      * 이미지를 조회한다.
      * @param vo - 조회할 정보가 담긴 CameraAPIVO
      * @return 조회한 이미지 정보
-     * @exception Exception
      */
-    public CameraAndroidAPIVO selectCameraPhotoAlbum(CameraAndroidAPIVO vo) throws Exception;
+    public CameraAndroidAPIVO selectCameraPhotoAlbum(CameraAndroidAPIVO vo);
     
     /**
      * 이미지 목록을 조회한다.
      * @param VO - 조회할 정보가 담긴 CameraAPIVO
      * @return 이미지 정보 목록
-     * @exception Exception
      */
-    public List<?> selectCameraPhotoAlbumList(CameraAndroidAPIDefaultVO searchVO) throws Exception;
+    public List<?> selectCameraPhotoAlbumList(CameraAndroidAPIDefaultVO searchVO);
     
     /**
      * 이미지 파일을 조회한다.
      * @param VO - 조회할 정보가 담긴 CameraAndroidAPIFileVO
      * @return 파일 정보
-     * @exception Exception
      */
-    public boolean selectImageFileInf(HttpServletResponse response, CameraAndroidAPIFileVO vo) throws Exception;
+    public boolean selectImageFileInf(HttpServletResponse response, CameraAndroidAPIFileVO vo);
     
     /**
      * 이미지 제목 중복을 조회한다.
      * @param vo - 조회할 정보가 담긴 CameraAPIVO
      * @return 조회한 이미지 정보
-     * @exception Exception
      */
-    public CameraAndroidAPIFileVO selectCameraPhotoAlbumPhotoSj(CameraAndroidAPIVO vo) throws Exception;
+    public CameraAndroidAPIFileVO selectCameraPhotoAlbumPhotoSj(CameraAndroidAPIVO vo);
 }  

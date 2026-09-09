@@ -1,23 +1,24 @@
 package egovframework.hyb.ios.ctt.web;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-import egovframework.hyb.add.ctt.service.ContactsAndroidAPIVO;
-import egovframework.hyb.ios.ctt.service.ContactsiOSAPIVO;
-import egovframework.hyb.ios.ctt.service.EgovContactsiOSAPIService;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-
 import javax.annotation.Resource;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import egovframework.hyb.add.ctt.service.ContactsAndroidAPIVO;
+import egovframework.hyb.ios.ctt.service.ContactsiOSAPIVO;
+import egovframework.hyb.ios.ctt.service.EgovContactsiOSAPIService;
+import egovframework.rte.fdl.cmmn.exception.BaseRuntimeException;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /**  
  * @Class Name : EgovContactsiOSAPIController.java
@@ -47,7 +48,6 @@ public class EgovContactsiOSAPIController {
 	 * 연락처  정보 목록을 조회한다.
 	 * @param contactVO - 조회할 정보가 담긴 ContactsiOSAPIVO 
 	 * @return ContactsiOSAPIVOList
-	 * @exception Exception
 	 */
     @ApiOperation(value="연락처 정보 목록조회", notes="[iOS] 연락처 정보 목록을 조회한다.", response=ContactsAndroidAPIVO.class, responseContainer="List")
     @ApiImplicitParams({
@@ -55,7 +55,7 @@ public class EgovContactsiOSAPIController {
     })
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/ctt/contactsiOSInfoList.do")
-	public ModelAndView selectContactsInfoListXml(ContactsiOSAPIVO contactVO) throws Exception{
+	public ModelAndView selectContactsInfoListXml(ContactsiOSAPIVO contactVO) {
 		
 		List<ContactsiOSAPIVO> contactInfoList = (List<ContactsiOSAPIVO>) egovContactsiOSAPIService.selectContactsInfoList(contactVO);
 		
@@ -71,7 +71,6 @@ public class EgovContactsiOSAPIController {
 	 * 연락처  정보 Backup 을 요청 한다.
 	 * @param contactVO - 연락처 정보가 담긴 ContactsiOSAPIVO 
 	 * @return ContactsiOSAPIVO
-	 * @exception Exception
 	 */
     @ApiOperation(value="연락처 정보 Backup 요청", notes="[iOS] 연락처 정보 Backup을 요청한다.\nresponseOK = {\"resultState\",\"OK\"}")
     @ApiImplicitParams({
@@ -79,9 +78,14 @@ public class EgovContactsiOSAPIController {
         @ApiImplicitParam(name = "contactsList", value = "연락처 리스트", required = true, dataType = "string", paramType = "query")
     })
 	@RequestMapping("/ctt/addContactsiOSInfo.do")
-	public @ResponseBody ContactsiOSAPIVO addContactsInfoXml(ContactsiOSAPIVO contactVO) throws Exception{
+	public @ResponseBody ContactsiOSAPIVO addContactsInfoXml(ContactsiOSAPIVO contactVO) {
 		String makeJSONString = contactVO.getContactsList().replaceAll("&quot;", "\"");
-		String decodeName = java.net.URLDecoder.decode(makeJSONString,"utf-8");
+		String decodeName;
+		try {
+			decodeName = java.net.URLDecoder.decode(makeJSONString,"utf-8");
+		} catch (UnsupportedEncodingException e) {
+			throw new BaseRuntimeException(e);
+		}
 		JSONObject jsonObject = JSONObject.fromObject(decodeName);
 		JSONArray jsonArray = jsonObject.getJSONArray("contactsList");
 		
@@ -120,7 +124,6 @@ public class EgovContactsiOSAPIController {
 	 * 연락처  정보의 id를 update 한다.
 	 * @param contactVO - 연락처 정보가 담긴 ContactsiOSAPIVO 
 	 * @return ContactsiOSAPIVO
-	 * @exception Exception
 	 */
     @ApiOperation(value="연락처 세부정보 수정", notes="[Android] 연락처 세부정보를 등록한다.\nresponseOK = {\"resultState\",\"OK\"}")
     @ApiImplicitParams({
@@ -128,7 +131,7 @@ public class EgovContactsiOSAPIController {
         @ApiImplicitParam(name = "contactsList", value = "연락처 리스트", required = true, dataType = "string", paramType = "query")
     })
 	@RequestMapping("/ctt/updateContactsiOS.do")
-	public @ResponseBody ContactsiOSAPIVO updateContactsiOS(ContactsiOSAPIVO contactVO) throws Exception{
+	public @ResponseBody ContactsiOSAPIVO updateContactsiOS(ContactsiOSAPIVO contactVO) {
 		String makeJSONString = contactVO.getContactsList().replaceAll("&quot;", "\"");
 		
 		JSONObject jsonObject = JSONObject.fromObject(makeJSONString);
@@ -166,7 +169,6 @@ public class EgovContactsiOSAPIController {
 	 * 연락처  정보  삭제를 요청 한다.
 	 * @param contactVO - 삭제할 정보가 담긴 ContactsiOSAPIVO 
 	 * @return ContactsiOSAPIVO
-	 * @exception Exception
 	 */
     @ApiOperation(value="연락처 세부정보 삭제", notes="[iOS] 연락처 세부정보를 삭제한다.\nresponseOK = {\"resultState\",\"OK\"}")
     @ApiImplicitParams({
@@ -175,7 +177,7 @@ public class EgovContactsiOSAPIController {
     	 @ApiImplicitParam(name = "telNo", value = "연락처 전화번호", required = true, dataType = "string", paramType = "query")
     })
 	@RequestMapping("/ctt/deleteContactsiOS.do")
-	public @ResponseBody ContactsiOSAPIVO deleteContactsiOS(ContactsiOSAPIVO contactVO) throws Exception{
+	public @ResponseBody ContactsiOSAPIVO deleteContactsiOS(ContactsiOSAPIVO contactVO) {
 		
 		ContactsiOSAPIVO contactsiOSAPIVO = new ContactsiOSAPIVO();
 		
@@ -196,14 +198,13 @@ public class EgovContactsiOSAPIController {
 	 * 백업된 연락처  총 개수를 조회한다.
 	 * @param fileVO - 조회할 정보가 담긴 ContactsiOSAPIVO 
 	 * @return ContactsiOSAPIVOList
-	 * @exception Exception
 	 */
     @ApiOperation(value="백업된 연락처 총 개수 조회", notes="[iOS] 백업된 연락처 총 개수를 조회한다.", response=ContactsAndroidAPIVO.class)
     @ApiImplicitParams({
     	@ApiImplicitParam(name = "uuid", value = "기기식별코드", required = true, dataType = "string", paramType = "query"),
     })
 	@RequestMapping("/ctt/selectBackupCountiOS.do")
-	public @ResponseBody ContactsiOSAPIVO selectContactsCount(ContactsiOSAPIVO fileVO) throws Exception{
+	public @ResponseBody ContactsiOSAPIVO selectContactsCount(ContactsiOSAPIVO fileVO) {
 		int nCount = egovContactsiOSAPIService.selectContactsCount(fileVO);
 		ContactsiOSAPIVO contactsiOSAPIVO  = new ContactsiOSAPIVO();
 		contactsiOSAPIVO.setTotCount(nCount);

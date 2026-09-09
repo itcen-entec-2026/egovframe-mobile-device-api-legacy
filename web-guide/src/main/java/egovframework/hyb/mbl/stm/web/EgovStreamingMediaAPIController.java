@@ -1,6 +1,7 @@
 package egovframework.hyb.mbl.stm.web;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
@@ -20,12 +21,13 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.AbstractView;
 
-import egovframework.hyb.ios.dvc.service.DeviceiOSAPIVO;
 import egovframework.com.cmm.security.DeviceAPIAuthSupport;
+import egovframework.hyb.ios.dvc.service.DeviceiOSAPIVO;
 import egovframework.hyb.mbl.stm.service.EgovStreamingMediaAPIService;
 import egovframework.hyb.mbl.stm.service.StreamingMediaAPIDefaultVO;
 import egovframework.hyb.mbl.stm.service.StreamingMediaAPIFileVO;
 import egovframework.hyb.mbl.stm.service.StreamingMediaAPIVO;
+import egovframework.rte.fdl.cmmn.exception.BaseRuntimeException;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -66,12 +68,11 @@ public class EgovStreamingMediaAPIController {
 	 * 미디어 목록을 조회한다.
 	 * @param VO - 조회할 정보가 담긴 StreamingMediaAPIVO
 	 * @return 조회 목록
-	 * @exception Exception
 	 */
     @ApiOperation(value="StreamingMedia 정보 목록조회", notes="StreamingMedia 정보 목록을 조회한다.", response=StreamingMediaAPIVO.class, responseContainer="List")
 	@RequestMapping("/stm/mediaInfoList.do")
 	public @ResponseBody
-	ModelAndView selectMediaInfoList(StreamingMediaAPIDefaultVO vo) throws Exception {
+	ModelAndView selectMediaInfoList(StreamingMediaAPIDefaultVO vo) {
 		
 		ModelAndView jsonView = new ModelAndView("jsonView");
 		
@@ -88,7 +89,7 @@ public class EgovStreamingMediaAPIController {
         @ApiImplicitParam(name = "sn", value = "일련번호", required = true, dataType = "int", paramType = "query"),
     })
 	@RequestMapping("/stm/updateMediaInfoRevivCo.do")
-	public ModelAndView updateMediaInfoRevivCo(@RequestParam("sn") String sn, HttpServletRequest request) throws Exception {
+	public ModelAndView updateMediaInfoRevivCo(@RequestParam("sn") String sn, HttpServletRequest request) {
 
 		if (sn != null && !"".equals(sn)) {
 			StreamingMediaAPIVO vo = new StreamingMediaAPIVO();
@@ -110,11 +111,11 @@ public class EgovStreamingMediaAPIController {
     })
 	@RequestMapping("/stm/getMediaStreaming.do")
 	public ModelAndView getMediaStreaming(@RequestParam("sn") final String sn,
-			final HttpServletRequest request, HttpServletResponse response) throws Exception {
+			final HttpServletRequest request, HttpServletResponse response) {
 
 		View streamView = new AbstractView() {
 	        @Override
-	        protected void renderMergedOutputModel(Map model, HttpServletRequest req, HttpServletResponse resp) throws Exception {
+	        protected void renderMergedOutputModel(Map model, HttpServletRequest req, HttpServletResponse resp) {
 	            
 	        	StreamingMediaAPIFileVO resultVO = null;
 	    		if (sn != null && !"".equals(sn)) {
@@ -124,12 +125,21 @@ public class EgovStreamingMediaAPIController {
 	    			resultVO = egovStreamingMediaAPIService.selectMediaFileURL(vo);
 	    		}
 	    		if (resultVO == null) {
-	    			resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Media access denied.");
+	    			try {
+						resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Media access denied.");
+					} catch (IOException e) {
+						throw new BaseRuntimeException(e);
+					}
 	    			return;
 	    		}
 
-	    		RandomAccessFile rf = new RandomAccessFile(new File(
-	    				resultVO.getFileStreCours().toString() + resultVO.getStreFileNm().toString()), "r");
+	    		RandomAccessFile rf;
+				try {
+					rf = new RandomAccessFile(new File(
+							resultVO.getFileStreCours().toString() + resultVO.getStreFileNm().toString()), "r");
+				} catch (FileNotFoundException e) {
+					throw new BaseRuntimeException(e);
+				}
 	    		
 	    		long rangeStart = 0;
 	    		long rangeEnd = 0;
@@ -180,9 +190,13 @@ public class EgovStreamingMediaAPIController {
 	    			}while(partSize > 0);
 	    			
 	    		}catch(IOException e){
-	    			e.getStackTrace();
+	    			throw new BaseRuntimeException(e);
 	    		}finally{
-	    			rf.close();
+	    			try {
+						rf.close();
+					} catch (IOException e) {
+						throw new BaseRuntimeException(e);
+					}
 	    		}
 	    		
 	        }

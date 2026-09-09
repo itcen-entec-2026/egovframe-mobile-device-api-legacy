@@ -25,6 +25,7 @@ import egovframework.hyb.add.acl.service.AcceleratorAndroidAPIDefaultVO;
 import egovframework.hyb.add.acl.service.AcceleratorAndroidAPIVO;
 import egovframework.hyb.add.acl.service.EgovAcceleratorAndroidAPIService;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.exception.BaseRuntimeException;
 
 /**  
  * @Class Name : EgovAcceleratorAPIServiceImpl.java
@@ -53,9 +54,8 @@ public class EgovAcceleratorAndroidAPIServiceImpl extends EgovAbstractServiceImp
      * 가속도 정보를 등록한다.
      * @param vo - 등록할 정보가 담긴 AcceleratorAPIVO
      * @return 등록 결과
-     * @exception Exception
      */
-    public int insertAcceleratorInfo(AcceleratorAndroidAPIVO vo) throws Exception {        
+    public int insertAcceleratorInfo(AcceleratorAndroidAPIVO vo) {        
         return acceleratorAPIDAO.insertAcceleratorInfo(vo);        
     }
 
@@ -63,9 +63,8 @@ public class EgovAcceleratorAndroidAPIServiceImpl extends EgovAbstractServiceImp
      * 가속도 정보를 수정한다.
      * @param vo - 수정할 정보가 담긴 AcceleratorAPIVO
      * @return void형
-     * @exception Exception
      */
-    public void updateAcceleratorInfo(AcceleratorAndroidAPIVO vo) throws Exception {
+    public void updateAcceleratorInfo(AcceleratorAndroidAPIVO vo) {
         acceleratorAPIDAO.updateAcceleratorInfo(vo);
     }
 
@@ -73,9 +72,8 @@ public class EgovAcceleratorAndroidAPIServiceImpl extends EgovAbstractServiceImp
      * 가속도 정보를 삭제한다.
      * @param vo - 삭제할 정보가 담긴 AcceleratorAPIVO
      * @return void형 
-     * @exception Exception
      */
-    public int deleteAcceleratorInfo(AcceleratorAndroidAPIVO vo) throws Exception {
+    public int deleteAcceleratorInfo(AcceleratorAndroidAPIVO vo) {
         return acceleratorAPIDAO.deleteAcceleratorInfo(vo);
     }
 
@@ -83,12 +81,11 @@ public class EgovAcceleratorAndroidAPIServiceImpl extends EgovAbstractServiceImp
      * 가속도 정보를 조회한다.
      * @param vo - 조회할 정보가 담긴 AcceleratorAPIVO
      * @return 조회한 가속도 정보
-     * @exception Exception
      */
-    public AcceleratorAndroidAPIVO selectAcceleratorInfo(AcceleratorAndroidAPIVO vo) throws Exception {
+    public AcceleratorAndroidAPIVO selectAcceleratorInfo(AcceleratorAndroidAPIVO vo) {
         AcceleratorAndroidAPIVO resultVO = acceleratorAPIDAO.selectAcceleratorInfo(vo);
         if (resultVO == null){
-            throw processException("info.nodata.msg");
+            throw new BaseRuntimeException(processException("info.nodata.msg"));
         }
         return resultVO;
     }
@@ -97,9 +94,8 @@ public class EgovAcceleratorAndroidAPIServiceImpl extends EgovAbstractServiceImp
      * 가속도 정보 목록을 조회한다.
      * @param VO - 조회할 정보가 담긴 AcceleratorAPIDefaultVO
      * @return 가속도 정보 목록
-     * @exception Exception
      */
-    public List<?> selectAcceleratorInfoList(AcceleratorAndroidAPIDefaultVO searchVO) throws Exception {
+    public List<?> selectAcceleratorInfoList(AcceleratorAndroidAPIDefaultVO searchVO) {
         return acceleratorAPIDAO.selectAcceleratorInfoList(searchVO);
     }
 
@@ -107,7 +103,6 @@ public class EgovAcceleratorAndroidAPIServiceImpl extends EgovAbstractServiceImp
      * 가속도 정보 총 갯수를 조회한다.
      * @param VO - 조회할 정보가 담긴 AcceleratorAPIDefaultVO
      * @return 가속도 정보 총 갯수
-     * @exception
      */
     public int selectAcceleratorInfoListTotCnt(AcceleratorAndroidAPIDefaultVO searchVO) {
         return acceleratorAPIDAO.selectAcceleratorInfoListTotCnt(searchVO);

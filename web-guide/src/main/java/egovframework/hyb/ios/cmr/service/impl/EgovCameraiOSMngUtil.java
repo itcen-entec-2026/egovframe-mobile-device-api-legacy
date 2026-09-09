@@ -20,7 +20,9 @@ import egovframework.com.cmm.security.DeviceAPIFileUploadValidator;
 import egovframework.hyb.ios.cmr.service.CameraiOSAPIFileVO;
 import egovframework.hyb.ios.cmr.service.EgovCameraiOSAPIService;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.exception.BaseRuntimeException;
 import egovframework.rte.fdl.cmmn.exception.EgovBizException;
+import egovframework.rte.fdl.cmmn.exception.FdlException;
 import egovframework.rte.fdl.idgnr.EgovIdGnrService;
 import egovframework.rte.fdl.property.EgovPropertyService;
 
@@ -58,7 +60,7 @@ public class EgovCameraiOSMngUtil extends EgovAbstractServiceImpl {
 	private EgovIdGnrService egovFileIdGnrService;
 	
 	
-	public CameraiOSAPIFileVO writeUploadedFile(MultipartFile file) throws Exception{
+	public CameraiOSAPIFileVO writeUploadedFile(MultipartFile file) {
 		
 		DeviceAPIFileUploadValidator.validateCmrUpload(file);
 
@@ -71,15 +73,17 @@ public class EgovCameraiOSMngUtil extends EgovAbstractServiceImpl {
 		
 		CameraiOSAPIFileVO fileVO = new CameraiOSAPIFileVO();
 		
-		fileVO.setFileSn(egovFileIdGnrService.getNextIntegerId());
+		try {
+			fileVO.setFileSn(egovFileIdGnrService.getNextIntegerId());
+		} catch (FdlException e) {
+			throw new BaseRuntimeException(e);
+		}
 		fileVO.setFileStreCours(filePath);
 		fileVO.setStreFileNm(newName);
 		fileVO.setOrignlFileNm(originFileName);
 		fileVO.setFileExtsn(fileExt);
 		fileVO.setFileSize(Long.toString(file.getSize()));
-		
-		IOException excep = null;
-		
+
 		if(!file.isEmpty()){
 			InputStream input = null;
 			FileOutputStream out = null;
@@ -96,27 +100,18 @@ public class EgovCameraiOSMngUtil extends EgovAbstractServiceImpl {
 				}
 			//2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 95-95
             }catch(IOException e){
-            	LOGGER.error("["+e.getClass()+"] Try/Catch...bytes : " + e.getMessage());
-            	throw new EgovBizException("Fail to open FileOutPutStream : " + e.getMessage());
-            }catch (Exception e) {
-            	LOGGER.error("["+e.getClass()+"] Fail to upload file : ", e.getMessage());
-				throw new EgovBizException("Fail to upload file : " + e.getMessage());
+            	throw new BaseRuntimeException(e);
 			}finally{
 				try {
 					if(out != null){
 						out.close();
 					}
-					
 				} catch(IOException e) {
-					LOGGER.debug("Fail to close fileoutputstrem : {}", e.getMessage());
-					excep = e;
+					throw new BaseRuntimeException(e);
 				}
 			}
 		}
-		
-		if(excep != null) {
-        	throw new EgovBizException("Fail to close fileoutputstrem : " + excep.getMessage());
-        }
+
 		egovCameraiOSAPIService.insertCameraPhotoAlbumFile(fileVO);
 		
 		return fileVO;
@@ -128,16 +123,9 @@ public class EgovCameraiOSMngUtil extends EgovAbstractServiceImpl {
 		// 문자열로 변환하기 위한 패턴 설정(년도-월-일 시:분:초:초(자정이후 초))
 		String pattern = "yyyyMMddhhmmssSSS";
 
-		try {
-		    SimpleDateFormat sdfCurrent = new SimpleDateFormat(pattern, Locale.KOREA);
-		    Timestamp ts = new Timestamp(System.currentTimeMillis());
-		    rtnStr = sdfCurrent.format(ts.getTime());
-        //2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 130-130
-        } catch(NullPointerException e){
-        	LOGGER.error("["+e.getClass()+"] Try/Catch... sdfCurrent : " , e.getMessage());
-        } catch (Exception e) {            
-        	LOGGER.error("["+e.getClass()+"] Try/Catch... : ", e.getMessage());
-		}
+	    SimpleDateFormat sdfCurrent = new SimpleDateFormat(pattern, Locale.KOREA);
+	    Timestamp ts = new Timestamp(System.currentTimeMillis());
+	    rtnStr = sdfCurrent.format(ts.getTime());
 
 		return rtnStr;
 	}

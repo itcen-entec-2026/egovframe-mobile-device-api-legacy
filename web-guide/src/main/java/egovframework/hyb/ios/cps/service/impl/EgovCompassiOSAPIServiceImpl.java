@@ -17,17 +17,17 @@ package egovframework.hyb.ios.cps.service.impl;
 
 import java.util.List;
 
-import egovframework.hyb.ios.cps.service.CompassiOSAPIDefaultVO;
-import egovframework.hyb.ios.cps.service.CompassiOSAPIVO;
-import egovframework.hyb.ios.cps.service.EgovCompassiOSAPIService;
-
-import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
-
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import egovframework.hyb.ios.cps.service.CompassiOSAPIDefaultVO;
+import egovframework.hyb.ios.cps.service.CompassiOSAPIVO;
+import egovframework.hyb.ios.cps.service.EgovCompassiOSAPIService;
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.exception.BaseRuntimeException;
 
 /**  
  * @Class Name : EgovCompassiOSAPIServiceImpl.java
@@ -59,9 +59,8 @@ public class EgovCompassiOSAPIServiceImpl extends EgovAbstractServiceImpl implem
 	 * 방향 정보를 등록한다.
 	 * @param vo - 등록할 정보가 담긴 CompassiOSAPIVO
 	 * @return 등록 결과
-	 * @exception Exception
 	 */
-    public int insertCompassInfo(CompassiOSAPIVO vo) throws Exception {
+    public int insertCompassInfo(CompassiOSAPIVO vo) {
     	LOGGER.debug(vo.toString());
     	
     	return compassAPIDAO.insertCompassInfo(vo);    	
@@ -71,9 +70,8 @@ public class EgovCompassiOSAPIServiceImpl extends EgovAbstractServiceImpl implem
 	 * 방향 정보를 수정한다.
 	 * @param vo - 수정할 정보가 담긴 CompassiOSAPIVO
 	 * @return void형
-	 * @exception Exception
 	 */
-    public void updateCompassInfo(CompassiOSAPIVO vo) throws Exception {
+    public void updateCompassInfo(CompassiOSAPIVO vo) {
     	compassAPIDAO.updateCompassInfo(vo);
     }
 
@@ -81,9 +79,8 @@ public class EgovCompassiOSAPIServiceImpl extends EgovAbstractServiceImpl implem
 	 * 방향 정보를 삭제한다.
 	 * @param vo - 삭제할 정보가 담긴 CompassiOSAPIVO
 	 * @return void형 
-	 * @exception Exception
 	 */
-    public int deleteCompassInfo(CompassiOSAPIVO vo) throws Exception {
+    public int deleteCompassInfo(CompassiOSAPIVO vo) {
     	return compassAPIDAO.deleteCompassInfo(vo);
     }
 
@@ -91,12 +88,12 @@ public class EgovCompassiOSAPIServiceImpl extends EgovAbstractServiceImpl implem
 	 * 방향 정보를 조회한다.
 	 * @param vo - 조회할 정보가 담긴 CompassiOSAPIVO
 	 * @return 조회한 방향 정보
-	 * @exception Exception
 	 */
-    public CompassiOSAPIVO selectCompassInfo(CompassiOSAPIVO vo) throws Exception {
+    public CompassiOSAPIVO selectCompassInfo(CompassiOSAPIVO vo) {
     	CompassiOSAPIVO resultVO = compassAPIDAO.selectCompassInfo(vo);
-        if (resultVO == null)
-            throw processException("info.nodata.msg");
+        if (resultVO == null) {
+            throw new BaseRuntimeException(processException("info.nodata.msg"));
+        }
         return resultVO;
     }
 
@@ -104,9 +101,8 @@ public class EgovCompassiOSAPIServiceImpl extends EgovAbstractServiceImpl implem
 	 * 방향 정보 목록을 조회한다.
 	 * @param VO - 조회할 정보가 담긴 CompassiOSAPIDefaultVO
 	 * @return 방향 정보 목록
-	 * @exception Exception
 	 */
-    public List<?> selectCompassInfoList(CompassiOSAPIDefaultVO searchVO) throws Exception {
+    public List<?> selectCompassInfoList(CompassiOSAPIDefaultVO searchVO) {
         return compassAPIDAO.selectCompassInfoList(searchVO);
     }
 
@@ -114,7 +110,6 @@ public class EgovCompassiOSAPIServiceImpl extends EgovAbstractServiceImpl implem
 	 * 방향 정보 총 갯수를 조회한다.
 	 * @param VO - 조회할 정보가 담긴 CompassiOSAPIDefaultVO
 	 * @return 방향 정보 총 갯수
-	 * @exception
 	 */
     public int selectCompassInfoListTotCnt(CompassiOSAPIDefaultVO searchVO) {
 		return compassAPIDAO.selectCompassInfoListTotCnt(searchVO);

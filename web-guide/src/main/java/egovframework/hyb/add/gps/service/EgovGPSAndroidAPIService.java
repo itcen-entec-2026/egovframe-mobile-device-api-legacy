@@ -42,9 +42,8 @@ public interface EgovGPSAndroidAPIService {
      * @param vo
      *            - 등록할 정보가 담긴 GPSAPIVO
      * @return 등록 결과
-     * @exception Exception
      */
-    int insertGPSInfo(GPSAndroidAPIVO vo) throws Exception;
+    int insertGPSInfo(GPSAndroidAPIVO vo);
 
     /**
      * gps 정보를 삭제한다.
@@ -52,9 +51,8 @@ public interface EgovGPSAndroidAPIService {
      * @param vo
      *            - 삭제할 정보가 담긴 GPSAPIVO
      * @return 삭제 결과
-     * @exception Exception
      */
-    int deleteGPSInfo(GPSAndroidAPIVO vo) throws Exception;
+    int deleteGPSInfo(GPSAndroidAPIVO vo);
 
     /**
      * gps 정보 목록을 조회한다.
@@ -62,9 +60,8 @@ public interface EgovGPSAndroidAPIService {
      * @param VO
      *            - 조회할 정보가 담긴 GPSAPIVO
      * @return gps 정보 목록
-     * @exception Exception
      */
-    List<?> selectGPSInfoList(GPSAndroidAPIDefaultVO searchVO) throws Exception;
+    List<?> selectGPSInfoList(GPSAndroidAPIDefaultVO searchVO);
 
     /**
      * gps 정보 총 갯수를 조회한다.
@@ -72,7 +69,6 @@ public interface EgovGPSAndroidAPIService {
      * @param VO
      *            - 조회할 정보가 담긴 GPSAPIDefaultVO
      * @return gps 정보 총 갯수
-     * @exception
      */
     int selectGPSInfoListTotCnt(GPSAndroidAPIDefaultVO searchVO);
 

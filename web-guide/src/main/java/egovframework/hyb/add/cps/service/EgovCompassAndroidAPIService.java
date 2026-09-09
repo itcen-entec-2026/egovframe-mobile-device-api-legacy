@@ -17,6 +17,8 @@ package egovframework.hyb.add.cps.service;
 
 import java.util.List;
 
+import egovframework.rte.fdl.cmmn.exception.BaseRuntimeException;
+
 /**  
  * @Class Name : EgovCompassAPIService.java
  * @Description : EgovCompassAPIService Class
@@ -38,47 +40,41 @@ public interface EgovCompassAndroidAPIService {
      * 방향 정보를 등록한다.
      * @param vo - 등록할 정보가 담긴 CompassAPIVO
      * @return 등록 결과
-     * @exception Exception
      */
-    int insertCompassInfo(CompassAndroidAPIVO vo) throws Exception;
+    int insertCompassInfo(CompassAndroidAPIVO vo);
     
     /**
      * 방향 정보를 수정한다.
      * @param vo - 수정할 정보가 담긴 CompassAPIVO
      * @return void형
-     * @exception Exception
      */
-    void updateCompassInfo(CompassAndroidAPIVO vo) throws Exception;
+    void updateCompassInfo(CompassAndroidAPIVO vo);
     
     /**
      * 방향 정보를 삭제한다.
      * @param vo - 삭제할 정보가 담긴 CompassAPIVO
      * @return 등록 결과 
-     * @exception Exception
      */
-    int deleteCompassInfo(CompassAndroidAPIVO vo) throws Exception;
+    int deleteCompassInfo(CompassAndroidAPIVO vo);
     
     /**
      * 방향 정보를 조회한다.
      * @param vo - 조회할 정보가 담긴 CompassAPIVO
      * @return 조회한 방향 정보
-     * @exception Exception
      */
-    CompassAndroidAPIVO selectCompassInfo(CompassAndroidAPIVO vo) throws Exception;
+    CompassAndroidAPIVO selectCompassInfo(CompassAndroidAPIVO vo);
     
     /**
      * 방향 정보 목록을 조회한다.
      * @param VO - 조회할 정보가 담긴 CompassAPIDefaultVO
      * @return 방향 정보 목록
-     * @exception Exception
      */
-    List<?> selectCompassInfoList(CompassAndroidAPIDefaultVO searchVO) throws Exception;
+    List<?> selectCompassInfoList(CompassAndroidAPIDefaultVO searchVO);
     
     /**
      * 방향 정보 총 갯수를 조회한다.
      * @param VO - 조회할 정보가 담긴 CompassAPIDefaultVO
      * @return 방향 정보 총 갯수
-     * @exception
      */
     int selectCompassInfoListTotCnt(CompassAndroidAPIDefaultVO searchVO);
     

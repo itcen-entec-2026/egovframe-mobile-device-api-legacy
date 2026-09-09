@@ -62,9 +62,8 @@ public class EgovGPSiOSAPIServiceImpl extends EgovAbstractServiceImpl implements
 	 * @param vo
 	 *            - 등록할 정보가 담긴 GPSAPIVO
 	 * @return 등록 결과
-	 * @exception Exception
 	 */
-	public void insertGPSInfo(GPSiOSAPIVO vo) throws Exception {
+	public void insertGPSInfo(GPSiOSAPIVO vo) {
 		LOGGER.debug(vo.toString());
 
 		gpsAPIDAO.insertGPSInfo(vo);
@@ -76,9 +75,8 @@ public class EgovGPSiOSAPIServiceImpl extends EgovAbstractServiceImpl implements
 	 * @param vo
 	 *            - 삭제할 정보가 담긴 GPSAPIVO
 	 * @return void형
-	 * @exception Exception
 	 */
-	public void deleteGPSInfo(GPSiOSAPIVO vo) throws Exception {
+	public void deleteGPSInfo(GPSiOSAPIVO vo) {
 		gpsAPIDAO.deleteGPSInfo(vo);
 	}
 
@@ -88,9 +86,8 @@ public class EgovGPSiOSAPIServiceImpl extends EgovAbstractServiceImpl implements
 	 * @param VO
 	 *            - 조회할 정보가 담긴 GPSAPIVO
 	 * @return gps 정보 목록
-	 * @exception Exception
 	 */
-	public List<?> selectGPSInfoList(GPSiOSAPIDefaultVO searchVO) throws Exception {
+	public List<?> selectGPSInfoList(GPSiOSAPIDefaultVO searchVO) {
 		return gpsAPIDAO.selectGPSInfoList(searchVO);
 	}
 
@@ -100,7 +97,6 @@ public class EgovGPSiOSAPIServiceImpl extends EgovAbstractServiceImpl implements
 	 * @param VO
 	 *            - 조회할 정보가 담긴 GPSAPIVO
 	 * @return gps 정보 총 갯수
-	 * @exception
 	 */
 	public int selectGPSInfoListTotCnt(GPSiOSAPIDefaultVO searchVO) {
 		return gpsAPIDAO.selectGPSInfoListTotCnt(searchVO);

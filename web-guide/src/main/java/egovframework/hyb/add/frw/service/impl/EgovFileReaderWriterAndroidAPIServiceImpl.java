@@ -41,10 +41,8 @@ public class EgovFileReaderWriterAndroidAPIServiceImpl extends EgovAbstractServi
      * 
      * @param fileVO
      *            - 파일 정보가 담긴 FileReaderWriterAndroidAPIVO
-     * @exception Exception
      */
-    public void insertFileInfo(FileReaderWriterAndroidAPIVO vo)
-            throws Exception {
+    public void insertFileInfo(FileReaderWriterAndroidAPIVO vo) {
         fileReaderWriterAPIDAO.insertFileInfo(vo);
     }
 
@@ -53,10 +51,8 @@ public class EgovFileReaderWriterAndroidAPIServiceImpl extends EgovAbstractServi
      * 
      * @param fileVO
      *            - 파일 정보가 담긴 FileReaderWriterAndroidAPIVO
-     * @exception Exception
      */
-    public void insertFileDetailInfo(FileReaderWriterAndroidAPIVO vo)
-            throws Exception {
+    public void insertFileDetailInfo(FileReaderWriterAndroidAPIVO vo) {
         fileReaderWriterAPIDAO.insertFileDetailInfo(vo);
     }
 
@@ -65,10 +61,8 @@ public class EgovFileReaderWriterAndroidAPIServiceImpl extends EgovAbstractServi
      * 
      * @param fileVO
      *            - 파일 정보가 담긴 FileReaderWriterAndroidAPIVO
-     * @exception Exception
      */
-    public List<?> selectFileInfoList(FileReaderWriterAndroidAPIVO vo)
-            throws Exception {
+    public List<?> selectFileInfoList(FileReaderWriterAndroidAPIVO vo) {
         return fileReaderWriterAPIDAO.selectFileInfoList(vo);
     }
 
@@ -77,10 +71,9 @@ public class EgovFileReaderWriterAndroidAPIServiceImpl extends EgovAbstractServi
      * 
      * @param fileVO
      *            - 파일 정보가 담긴 FileReaderWriterAndroidAPIVO
-     * @exception Exception
      */
     public FileReaderWriterAndroidAPIVO selectFileInfo(
-            FileReaderWriterAndroidAPIVO vo) throws Exception {
+            FileReaderWriterAndroidAPIVO vo) {
         return fileReaderWriterAPIDAO.selectFileInfo(vo);
     }
 
@@ -89,9 +82,8 @@ public class EgovFileReaderWriterAndroidAPIServiceImpl extends EgovAbstractServi
      * 
      * @param fileVO
      *            - 파일 정보가 담긴 FileReaderWriterAndroidAPIVO
-     * @exception Exception
      */
-    public int deleteFileInfo(FileReaderWriterAndroidAPIVO vo) throws Exception {
+    public int deleteFileInfo(FileReaderWriterAndroidAPIVO vo) {
         return fileReaderWriterAPIDAO.deleteFileInfo(vo);
     }
 
@@ -100,10 +92,8 @@ public class EgovFileReaderWriterAndroidAPIServiceImpl extends EgovAbstractServi
      * 
      * @param fileVO
      *            - 파일 정보가 담긴 FileReaderWriterAndroidAPIVO
-     * @exception Exception
      */
-    public int deleteFileDetailInfo(FileReaderWriterAndroidAPIVO vo)
-            throws Exception {
+    public int deleteFileDetailInfo(FileReaderWriterAndroidAPIVO vo) {
         return fileReaderWriterAPIDAO.deleteFileDetailInfo(vo);
     }
 

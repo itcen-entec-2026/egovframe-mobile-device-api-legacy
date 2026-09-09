@@ -70,14 +70,12 @@ public class EgovCompassAndroidAPIController {
      * @param searchVO - 조회할 정보가 담긴 CompassAPIDefaultVO
      * @param model
      * @return "/cps/xml/compassInfoList.do"
-     * @exception Exception
      */
     @ApiOperation(value="디바이스 정보 목록조회", notes="[Android] 디바이스 정보 목록을 조회한다.")
     @SuppressWarnings("unchecked")
 	@RequestMapping(value="/cps/xml/compassInfoList.do")
     public @ResponseBody CompassAndroidAPIVOList selectCompassInfoXMLList(@ModelAttribute("searchVO") CompassAndroidAPIDefaultVO searchVO, 
-            ModelMap model)
-            throws Exception {
+            ModelMap model) {
  
         List<CompassAndroidAPIVO> compassInfoList = (List<CompassAndroidAPIVO>) egovCompassAndroidAPIService.selectCompassInfoList(searchVO);
         
@@ -94,7 +92,6 @@ public class EgovCompassAndroidAPIController {
      * @param searchVO - 목록 조회조건 정보가 담긴 CompassAPIDefaultVO
      * @param status
      * @return "forward:/cps/xml/addCompassInfo.do"
-     * @exception Exception
      */
     @ApiOperation(value="Compass 세부정보 등록", notes="[Android] Compass 세부정보를 등록한다.\nresponseOK = {\"useYn\",\"OK\"}")
     @ApiImplicitParams({
@@ -103,8 +100,7 @@ public class EgovCompassAndroidAPIController {
     @RequestMapping("/cps/xml/addCompassInfo.do")
     public @ResponseBody CompassAndroidAPIVO addCompassInfoXml(
                 CompassAndroidAPIVO compassVO,
-            BindingResult bindingResult, Model model, SessionStatus status) 
-            throws Exception {
+            BindingResult bindingResult, Model model, SessionStatus status) {
 
         CompassAndroidAPIVO compassAPIVO = new CompassAndroidAPIVO();
 
@@ -125,14 +121,12 @@ public class EgovCompassAndroidAPIController {
      * @param searchVO - 목록 조회조건 정보가 담긴 VO
      * @param status
      * @return "forward:/cps/xml/withdrawal.do"
-     * @exception Exception
      */
     @ApiOperation(value="Compass 세부정보 삭제", notes="[Android] Compass 세부정보를 삭제한다.\nresponseOK = {\"useYn\",\"OK\"}")
     @RequestMapping("/cps/xml/withdrawal.do")
     public @ResponseBody CompassAndroidAPIVO withdrawalXml(
                 CompassAndroidAPIVO compassVO,
-            BindingResult bindingResult, Model model, SessionStatus status) 
-    throws Exception {        
+            BindingResult bindingResult, Model model, SessionStatus status) {
               
         int cnt = egovCompassAndroidAPIService.deleteCompassInfo(compassVO);
                 

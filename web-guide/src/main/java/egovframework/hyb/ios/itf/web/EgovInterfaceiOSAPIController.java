@@ -72,7 +72,6 @@ public class EgovInterfaceiOSAPIController {
      *            - 등록할 정보가 담긴 InterfaceAPIDefaultVO
      * @param status
      * @return "forward:/itf/addInterfaceInfo.do"
-     * @exception Exception
      */
     @ApiOperation(value="Interface 회원가입 정보 등록", notes="[iOS] 회원가입 정보를 등록한다", response=InterfaceiOSAPIVO.class)
     @ApiImplicitParams({
@@ -82,7 +81,7 @@ public class EgovInterfaceiOSAPIController {
     @RequestMapping("/itf/addInterfaceiOSInfo.do")
     public ModelAndView addInterfaceInfo(
             InterfaceiOSAPIVO interfaceVO, BindingResult bindingResult,
-            Model model, SessionStatus status) throws Exception {
+            Model model, SessionStatus status) {
 
         ModelAndView jsonView = new ModelAndView("jsonView");
 
@@ -114,7 +113,6 @@ public class EgovInterfaceiOSAPIController {
      *            - 로그인 할 정보가 담긴 InterfaceiOSAPIVO
      * @param status
      * @return "forward:/itf/logIn.do"
-     * @exception Exception
      */
     @ApiOperation(value="Interface 로그인 조회", notes="[iOS] 로그인을 한다.", response=InterfaceiOSAPIVO.class)
     @ApiImplicitParams({
@@ -124,7 +122,7 @@ public class EgovInterfaceiOSAPIController {
     @RequestMapping("/itf/logIniOS.do")
     public ModelAndView logIn(
             InterfaceiOSAPIVO interfaceVO, BindingResult bindingResult,
-            Model model, SessionStatus status, HttpServletRequest request) throws Exception {
+            Model model, SessionStatus status, HttpServletRequest request) {
 
         ModelAndView jsonView = new ModelAndView("jsonView");
 
@@ -154,7 +152,6 @@ public class EgovInterfaceiOSAPIController {
      *            - 탈퇴 할 정보가 담긴 InterfaceiOSAPIVO
      * @param status
      * @return "forward:/itf/withdrawal.do"
-     * @exception Exception
      */
     @ApiOperation(value="Interface 회원탈퇴", notes="[iOS] 회원탈퇴 한다.", response=InterfaceiOSAPIVO.class)
     @ApiImplicitParams({
@@ -164,7 +161,7 @@ public class EgovInterfaceiOSAPIController {
     @RequestMapping("/itf/withdrawaliOS.do")
     public ModelAndView withdrawal(
             InterfaceiOSAPIVO interfaceVO, BindingResult bindingResult,
-            Model model, SessionStatus status) throws Exception {
+            Model model, SessionStatus status) {
 
         ModelAndView jsonView = new ModelAndView("jsonView");
 

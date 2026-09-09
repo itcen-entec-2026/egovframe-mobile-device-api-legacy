@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -29,7 +30,9 @@ import egovframework.com.cmm.security.DeviceAPIFileUploadValidator;
 import egovframework.hyb.add.frw.service.EgovFileReaderWriterAndroidAPIService;
 import egovframework.hyb.add.frw.service.FileReaderWriterAndroidAPIVO;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.exception.BaseRuntimeException;
 import egovframework.rte.fdl.cmmn.exception.EgovBizException;
+import egovframework.rte.fdl.cmmn.exception.FdlException;
 import egovframework.rte.fdl.idgnr.EgovIdGnrService;
 import egovframework.rte.fdl.property.EgovPropertyService;
 
@@ -76,10 +79,9 @@ public class EgovFileMngAndroidUtil extends EgovAbstractServiceImpl {
      *            - 업로드된 파일 정보가 담긴 MultipartFile
      * @param fileVO
      *            - 파일 정보가 담긴 FileReaderWriterAndroidAPIVO
-     * @exception Exception
      */
     public FileReaderWriterAndroidAPIVO writeUploadedFile(MultipartFile file,
-            FileReaderWriterAndroidAPIVO fileVO) throws Exception {
+            FileReaderWriterAndroidAPIVO fileVO) {
 
         DeviceAPIFileUploadValidator.validateFrwUpload(file);
 
@@ -94,10 +96,12 @@ public class EgovFileMngAndroidUtil extends EgovAbstractServiceImpl {
         fileVO.setStreFileNm(newName);
         fileVO.setFileExtsn(fileExt);
         fileVO.setFileSize(Long.toString(file.getSize()));
-        fileVO.setFileSn(egovFileIdGnrService.getNextIntegerId());
+        try {
+			fileVO.setFileSn(egovFileIdGnrService.getNextIntegerId());
+		} catch (FdlException e) {
+			throw new BaseRuntimeException(e);
+		}
 
-        IOException excep = null;
-        
         if (!file.isEmpty()) {
             InputStream input = null;
             FileOutputStream out = null;
@@ -117,26 +121,18 @@ public class EgovFileMngAndroidUtil extends EgovAbstractServiceImpl {
                 }
             //2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 116-116    
             }catch(IOException e){
-            	LOGGER.error("["+e.getClass()+"] : Try/Catch...file : " , e.getMessage());
-            }catch (Exception e) {
-            	LOGGER.error("["+e.getClass()+"] Try/Catch... : ", e.getMessage());
-                throw new EgovBizException("Fail to upload file : "
-                        + e.getMessage());
+            	throw new BaseRuntimeException(e);
             } finally {
                 try {
                     if (out != null) {
                         out.close();
                     }
-
                 } catch (IOException e) {
-                	LOGGER.error("Fail to close fileoutputstrem : {}", e.getMessage());
-                    excep = e;
+                	throw new BaseRuntimeException(e);
                 }
             }
         }
-        if(excep != null) {
-        	throw new EgovBizException("Fail to close fileoutputstrem : " + excep.getMessage());
-        }
+
         egovFileReaderWriterAndroidAPIService.insertFileDetailInfo(fileVO);
         return fileVO;
     }
@@ -150,28 +146,30 @@ public class EgovFileMngAndroidUtil extends EgovAbstractServiceImpl {
      *            - HttpServletResponse
      * @param fileVO
      *            - 파일 정보가 담긴 FileReaderWriterAndroidAPIVO
-     * @exception Exception
      */
     public void fileDownload(HttpServletRequest request,
-            HttpServletResponse response, FileReaderWriterAndroidAPIVO fileVO)
-            throws Exception {
+            HttpServletResponse response, FileReaderWriterAndroidAPIVO fileVO) {
 
         DeviceAPIFileUploadValidator.assertSafeStoredFileName(fileVO.getStreFileNm());
         File file = new File(propertiesService.getString("fileStorePath")
                 + fileVO.getStreFileNm());
 
         if (!file.exists()) {
-            throw new FileNotFoundException(fileVO.getStreFileNm());
+            throw new BaseRuntimeException(fileVO.getStreFileNm());
         }
         if (!file.isFile()) {
-            throw new FileNotFoundException(fileVO.getStreFileNm());
+            throw new BaseRuntimeException(fileVO.getStreFileNm());
         }
 
         byte[] buffer = new byte[BUFFER_SIZE];
 
         response.setContentType("video/quicktime");
-        response.setHeader("Content-Disposition:", "attachment; filename="
-                + new String(fileVO.getOrignlFileNm().getBytes(), "UTF-8"));
+        try {
+			response.setHeader("Content-Disposition:", "attachment; filename="
+			        + new String(fileVO.getOrignlFileNm().getBytes(), "UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			throw new BaseRuntimeException(e);
+		}
         response.setHeader("Content-Transfer-Encoding", "binary");
         response.setHeader("Pragma", "no-cache");
         response.setHeader("Expires", "0");
@@ -187,15 +185,15 @@ public class EgovFileMngAndroidUtil extends EgovAbstractServiceImpl {
             while ((read = fin.read(buffer)) != -1) {
                 outs.write(buffer, 0, read);
             }
-        } finally {
+        } catch (IOException e) {
+        	throw new BaseRuntimeException(e);
+		} finally {
             if (outs != null) {
                 try {
                     outs.close();
                 //2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 188-188
                 }catch(IOException e){
-                	LOGGER.error("["+e.getClass()+"] Try/Catch...outs : ", e.getMessage());
-                } catch (Exception ignore) {
-                	LOGGER.error("["+ignore.getClass()+"] Try/Catch... : ", ignore.getMessage());
+                	throw new BaseRuntimeException(e);
                 }
             }
             if (fin != null) {
@@ -203,9 +201,7 @@ public class EgovFileMngAndroidUtil extends EgovAbstractServiceImpl {
                     fin.close();
                 //2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 195-195
                 }catch(IOException e){
-                	LOGGER.error("["+e.getClass()+"] Try/Catch...fin : ", e.getMessage());
-                }catch (Exception ignore) {
-                	LOGGER.error("["+ignore.getClass()+"] Try/Catch... : ", ignore.getMessage());
+                	throw new BaseRuntimeException(e);
                 }
             }
         }
@@ -217,10 +213,8 @@ public class EgovFileMngAndroidUtil extends EgovAbstractServiceImpl {
      * 
      * @param fileVO
      *            - 파일 정보가 담긴 FileReaderWriterAndroidAPIVO
-     * @exception Exception
      */
-    public boolean deleteFile(FileReaderWriterAndroidAPIVO fileVO)
-            throws Exception {
+    public boolean deleteFile(FileReaderWriterAndroidAPIVO fileVO) {
 
         File videoFile = new File(propertiesService.getString("fileStorePath")
                 + fileVO.getStreFileNm());
@@ -251,7 +245,6 @@ public class EgovFileMngAndroidUtil extends EgovAbstractServiceImpl {
      * yyyyMMddhhmmssSSS 패턴의 현재 날자를 반환한다.
      * 
      * @return String
-     * @exception Exception
      */
     private static String getTimeStamp() {
         String rtnStr = null;
@@ -259,20 +252,11 @@ public class EgovFileMngAndroidUtil extends EgovAbstractServiceImpl {
         // 문자열로 변환하기 위한 패턴 설정(년도-월-일 시:분:초:초(자정이후 초))
         String pattern = "yyyyMMddhhmmssSSS";
 
-        try {
-            SimpleDateFormat sdfCurrent = new SimpleDateFormat(pattern,
-                    Locale.KOREA);
-            Timestamp ts = new Timestamp(System.currentTimeMillis());
+        SimpleDateFormat sdfCurrent = new SimpleDateFormat(pattern,
+                Locale.KOREA);
+        Timestamp ts = new Timestamp(System.currentTimeMillis());
 
-            rtnStr = sdfCurrent.format(ts.getTime());
-        //2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 256-256
-        } catch(NullPointerException e){
-        	LOGGER.error("["+e.getClass()+"] Try/Catch...sdfCurrent : " + e.getMessage());
-        } catch (Exception e) {
-            // e.printStackTrace();
-            // throw new RuntimeException(e); // 보안점검 후속조치
-        	LOGGER.error("["+e.getClass()+"] Try/Catch... : ", e.getMessage());
-        }
+        rtnStr = sdfCurrent.format(ts.getTime());
 
         return rtnStr;
     }

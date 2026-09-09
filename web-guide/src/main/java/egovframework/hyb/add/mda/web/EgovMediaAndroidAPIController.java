@@ -75,7 +75,6 @@ public class EgovMediaAndroidAPIController {
 	 * @param file - 녹음 파일 정보가 담긴 MultipartFile
 	 * @param fileVO - 등록 정보가 담긴 CameraAndroidAPIVO
 	 * @return boolean
-	 * @exception Exception
 	 */
     @ApiOperation(value="Media 녹음 파일 업로드", notes="[Android] Media 녹음 파일을 업로드한다.\nresponseOK = true")
     @ApiImplicitParams({
@@ -84,7 +83,7 @@ public class EgovMediaAndroidAPIController {
     })
 	@RequestMapping("/mda/mediaRecordUpload.do")
 	public @ResponseBody
-	boolean fileUpload(@RequestParam("file") MultipartFile file, MediaAndroidAPIVO vo, HttpServletRequest request) throws Exception {
+	boolean fileUpload(@RequestParam("file") MultipartFile file, MediaAndroidAPIVO vo, HttpServletRequest request) {
 
 		if (!file.isEmpty()) {
 
@@ -103,7 +102,6 @@ public class EgovMediaAndroidAPIController {
 	 * 미디어 정보를 조회한다.
 	 * @param VO - 조회할 정보가 담긴 MediaAndroidAPIVO
 	 * @return 조회 목록
-	 * @exception Exception
 	 */
     @ApiOperation(value="Media 세부정보 조회", notes="[Android] Media 세부정보를 조회한다.")
     @ApiImplicitParams({
@@ -111,7 +109,7 @@ public class EgovMediaAndroidAPIController {
     })
 	@RequestMapping("/mda/mediaInfoDetail.do")
 	public @ResponseBody
-	MediaAndroidAPIXmlVO selectMediaInfoDetail(MediaAndroidAPIVO vo) throws Exception {
+	MediaAndroidAPIXmlVO selectMediaInfoDetail(MediaAndroidAPIVO vo) {
 
 		MediaAndroidAPIFileVO mediaInfo = egovMediaAndroidAPIService.selectMediaInfoDetail(vo);
 
@@ -125,7 +123,6 @@ public class EgovMediaAndroidAPIController {
 	 * 미디어 목록을 조회한다.
 	 * @param VO - 조회할 정보가 담긴 MediaAndroidAPIVO
 	 * @return 조회 목록
-	 * @exception Exception
 	 */
     @ApiOperation(value="Media 정보 목록조회", notes="[Android] Media 정보 목록을 조회한다.")
     @ApiImplicitParams({
@@ -134,7 +131,7 @@ public class EgovMediaAndroidAPIController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/mda/mediaInfoList.do")
 	public @ResponseBody
-	MediaAndroidAPIXmlVO selectMediaInfoList(MediaAndroidAPIVO vo) throws Exception {
+	MediaAndroidAPIXmlVO selectMediaInfoList(MediaAndroidAPIVO vo) {
 
 		List<MediaAndroidAPIVO> mediaList = (List<MediaAndroidAPIVO>) egovMediaAndroidAPIService.selectMediaInfoList(vo);
 
@@ -150,7 +147,6 @@ public class EgovMediaAndroidAPIController {
 	 * @param model
 	 * @param response
 	 * @return jsonView
-	 * @exception Exception
 	 */
     @ApiOperation(value="Media 파일 다운로드", notes="[Android] Media 파일을 다운로드 한다.")
     @ApiImplicitParams({
@@ -159,7 +155,7 @@ public class EgovMediaAndroidAPIController {
 	@RequestMapping("/mda/getMedia.do")
 	public void getImageInf(@RequestParam("sn") String sn,
 			@RequestParam(value = "uuid", required = false) String uuid,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+			HttpServletRequest request, HttpServletResponse response) {
 
 		if (sn != null && !"".equals(sn)) {
 			MediaAndroidAPIFileVO vo = new MediaAndroidAPIFileVO();

@@ -1,7 +1,10 @@
 package egovframework.com.tcpsocket;
 
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+
+import egovframework.rte.fdl.cmmn.exception.BaseRuntimeException;
 
 /**
  * @Class Name : SocketChatServer.java
@@ -43,10 +46,8 @@ public class SocketChatServer {
 				new Thread(runnableServerSocket).start();
 			}
 			
-		} catch (Exception e) {
-
-			e.printStackTrace();
-
+		} catch (IOException e) {
+			throw new BaseRuntimeException(e);
 		}
 
 	}

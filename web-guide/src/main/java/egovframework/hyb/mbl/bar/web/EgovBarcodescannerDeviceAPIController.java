@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import egovframework.hyb.ios.dvc.service.DeviceiOSAPIVO;
 import egovframework.hyb.mbl.bar.service.BarcodescannerAPIDefaultVO;
 import egovframework.hyb.mbl.bar.service.BarcodescannerAPIVO;
 import egovframework.hyb.mbl.bar.service.EgovBarcodescannerAPIService;
@@ -53,15 +52,13 @@ public class EgovBarcodescannerDeviceAPIController {
 	 *            - 등록할 정보가 담긴BarcodescannerDeviceAPIDefaultVO
 	 * @param status
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="Barcodescanner 세부정보 등록", notes="Barcodescanner 세부정보를 등록한다.\nresponseOK = {\"resultState\",\"OK\"}")
     @ApiImplicitParams({
         @ApiImplicitParam(name = "codeType", value = "바코드 타입", required = true, dataType = "string", paramType = "query"),
     })
 	@RequestMapping("/bar/addBarcodescannerDeviceInfo.do")
-	public ModelAndView insertDeviceInfo(@ModelAttribute("searchPushVO") BarcodescannerAPIVO sampleVO, Model model)
-			throws Exception {
+	public ModelAndView insertDeviceInfo(@ModelAttribute("searchPushVO") BarcodescannerAPIVO sampleVO, Model model) {
 
 		ModelAndView jsonView = new ModelAndView("jsonView");
 
@@ -84,12 +81,11 @@ public class EgovBarcodescannerDeviceAPIController {
 	 *            - 조회할 정보가 담긴 PushDeviceAPIDefaultVO
 	 * @param model
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="Barcodescanner 정보 목록조회", notes="Barcodescanner 정보 목록을 조회한다.", response=BarcodescannerAPIVO.class, responseContainer="List")
 	@RequestMapping(value = "/bar/BarcodescannerInfoList.do")
 	public ModelAndView selectBarcodescannerList(@ModelAttribute("searchVibratorVO") BarcodescannerAPIDefaultVO searchVO,
-			ModelMap model) throws Exception {
+			ModelMap model) {
 
 		ModelAndView jsonView = new ModelAndView("jsonView");
 

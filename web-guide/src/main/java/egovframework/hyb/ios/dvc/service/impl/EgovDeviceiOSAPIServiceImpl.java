@@ -17,16 +17,16 @@ package egovframework.hyb.ios.dvc.service.impl;
 
 import java.util.List;
 
-import egovframework.hyb.ios.dvc.service.DeviceiOSAPIVO;
-import egovframework.hyb.ios.dvc.service.EgovDeviceiOSAPIService;
-
-import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
-
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import egovframework.hyb.ios.dvc.service.DeviceiOSAPIVO;
+import egovframework.hyb.ios.dvc.service.EgovDeviceiOSAPIService;
+import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.exception.BaseRuntimeException;
 
 /**  
  * @Class Name : EgovDeviceiOSAPIServiceImpl.java
@@ -58,9 +58,8 @@ public class EgovDeviceiOSAPIServiceImpl extends EgovAbstractServiceImpl impleme
 	 * 디바이스 정보를 등록한다.
 	 * @param vo - 등록할 정보가 담긴 DeviceiOSAPIVO
 	 * @return 등록 결과
-	 * @exception Exception
 	 */
-    public void insertDeviceInfo(DeviceiOSAPIVO vo) throws Exception {
+    public void insertDeviceInfo(DeviceiOSAPIVO vo) {
     	LOGGER.debug(vo.toString());
     	deviceiOSAPIDAO.insertDeviceInfo(vo);   
     }
@@ -70,9 +69,8 @@ public class EgovDeviceiOSAPIServiceImpl extends EgovAbstractServiceImpl impleme
 	 * 디바이스 정보를 삭제한다.
 	 * @param vo - 삭제할 정보가 담긴 DeviceiOSAPIVO
 	 * @return void형 
-	 * @exception Exception
 	 */
-    public void deleteDeviceInfo(DeviceiOSAPIVO vo) throws Exception {
+    public void deleteDeviceInfo(DeviceiOSAPIVO vo) {
     	deviceiOSAPIDAO.deleteDeviceInfo(vo);
     }
 
@@ -80,12 +78,12 @@ public class EgovDeviceiOSAPIServiceImpl extends EgovAbstractServiceImpl impleme
 	 * 디바이스 정보를 조회한다.
 	 * @param vo - 조회할 정보가 담긴 DeviceiOSAPIVO
 	 * @return 조회한 디바이스 정보
-	 * @exception Exception
 	 */
-    public DeviceiOSAPIVO selectDeviceInfo(DeviceiOSAPIVO vo) throws Exception {
+    public DeviceiOSAPIVO selectDeviceInfo(DeviceiOSAPIVO vo) {
     	DeviceiOSAPIVO resultVO = deviceiOSAPIDAO.selectDeviceInfo(vo);
-        if (resultVO == null)
-            throw processException("info.nodata.msg");
+        if (resultVO == null) {
+            throw new BaseRuntimeException(processException("info.nodata.msg"));
+        }
         return resultVO;
     }
 
@@ -93,9 +91,8 @@ public class EgovDeviceiOSAPIServiceImpl extends EgovAbstractServiceImpl impleme
 	 * 디바이스 정보 목록을 조회한다.
 	 * @param VO - 조회할 정보가 담긴 DeviceiOSAPIVO
 	 * @return 디바이스 정보 목록
-	 * @exception Exception
 	 */
-    public List<?> selectDeviceInfoList(DeviceiOSAPIVO vo) throws Exception {
+    public List<?> selectDeviceInfoList(DeviceiOSAPIVO vo) {
         return deviceiOSAPIDAO.selectDeviceInfoList(vo);
     }
 
@@ -103,7 +100,6 @@ public class EgovDeviceiOSAPIServiceImpl extends EgovAbstractServiceImpl impleme
 	 * 디바이스 정보 총 갯수를 조회한다.
 	 * @param VO - 조회할 정보가 담긴 DeviceiOSAPIVO
 	 * @return 디바이스 정보 총 갯수
-	 * @exception
 	 */
     public int selectDeviceInfoListTotCnt(DeviceiOSAPIVO vo) {
 		return deviceiOSAPIDAO.selectDeviceInfoListTotCnt(vo);

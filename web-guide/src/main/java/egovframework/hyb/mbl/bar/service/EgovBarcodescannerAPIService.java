@@ -39,16 +39,14 @@ public interface EgovBarcodescannerAPIService {
 	 * Barcodescanner을 위해 Barcodescanner 정보를 등록한다.
 	 * @param vo - 등록할 정보가 담긴 BarcodescannerAPIVO
 	 * @return 등록 결과
-	 * @exception Exception
 	 */
-    int insertBarcodescannerDevcie(BarcodescannerAPIVO vo) throws Exception;
+    int insertBarcodescannerDevcie(BarcodescannerAPIVO vo);
 
 	/**
 	 * Barcodescanner을 위해 Barcodescanner 정보를 서버에서 조회한다.
 	 * @param vo - 등록할 정보가 담긴 BarcodescannerAPIVO
 	 * @return 등록 결과
-	 * @exception Exception
 	 */
-	List<?> selectBarcodescannerList(BarcodescannerAPIDefaultVO searchVO) throws Exception;
+	List<?> selectBarcodescannerList(BarcodescannerAPIDefaultVO searchVO);
 
 }

@@ -39,10 +39,8 @@ public interface EgovInterfaceAndroidAPIService {
      * @param vo
      *            - 가입 정보가 담긴 InterfaceAndroidAPIVO
      * @return 해당 ID로 가입된 갯수
-     * @exception Exception
      */
-    int selectInterfaceInfoListTotCnt(InterfaceAndroidAPIVO vo)
-            throws Exception;
+    int selectInterfaceInfoListTotCnt(InterfaceAndroidAPIVO vo);
 
     /**
      * 회원 정보를 등록한다.
@@ -50,9 +48,8 @@ public interface EgovInterfaceAndroidAPIService {
      * @param vo
      *            - 등록할 정보가 담긴 InterfaceAndroidAPIVO
      * @return 등록 결과
-     * @exception Exception
      */
-    int insertInterfaceInfo(InterfaceAndroidAPIVO vo) throws Exception;
+    int insertInterfaceInfo(InterfaceAndroidAPIVO vo);
 
     /**
      * 로그인을 한다.
@@ -60,10 +57,8 @@ public interface EgovInterfaceAndroidAPIService {
      * @param vo
      *            - 로그인할 정보가 담긴 InterfaceAndroidAPIVO
      * @return 로그인 결과
-     * @exception Exception
      */
-    InterfaceAndroidAPIVO selectInterfaceInfo(InterfaceAndroidAPIVO vo)
-            throws Exception;
+    InterfaceAndroidAPIVO selectInterfaceInfo(InterfaceAndroidAPIVO vo);
 
     /**
      * 회원탈퇴를 한다.
@@ -71,7 +66,6 @@ public interface EgovInterfaceAndroidAPIService {
      * @param vo
      *            - 탈퇴할 정보가 담긴 InterfaceAndroidAPIVO
      * @return 회원탈퇴 결과
-     * @exception Exception
      */
-    int deleteInterfaceInfo(InterfaceAndroidAPIVO vo) throws Exception;
+    int deleteInterfaceInfo(InterfaceAndroidAPIVO vo);
 }

@@ -56,10 +56,8 @@ public class EgovInterfaceAndroidAPIServiceImpl extends EgovAbstractServiceImpl
      * @param vo
      *            - 로그인할 정보가 담긴 InterfaceAndroidAPIVO
      * @return 로그인 결과
-     * @exception Exception
      */
-    public int selectInterfaceInfoListTotCnt(InterfaceAndroidAPIVO vo)
-            throws Exception {
+    public int selectInterfaceInfoListTotCnt(InterfaceAndroidAPIVO vo) {
         return interfaceAPIDAO.selectInterfaceInfoListTotCnt(vo);
     }
 
@@ -69,9 +67,8 @@ public class EgovInterfaceAndroidAPIServiceImpl extends EgovAbstractServiceImpl
      * @param vo
      *            - 등록할 정보가 담긴 InterfaceAndroidAPIVO
      * @return 등록 결과
-     * @exception Exception
      */
-    public int insertInterfaceInfo(InterfaceAndroidAPIVO vo) throws Exception {
+    public int insertInterfaceInfo(InterfaceAndroidAPIVO vo) {
         vo.setUserPw(DeviceAPIPasswordUtil.encode(vo.getUserPw()));
         return interfaceAPIDAO.insertInterfaceInfo(vo);
     }
@@ -82,10 +79,8 @@ public class EgovInterfaceAndroidAPIServiceImpl extends EgovAbstractServiceImpl
      * @param vo
      *            - 로그인할 정보가 담긴 InterfaceAndroidAPIVO
      * @return 로그인 결과
-     * @exception Exception
      */
-    public InterfaceAndroidAPIVO selectInterfaceInfo(InterfaceAndroidAPIVO vo)
-            throws Exception {
+    public InterfaceAndroidAPIVO selectInterfaceInfo(InterfaceAndroidAPIVO vo) {
         InterfaceAndroidAPIVO stored = interfaceAPIDAO.selectInterfaceInfoByUserId(vo);
         if (stored == null) {
             return null;
@@ -104,9 +99,8 @@ public class EgovInterfaceAndroidAPIServiceImpl extends EgovAbstractServiceImpl
      * @param vo
      *            - 탈퇴할 정보가 담긴 InterfaceAndroidAPIVO
      * @return 회원탈퇴 결과
-     * @exception Exception
      */
-    public int deleteInterfaceInfo(InterfaceAndroidAPIVO vo) throws Exception {
+    public int deleteInterfaceInfo(InterfaceAndroidAPIVO vo) {
         InterfaceAndroidAPIVO stored = interfaceAPIDAO.selectInterfaceInfoByUserId(vo);
         if (stored == null || !DeviceAPIPasswordUtil.matches(vo.getUserPw(), stored.getUserPw())) {
             return 0;

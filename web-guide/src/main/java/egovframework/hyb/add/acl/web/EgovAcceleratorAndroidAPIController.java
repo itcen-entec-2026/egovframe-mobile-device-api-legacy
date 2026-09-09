@@ -70,14 +70,12 @@ public class EgovAcceleratorAndroidAPIController {
      * @param searchVO - 조회할 정보가 담긴 AcceleratorAPIDefaultVO
      * @param model
      * @return "/acl/xml/acceleratorInfoList.do"
-     * @exception Exception
      */
     @ApiOperation(value="Accelerator 정보 목록조회", notes="[Android] Accelerator 정보 목록을 조회한다.", response=AcceleratorAndroidAPIVOList.class)
     @SuppressWarnings("unchecked")
 	@RequestMapping(value="/acl/xml/acceleratorInfoList.do")
     public @ResponseBody AcceleratorAndroidAPIVOList selectAcceleratorInfoXMLList(
-    		@ModelAttribute("searchVO") AcceleratorAndroidAPIDefaultVO searchVO, ModelMap model)
-            throws Exception {
+    		@ModelAttribute("searchVO") AcceleratorAndroidAPIDefaultVO searchVO, ModelMap model) {
  
         List<AcceleratorAndroidAPIVO> acceleratorInfoList = (List<AcceleratorAndroidAPIVO>) egovAcceleratorAndroidAPIService.selectAcceleratorInfoList(searchVO);
         
@@ -94,7 +92,6 @@ public class EgovAcceleratorAndroidAPIController {
      * @param searchVO - 목록 조회조건 정보가 담긴 AcceleratorAPIDefaultVO
      * @param status
      * @return "forward:/acl/xml/addAcceleratorInfo.do"
-     * @exception Exception
      */
     @ApiOperation(value="Accelerator 세부정보 등록", notes="[Android] Accelerator 세부정보를 등록한다.\nresponseOK = {\"useYn\",\"OK\"}")
     @ApiImplicitParams({
@@ -103,8 +100,7 @@ public class EgovAcceleratorAndroidAPIController {
     @RequestMapping("/acl/xml/addAcceleratorInfo.do")
     public @ResponseBody AcceleratorAndroidAPIVO addAcceleratorInfoXml(
                 AcceleratorAndroidAPIVO acceleratorVO,
-            BindingResult bindingResult, Model model, SessionStatus status)
-            throws Exception {
+            BindingResult bindingResult, Model model, SessionStatus status) {
 
         AcceleratorAndroidAPIVO acceleratorAPIVO = new AcceleratorAndroidAPIVO();
 
@@ -125,14 +121,12 @@ public class EgovAcceleratorAndroidAPIController {
      * @param searchVO - 목록 조회조건 정보가 담긴 VO
      * @param status
      * @return "forward:/acl/xml/withdrawal.do"
-     * @exception Exception
      */
     @ApiOperation(value="Accelerator 세부정보 삭제", notes="[Android] Accelerator 세부정보를 삭제한다.(useYn=N으로변경)\nresponseOK = {\"useYn\",\"OK\"}")
     @RequestMapping("/acl/xml/withdrawal.do")
     public @ResponseBody AcceleratorAndroidAPIVO withdrawalXml(
                 AcceleratorAndroidAPIVO acceleratorVO,
-            BindingResult bindingResult, Model model, SessionStatus status) 
-    throws Exception {
+            BindingResult bindingResult, Model model, SessionStatus status) {
         
         int cnt = egovAcceleratorAndroidAPIService.deleteAcceleratorInfo(acceleratorVO);
         

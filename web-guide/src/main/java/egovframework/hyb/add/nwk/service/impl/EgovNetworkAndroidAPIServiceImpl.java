@@ -33,6 +33,7 @@ import egovframework.hyb.add.nwk.service.EgovNetworkAndroidAPIService;
 import egovframework.hyb.add.nwk.service.NetworkAndroidAPIDefaultVO;
 import egovframework.hyb.add.nwk.service.NetworkAndroidAPIVO;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.exception.BaseRuntimeException;
 
 /**  
  * @Class Name : EgovNetworkAndroidAPIServiceImpl.java
@@ -64,9 +65,8 @@ public class EgovNetworkAndroidAPIServiceImpl extends EgovAbstractServiceImpl im
      * 네트워크 정보를 등록한다.
      * @param vo - 등록할 정보가 담긴 NetworkAPIVO
      * @return 등록 결과
-     * @exception Exception
      */
-    public int insertNetworkInfo(NetworkAndroidAPIVO vo) throws Exception {    
+    public int insertNetworkInfo(NetworkAndroidAPIVO vo) {    
         return (Integer)networkAndroidAPIDAO.insertNetworkInfo(vo);  
     }
 
@@ -74,9 +74,8 @@ public class EgovNetworkAndroidAPIServiceImpl extends EgovAbstractServiceImpl im
      * 네트워크 정보를 수정한다.
      * @param vo - 수정할 정보가 담긴 NetworkAPIVO
      * @return void형
-     * @exception Exception
      */
-    public int updateNetworkInfo(NetworkAndroidAPIVO vo) throws Exception {
+    public int updateNetworkInfo(NetworkAndroidAPIVO vo) {
         return (Integer)networkAndroidAPIDAO.updateNetworkInfo(vo);
     }
 
@@ -84,9 +83,8 @@ public class EgovNetworkAndroidAPIServiceImpl extends EgovAbstractServiceImpl im
      * 네트워크 정보를 삭제한다.
      * @param vo - 삭제할 정보가 담긴 NetworkAPIVO
      * @return void형 
-     * @exception Exception
      */
-    public int deleteNetworkInfo(NetworkAndroidAPIVO vo) throws Exception {
+    public int deleteNetworkInfo(NetworkAndroidAPIVO vo) {
         return (Integer)networkAndroidAPIDAO.deleteNetworkInfo(vo);
     }
 
@@ -94,12 +92,12 @@ public class EgovNetworkAndroidAPIServiceImpl extends EgovAbstractServiceImpl im
      * 네트워크 정보를 조회한다.
      * @param vo - 조회할 정보가 담긴 NetworkAPIVO
      * @return 조회한 네트워크 정보
-     * @exception Exception
      */
-    public NetworkAndroidAPIVO selectNetworkInfo(NetworkAndroidAPIVO vo) throws Exception {
+    public NetworkAndroidAPIVO selectNetworkInfo(NetworkAndroidAPIVO vo) {
         NetworkAndroidAPIVO resultVO = networkAndroidAPIDAO.selectNetworkInfo(vo);
-        if (resultVO == null)
-            throw processException("info.nodata.msg");
+        if (resultVO == null) {
+            throw new BaseRuntimeException(processException("info.nodata.msg"));
+        }
         return resultVO;
     }
 
@@ -107,9 +105,8 @@ public class EgovNetworkAndroidAPIServiceImpl extends EgovAbstractServiceImpl im
      * 네트워크 정보 목록을 조회한다.
      * @param VO - 조회할 정보가 담긴 NetworkAPIVO
      * @return 네트워크 정보 목록
-     * @exception Exception
      */
-    public List<?> selectNetworkInfoList(NetworkAndroidAPIDefaultVO searchNetworkVO) throws Exception {
+    public List<?> selectNetworkInfoList(NetworkAndroidAPIDefaultVO searchNetworkVO) {
         return networkAndroidAPIDAO.selectNetworkInfoList(searchNetworkVO);
     }
     
@@ -117,9 +114,8 @@ public class EgovNetworkAndroidAPIServiceImpl extends EgovAbstractServiceImpl im
      * 미디어 파일을 조회한다.
      * @param mp3FilePath
      * @return 파일 정보
-     * @exception Exception
      */
-    public boolean selectMediaFileInf(HttpServletResponse response, String mp3FilePath) throws Exception {
+    public boolean selectMediaFileInf(HttpServletResponse response, String mp3FilePath) {
         File file = null;
         FileInputStream fis = null;
     
@@ -150,9 +146,6 @@ public class EgovNetworkAndroidAPIServiceImpl extends EgovAbstractServiceImpl im
         //2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 149-149
         }catch(IOException e){
         	LOGGER.error("["+e.getClass()+"] Try/Catch...file : " , e.getMessage());
-        } catch(Exception e) {
-        	LOGGER.error("["+e.getClass()+"] Try/Catch... : " + e.getMessage());
-            errorFlag = false;
         } finally {
             if (bStream != null) {
                 try {
@@ -160,9 +153,6 @@ public class EgovNetworkAndroidAPIServiceImpl extends EgovAbstractServiceImpl im
                   //2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 156-156
                 }catch(IOException e){
                 	LOGGER.error("["+e.getClass()+"] Try/Catch...bStream : " , e.getMessage());
-                } catch(Exception e) {
-                	LOGGER.error("["+e.getClass()+"] Try/Catch... : " + e.getMessage());
-                    errorFlag = false;
                 }
             }
             if (in != null) {
@@ -171,9 +161,6 @@ public class EgovNetworkAndroidAPIServiceImpl extends EgovAbstractServiceImpl im
                   //2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 164-164
                 }catch(IOException e){
                 	LOGGER.error("["+e.getClass()+"] Try/Catch...in : " , e.getMessage());
-                } catch(Exception e) {
-                	LOGGER.error("["+e.getClass()+"] Try/Catch... : " + e.getMessage());
-                    errorFlag = false;
                 }
             }
             if (fis != null) {
@@ -182,9 +169,6 @@ public class EgovNetworkAndroidAPIServiceImpl extends EgovAbstractServiceImpl im
                   //2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 172-172
                 }catch(IOException e){
                 	LOGGER.error("["+e.getClass()+"] Try/Catch...fis : " , e.getMessage());
-                } catch(Exception e) {
-                	LOGGER.error("["+e.getClass()+"] Try/Catch... : " + e.getMessage());
-                    errorFlag = false;
                 }
             }
             

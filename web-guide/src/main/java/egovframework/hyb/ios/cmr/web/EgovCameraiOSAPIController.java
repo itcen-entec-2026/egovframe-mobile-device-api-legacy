@@ -15,6 +15,7 @@
  */
 package egovframework.hyb.ios.cmr.web;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -22,7 +23,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,13 +31,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
+import egovframework.com.cmm.security.DeviceAPIAuthSupport;
 import egovframework.hyb.ios.cmr.service.CameraiOSAPIDefaultVO;
 import egovframework.hyb.ios.cmr.service.CameraiOSAPIFileVO;
 import egovframework.hyb.ios.cmr.service.CameraiOSAPIVO;
 import egovframework.hyb.ios.cmr.service.CameraiOSAPIXmlVO;
 import egovframework.hyb.ios.cmr.service.EgovCameraiOSAPIService;
-import egovframework.com.cmm.security.DeviceAPIAuthSupport;
 import egovframework.hyb.ios.cmr.service.impl.EgovCameraiOSMngUtil;
+import egovframework.rte.fdl.cmmn.exception.BaseRuntimeException;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -82,7 +83,6 @@ public class EgovCameraiOSAPIController {
 	 * @param file - 이미지 파일 정보가 담긴 MultipartFile
 	 * @param fileVO - 목록 조회조건 정보가 담긴 CameraIOSAPIVO
 	 * @return boolean
-	 * @exception Exception
 	 */
     @ApiOperation(value="Camera 이미지파일 등록", notes="[iOS] Camera 이미지파일 등록한다.")
     @ApiImplicitParams({
@@ -90,11 +90,16 @@ public class EgovCameraiOSAPIController {
     })
     @RequestMapping(value="/cmr/photoAlbumImageUploadiOS.do", method=RequestMethod.POST)
 	public @ResponseBody boolean fileUpload(@RequestParam("file") MultipartFile file, CameraiOSAPIVO vo, 
-			HttpServletRequest request) throws Exception{
+			HttpServletRequest request) {
 		
 		if (!file.isEmpty()) {
 			
-			String decodeName = java.net.URLDecoder.decode(vo.getPhotoSj(),"utf-8");
+			String decodeName;
+			try {
+				decodeName = java.net.URLDecoder.decode(vo.getPhotoSj(),"utf-8");
+			} catch (UnsupportedEncodingException e) {
+				throw new BaseRuntimeException(e);
+			}
 			vo.setPhotoSj(decodeName);
 			CameraiOSAPIFileVO fileVO = egovCameraiOSMngUtil.writeUploadedFile(file);
 			
@@ -112,7 +117,6 @@ public class EgovCameraiOSAPIController {
 	 * @param file - 이미지 파일 정보가 담긴 MultipartFile
 	 * @param fileVO - 목록 조회조건 정보가 담긴 CameraIOSAPIVO
 	 * @return boolean
-	 * @exception Exception
 	 */
     @ApiOperation(value="Camera 이미지파일 수정", notes="[iOS] Camera 이미지파일 수정한다.")
     @ApiImplicitParams({
@@ -120,7 +124,7 @@ public class EgovCameraiOSAPIController {
     })
     @RequestMapping(value="/cmr/photoAlbumImageUpdateiOS.do", method=RequestMethod.POST)
 	public @ResponseBody boolean fileUpdate(@RequestParam("file") MultipartFile file, CameraiOSAPIVO vo, 
-			HttpServletRequest request) throws Exception{
+			HttpServletRequest request) {
 		
 		if (!file.isEmpty()) {
 			
@@ -138,7 +142,6 @@ public class EgovCameraiOSAPIController {
 	 * 이미지 목록을 조회한다.
 	 * @param searchVO - 조회할 정보가 담긴 NetworkAPIDefaultVO
 	 * @return jsonView
-	 * @exception Exception
 	 */
     @ApiOperation(value="Camera 이미지 목록조회", notes="[iOS] Camera 이미지 목록을 조회한다.")
     @ApiImplicitParams({
@@ -148,8 +151,7 @@ public class EgovCameraiOSAPIController {
 	@RequestMapping(value="/cmr/cameraPhotoAlbumListiOS.do")
     public @ResponseBody CameraiOSAPIXmlVO selectCameraPhotoAlbumList(
     		@ModelAttribute("searchVO") CameraiOSAPIDefaultVO searchVO,
-    		SessionStatus status)
-            throws Exception {
+    		SessionStatus status) {
  
     	searchVO.setFirstIndex((searchVO.getPageIndex()-1)*10);
 		List<CameraiOSAPIFileVO> photoAlbumList = (List<CameraiOSAPIFileVO>) egovCameraiOSAPIService.selectCameraPhotoAlbumList(searchVO);
@@ -167,7 +169,6 @@ public class EgovCameraiOSAPIController {
 	 * @param bindingResult
 	 * @param status
 	 * @return jsonView
-	 * @exception Exception
 	 */
     @ApiOperation(value="Camera 이미지 세부정보 조회", notes="[iOS] Camera 이미지 세부정보를 조회한다.")
     @ApiImplicitParams({
@@ -175,8 +176,7 @@ public class EgovCameraiOSAPIController {
     })
     @RequestMapping(value="/cmr/cameraPhotoAlbumDetailiOS.do")
     public @ResponseBody CameraiOSAPIXmlVO selectPhotoAlbum(CameraiOSAPIVO vo,
-    		HttpServletRequest request, SessionStatus status)
-            throws Exception {
+    		HttpServletRequest request, SessionStatus status) {
 
     	vo.setUuid(DeviceAPIAuthSupport.resolveDeviceUuid(request, vo.getUuid()));
     	CameraiOSAPIVO cameraVO = egovCameraiOSAPIService.selectCameraPhotoAlbum(vo);
@@ -193,7 +193,6 @@ public class EgovCameraiOSAPIController {
 	 * @param model
 	 * @param response
 	 * @return jsonView
-	 * @exception Exception
 	 */
     @ApiOperation(value="Camera 이미지 다운로드", notes="[iOS] Camera 이미지 다운로드 한다.")
     @ApiImplicitParams({
@@ -202,7 +201,7 @@ public class EgovCameraiOSAPIController {
     @RequestMapping("/cmr/getImageiOS.do")
     public void getImageInf(@RequestParam("fileSn") String fileSn,
             @RequestParam(value = "uuid", required = false) String uuid,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+            HttpServletRequest request, HttpServletResponse response) {
 
     	if(fileSn != null && !"".equals(fileSn)) {
 			CameraiOSAPIFileVO vo = new CameraiOSAPIFileVO();
@@ -216,7 +215,6 @@ public class EgovCameraiOSAPIController {
 	 * 이미지를 삭제한다.
 	 * @param sn - 조회할 정보가 담긴 String
 	 * @return jsonView
-	 * @exception Exception
 	 */
     @ApiOperation(value="Camera 이미지정보 삭제", notes="[iOS] Camera 이미지정보를 삭제한다.")
     @ApiImplicitParams({
@@ -224,8 +222,7 @@ public class EgovCameraiOSAPIController {
     })
     @RequestMapping(value="/cmr/deleteCameraPhotoAlbumiOS.do")
     public @ResponseBody CameraiOSAPIXmlVO deleteCameraPhotoAlbum(CameraiOSAPIVO vo,
-    		HttpServletRequest request, SessionStatus status)
-            throws Exception {
+    		HttpServletRequest request, SessionStatus status) {
 
     	CameraiOSAPIXmlVO cameraiOSAPIXmlVO = new CameraiOSAPIXmlVO();
     	vo.setUuid(DeviceAPIAuthSupport.resolveDeviceUuid(request, vo.getUuid()));
@@ -257,7 +254,6 @@ public class EgovCameraiOSAPIController {
 	 * @param bindingResult
 	 * @param status
 	 * @return jsonView
-	 * @exception Exception
 	 */
     @ApiOperation(value="Camera 이미지 제목 중복 조회", notes="[iOS] Camera 이미지 제목 중복을 조회한다.")
     @ApiImplicitParams({
@@ -265,8 +261,7 @@ public class EgovCameraiOSAPIController {
     })
     @RequestMapping(value="/cmr/cameraPhotoAlbumCheckiOS.do")
     public @ResponseBody CameraiOSAPIXmlVO selectPhotoAlbumPhoSj( CameraiOSAPIVO vo,
-    		SessionStatus status)
-            throws Exception {
+    		SessionStatus status) {
     	CameraiOSAPIFileVO cameraVO = egovCameraiOSAPIService.selectCameraPhotoAlbumPhotoSj(vo);
     	CameraiOSAPIVO newVO = new CameraiOSAPIVO();
     	if(cameraVO != null) {
@@ -282,12 +277,10 @@ public class EgovCameraiOSAPIController {
     /**
 	 * 어플리케이션 실행 시, 서버 설정
 	 * @return boolean
-	 * @exception Exception
 	 */
     @ApiOperation(value="Camera 서버 ContextPath 조회", notes="[iOS] 서버 ContextPath 조회한다.")
     @RequestMapping("/cmr/htmlLoadiOS.do")
-	public @ResponseBody CameraiOSAPIXmlVO htmlLoad(SessionStatus status) 
-    throws Exception{
+	public @ResponseBody CameraiOSAPIXmlVO htmlLoad(SessionStatus status) {
 		
     	CameraiOSAPIXmlVO cameraiOSAPIXmlVO = new CameraiOSAPIXmlVO();
     	

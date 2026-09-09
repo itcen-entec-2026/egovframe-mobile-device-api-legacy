@@ -34,6 +34,7 @@ import egovframework.hyb.ios.cmr.service.CameraiOSAPIFileVO;
 import egovframework.hyb.ios.cmr.service.CameraiOSAPIVO;
 import egovframework.hyb.ios.cmr.service.EgovCameraiOSAPIService;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.exception.BaseRuntimeException;
 
 /**  
  * @Class Name : EgovCameraIOSAPIServiceImpl.java
@@ -66,9 +67,8 @@ public class EgovCameraiOSAPIServiceImpl extends EgovAbstractServiceImpl impleme
 	 * 이미지를 등록한다.
 	 * @param vo - 등록할 정보가 담긴 CameraAPIVO
 	 * @return void형
-	 * @exception Exception
 	 */
-	public int insertCameraPhotoAlbum(CameraiOSAPIVO vo, int fileSn) throws Exception {
+	public int insertCameraPhotoAlbum(CameraiOSAPIVO vo, int fileSn) {
 
 		CameraiOSAPIFileVO fileVO = new CameraiOSAPIFileVO();
 		fileVO.setFileSn(fileSn);
@@ -82,9 +82,8 @@ public class EgovCameraiOSAPIServiceImpl extends EgovAbstractServiceImpl impleme
 	 * 이미지 파일을 등록한다.
 	 * @param vo - 등록할 정보가 담긴 CameraAPIVO
 	 * @return void형
-	 * @exception Exception
 	 */
-	public int insertCameraPhotoAlbumFile(CameraiOSAPIFileVO vo) throws Exception {
+	public int insertCameraPhotoAlbumFile(CameraiOSAPIFileVO vo) {
 		return cameraAPIDAO.insertCameraPhotoAlbumFile(vo);
 	}
 
@@ -92,9 +91,8 @@ public class EgovCameraiOSAPIServiceImpl extends EgovAbstractServiceImpl impleme
 	 * 이미지를 수정한다.
 	 * @param vo - 등록할 정보가 담긴 CameraAPIVO
 	 * @return void형
-	 * @exception Exception
 	 */
-	public int updateCameraPhotoAlbumFile(CameraiOSAPIVO vo, int fileSn) throws Exception {
+	public int updateCameraPhotoAlbumFile(CameraiOSAPIVO vo, int fileSn) {
 
 		CameraiOSAPIFileVO fileVO = new CameraiOSAPIFileVO();
 		fileVO.setFileSn(fileSn);
@@ -107,9 +105,8 @@ public class EgovCameraiOSAPIServiceImpl extends EgovAbstractServiceImpl impleme
 	 * 이미지를 삭제한다.
 	 * @param vo - 삭제할 정보가 담긴 CameraAPIVO
 	 * @return void형
-	 * @exception Exception
 	 */
-	public boolean deleteCameraPhotoAlbum(CameraiOSAPIVO vo) throws Exception {
+	public boolean deleteCameraPhotoAlbum(CameraiOSAPIVO vo) {
 
 		int deleteCnt = cameraAPIDAO.deleteCameraPhotoAlbumInfo(vo);
 		if (deleteCnt < 1) {
@@ -127,9 +124,8 @@ public class EgovCameraiOSAPIServiceImpl extends EgovAbstractServiceImpl impleme
 	 * 이미지 정보를 조회한다.
 	 * @param vo - 조회할 정보가 담긴 CameraAPIVO
 	 * @return 조회 결과
-	 * @exception Exception
 	 */
-	public CameraiOSAPIVO selectCameraPhotoAlbum(CameraiOSAPIVO vo) throws Exception {
+	public CameraiOSAPIVO selectCameraPhotoAlbum(CameraiOSAPIVO vo) {
 		return cameraAPIDAO.selectCameraPhotoAlbumInfo(vo);
 	}
 
@@ -137,9 +133,8 @@ public class EgovCameraiOSAPIServiceImpl extends EgovAbstractServiceImpl impleme
 	 * 이미지 정보 목록을 조회한다.
 	 * @param vo - 조회할 정보가 담긴 CameraIOSAPIDefaultVO
 	 * @return 이미지 정보 목록
-	 * @exception Exception
 	 */
-	public List<?> selectCameraPhotoAlbumList(CameraiOSAPIDefaultVO searchVO) throws Exception {
+	public List<?> selectCameraPhotoAlbumList(CameraiOSAPIDefaultVO searchVO) {
 		return cameraAPIDAO.selectCameraPhotoAlbumInfoList(searchVO);
 	}
 
@@ -147,9 +142,8 @@ public class EgovCameraiOSAPIServiceImpl extends EgovAbstractServiceImpl impleme
 	 * 이미지 파일을 조회한다.
 	 * @param VO - 조회할 정보가 담긴 CameraIOSAPIFileVO
 	 * @return 파일 정보
-	 * @exception Exception
 	 */
-	public boolean selectImageFileInf(HttpServletResponse response, CameraiOSAPIFileVO vo) throws Exception {
+	public boolean selectImageFileInf(HttpServletResponse response, CameraiOSAPIFileVO vo) {
 		File file = null;
 		FileInputStream fis = null;
 
@@ -158,7 +152,11 @@ public class EgovCameraiOSAPIServiceImpl extends EgovAbstractServiceImpl impleme
 
 		CameraiOSAPIFileVO fileVO = cameraAPIDAO.selectImageFileInfo(vo);
 		if (fileVO == null) {
-			response.sendError(HttpServletResponse.SC_FORBIDDEN, "File access denied.");
+			try {
+				response.sendError(HttpServletResponse.SC_FORBIDDEN, "File access denied.");
+			} catch (IOException e) {
+				throw new BaseRuntimeException(e);
+			}
 			return false;
 		}
 
@@ -201,9 +199,6 @@ public class EgovCameraiOSAPIServiceImpl extends EgovAbstractServiceImpl impleme
 	    //2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 195-195
         }catch(IOException e){
         	LOGGER.error("["+e.getClass()+"] Try/Catch...file : " , e.getMessage());
-        } catch(Exception e) {
-        	LOGGER.error("["+e.getClass()+"] Try/Catch... : " + e.getMessage());
-			errorFlag = false;
 		} finally {
 			if (bStream != null) {
 				try {
@@ -211,9 +206,6 @@ public class EgovCameraiOSAPIServiceImpl extends EgovAbstractServiceImpl impleme
 				//2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 202-202
                 }catch(IOException e){
                 	LOGGER.error("["+e.getClass()+"] Try/Catch...bStream : " , e.getMessage());
-                } catch(Exception e) {
-                	LOGGER.error("["+e.getClass()+"] Try/Catch... : " + e.getMessage());
-					errorFlag = false;
 				}
 			}
 			if (in != null) {
@@ -222,9 +214,6 @@ public class EgovCameraiOSAPIServiceImpl extends EgovAbstractServiceImpl impleme
 				//2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 210-210
                 }catch(IOException e){
                 	LOGGER.error("["+e.getClass()+"] Try/Catch...in : " , e.getMessage());
-                } catch(Exception e) {
-                	LOGGER.error("["+e.getClass()+"] Try/Catch... : " + e.getMessage());
-					errorFlag = false;
 				}
 			}
 			if (fis != null) {
@@ -233,9 +222,6 @@ public class EgovCameraiOSAPIServiceImpl extends EgovAbstractServiceImpl impleme
 				//2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 218-218
                 }catch(IOException e){
                 	LOGGER.error("["+e.getClass()+"] Try/Catch...fis : " , e.getMessage());
-                } catch(Exception e) {
-                	LOGGER.error("["+e.getClass()+"] Try/Catch... : " + e.getMessage());
-					errorFlag = false;
 				}
 			}
 		}
@@ -247,9 +233,8 @@ public class EgovCameraiOSAPIServiceImpl extends EgovAbstractServiceImpl impleme
 	 * 이미지 제목 중복을 조회한다.
 	 * @param vo - 조회할 정보가 담긴 CameraAPIVO
 	 * @return 조회한 이미지 정보
-	 * @exception Exception
 	 */
-	public CameraiOSAPIFileVO selectCameraPhotoAlbumPhotoSj(CameraiOSAPIVO vo) throws Exception {
+	public CameraiOSAPIFileVO selectCameraPhotoAlbumPhotoSj(CameraiOSAPIVO vo) {
 
 		CameraiOSAPIFileVO fileVO = new CameraiOSAPIFileVO();
 		fileVO.setPhotoSj(vo.getPhotoSj());

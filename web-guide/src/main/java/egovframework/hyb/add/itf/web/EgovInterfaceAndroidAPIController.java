@@ -72,7 +72,6 @@ public class EgovInterfaceAndroidAPIController {
      *            - 등록할 정보가 담긴 InterfaceAPIDefaultVO
      * @param interfaceVO
      * @return MedelAndView(Json)
-     * @exception Exception
      */
     @ApiOperation(value="Interface 회원가입 정보 등록", notes="[Android] 회원가입 정보를 등록한다", response=InterfaceiOSAPIVO.class)
     @ApiImplicitParams({
@@ -82,7 +81,7 @@ public class EgovInterfaceAndroidAPIController {
     @RequestMapping("/itf/addInterfaceInfo.do")
     public ModelAndView addInterfaceInfo(
             InterfaceAndroidAPIVO interfaceVO, BindingResult bindingResult,
-            Model model, SessionStatus status) throws Exception {
+            Model model, SessionStatus status) {
 
         ModelAndView jsonView = new ModelAndView("jsonView");
 
@@ -114,7 +113,6 @@ public class EgovInterfaceAndroidAPIController {
      *            - 등록할 정보가 담긴 InterfaceAPIDefaultVO
      * @param InterfaceAndroidAPIVO
      * @return InterfaceAndroidAPIVO (XML)
-     * @exception Exception
      */
     @ApiOperation(value="Interface 회원가입 정보 등록", notes="[Android] 회원가입 정보를 등록한다", response=InterfaceAndroidAPIVO.class)
     @ApiImplicitParams({
@@ -125,7 +123,7 @@ public class EgovInterfaceAndroidAPIController {
     public @ResponseBody
     InterfaceAndroidAPIVO addInterfaceInfoXml(
             InterfaceAndroidAPIVO interfaceVO, BindingResult bindingResult,
-            Model model, SessionStatus status) throws Exception {
+            Model model, SessionStatus status) {
 
         int cnt = egovInterfaceAPIService
                 .selectInterfaceInfoListTotCnt(interfaceVO);
@@ -157,7 +155,6 @@ public class EgovInterfaceAndroidAPIController {
      *            - 로그인 할 정보가 담긴 InterfaceAndroidAPIVO
      * @param status
      * @return MedelAndView(Json)
-     * @exception Exception
      */
     @ApiOperation(value="Interface 로그인 조회", notes="[Android] 로그인을 한다.", response=InterfaceAndroidAPIVO.class)
     @ApiImplicitParams({
@@ -167,7 +164,7 @@ public class EgovInterfaceAndroidAPIController {
     @RequestMapping("/itf/logIn.do")
     public ModelAndView logIn(
             InterfaceAndroidAPIVO interfaceVO, BindingResult bindingResult,
-            Model model, SessionStatus status, HttpServletRequest request) throws Exception {
+            Model model, SessionStatus status, HttpServletRequest request) {
 
         ModelAndView jsonView = new ModelAndView("jsonView");
 
@@ -204,7 +201,6 @@ public class EgovInterfaceAndroidAPIController {
      *            - 로그인 할 정보가 담긴 InterfaceAndroidAPIVO
      * @param InterfaceAndroidAPIVO
      * @return InterfaceAndroidAPIVO (XML)
-     * @exception Exception
      */
     @ApiOperation(value="Interface 로그인 조회", notes="[Android] 로그인을 한다.", response=InterfaceAndroidAPIVO.class)
     @ApiImplicitParams({
@@ -215,7 +211,7 @@ public class EgovInterfaceAndroidAPIController {
     public @ResponseBody
     InterfaceAndroidAPIVO logInXml(
             InterfaceAndroidAPIVO interfaceVO, BindingResult bindingResult,
-            Model model, SessionStatus status, HttpServletRequest request) throws Exception {
+            Model model, SessionStatus status, HttpServletRequest request) {
 
         InterfaceAndroidAPIVO interfaceAndroidAPIVO = egovInterfaceAPIService
                 .selectInterfaceInfo(interfaceVO);
@@ -252,7 +248,6 @@ public class EgovInterfaceAndroidAPIController {
      *            - 탈퇴 할 정보가 담긴 InterfaceAndroidAPIVO
      * @param status
      * @return MedelAndView(Json)
-     * @exception Exception
      */
     @ApiOperation(value="Interface 회원탈퇴", notes="[Android] 회원탈퇴 한다.", response=InterfaceAndroidAPIVO.class)
     @ApiImplicitParams({
@@ -262,7 +257,7 @@ public class EgovInterfaceAndroidAPIController {
     @RequestMapping("/itf/withdrawal.do")
     public ModelAndView withdrawal(
             InterfaceAndroidAPIVO interfaceVO, BindingResult bindingResult,
-            Model model, SessionStatus status) throws Exception {
+            Model model, SessionStatus status) {
 
         ModelAndView jsonView = new ModelAndView("jsonView");
 
@@ -286,7 +281,6 @@ public class EgovInterfaceAndroidAPIController {
      *            - 탈퇴 할 정보가 담긴 InterfaceAndroidAPIVO
      * @param InterfaceAndroidAPIVO
      * @return InterfaceAndroidAPIVO (XML)
-     * @exception Exception
      */
     @ApiOperation(value="Interface 회원탈퇴", notes="[Android] 회원탈퇴 한다.", response=InterfaceAndroidAPIVO.class)
     @ApiImplicitParams({
@@ -297,7 +291,7 @@ public class EgovInterfaceAndroidAPIController {
     public @ResponseBody
     InterfaceAndroidAPIVO withdrawalXml(
             InterfaceAndroidAPIVO interfaceVO, BindingResult bindingResult,
-            Model model, SessionStatus status) throws Exception {
+            Model model, SessionStatus status) {
 
         int cnt = egovInterfaceAPIService.deleteInterfaceInfo(interfaceVO);
 

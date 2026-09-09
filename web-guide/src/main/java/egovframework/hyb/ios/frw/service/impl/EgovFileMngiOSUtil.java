@@ -8,11 +8,12 @@ import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -30,7 +31,8 @@ import egovframework.com.cmm.security.DeviceAPIFileUploadValidator;
 import egovframework.hyb.ios.frw.service.EgovFileReaderWriteriOSAPIService;
 import egovframework.hyb.ios.frw.service.FileReaderWriteriOSAPIVO;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
-import egovframework.rte.fdl.cmmn.exception.EgovBizException;
+import egovframework.rte.fdl.cmmn.exception.BaseRuntimeException;
+import egovframework.rte.fdl.cmmn.exception.FdlException;
 import egovframework.rte.fdl.idgnr.EgovIdGnrService;
 import egovframework.rte.fdl.property.EgovPropertyService;
 
@@ -77,9 +79,8 @@ public class EgovFileMngiOSUtil extends EgovAbstractServiceImpl {
 	 * 사용자가 전송한 파일을 업로드 한다.
 	 * @param file - 업로드된 파일 정보가 담긴 MultipartFile 
 	 * @param fileVO - 파일 정보가 담긴 FileReaderWriteriOSAPIVO 
-	 * @exception Exception
 	 */
-	public FileReaderWriteriOSAPIVO writeUploadedFile(MultipartFile file, FileReaderWriteriOSAPIVO fileVO) throws Exception{
+	public FileReaderWriteriOSAPIVO writeUploadedFile(MultipartFile file, FileReaderWriteriOSAPIVO fileVO) {
 
 		DeviceAPIFileUploadValidator.validateFrwUpload(file);
 
@@ -94,7 +95,11 @@ public class EgovFileMngiOSUtil extends EgovAbstractServiceImpl {
 		fileVO.setStreFileNm(newName);
 		fileVO.setFileExtsn(fileExt);
 		fileVO.setFileSize(Long.toString(file.getSize()));
-		fileVO.setFileSn(egovFileIdGnrService.getNextIntegerId());
+		try {
+			fileVO.setFileSn(egovFileIdGnrService.getNextIntegerId());
+		} catch (FdlException e) {
+			throw new BaseRuntimeException(e);
+		}
 		
 		
 
@@ -114,19 +119,15 @@ public class EgovFileMngiOSUtil extends EgovAbstractServiceImpl {
 					out.flush();					
 				}
 			//2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 113-113
-            }catch(FileNotFoundException e){
-            	LOGGER.error("["+e.getClass()+"] Try/Catch...FileOutputStream : " , e.getMessage());
-            } catch(Exception e) {
-            	LOGGER.error("["+e.getClass()+"] Try/Catch... : " + e.getMessage());
-				throw new EgovBizException("Fail to upload file : " + e.getMessage());
+            }catch(IOException e){
+            	throw new BaseRuntimeException(e);
 			}finally{
 				try {
 					if(out != null){
 						out.close();
 					}
-					
 				} catch (IOException e) {
-					LOGGER.error("Fail to close fileoutputstrem : {}", e.getMessage());
+					throw new BaseRuntimeException(e);
 				}
 			}
 		}
@@ -140,9 +141,8 @@ public class EgovFileMngiOSUtil extends EgovAbstractServiceImpl {
 	 * @param request - HttpServletRequest 
 	 * @param response - HttpServletResponse 
 	 * @param fileVO - 파일 정보가 담긴 FileReaderWriteriOSAPIVO 
-	 * @exception Exception
 	 */
-	public void fileDownload(HttpServletRequest request, HttpServletResponse response, FileReaderWriteriOSAPIVO fileVO) throws Exception{
+	public void fileDownload(HttpServletRequest request, HttpServletResponse response, FileReaderWriteriOSAPIVO fileVO) {
 		
 		fileDownload(request, response, fileVO.getOrignlFileNm(), fileVO.getStreFileNm());
 		
@@ -153,15 +153,19 @@ public class EgovFileMngiOSUtil extends EgovAbstractServiceImpl {
 	 * @param request - HttpServletRequest 
 	 * @param response - HttpServletResponse 
 	 * @param fileVO - 파일 정보가 담긴 FileReaderWriteriOSAPIVO 
-	 * @exception Exception
 	 */
-	public String computeFileSha256(String streFileNm) throws Exception {
+	public String computeFileSha256(String streFileNm) {
 		File file = new File(propertiesService.getString("fileStorePath") + streFileNm);
 		if (!file.exists() || !file.isFile()) {
-			throw new FileNotFoundException(streFileNm);
+			throw new BaseRuntimeException(streFileNm);
 		}
 
-		MessageDigest digest = MessageDigest.getInstance("SHA-256");
+		MessageDigest digest;
+		try {
+			digest = MessageDigest.getInstance("SHA-256");
+		} catch (NoSuchAlgorithmException e) {
+			throw new BaseRuntimeException(e);
+		}
 		FileInputStream fis = null;
 		try {
 			fis = new FileInputStream(file);
@@ -170,12 +174,14 @@ public class EgovFileMngiOSUtil extends EgovAbstractServiceImpl {
 			while ((read = fis.read(buffer)) != -1) {
 				digest.update(buffer, 0, read);
 			}
+		} catch (IOException e) {
+			throw new BaseRuntimeException(e);
 		} finally {
 			if (fis != null) {
 				try {
 					fis.close();
-				} catch (IOException ignore) {
-					LOGGER.error("Fail to close fileinputstream : {}", ignore.getMessage());
+				} catch (IOException e) {
+					throw new BaseRuntimeException(e);
 				}
 			}
 		}
@@ -188,15 +194,15 @@ public class EgovFileMngiOSUtil extends EgovAbstractServiceImpl {
 		return sb.toString();
 	}
 
-	public void fileDownload(HttpServletRequest request, HttpServletResponse response, String originalFileName, String streFileNm) throws Exception{
+	public void fileDownload(HttpServletRequest request, HttpServletResponse response, String originalFileName, String streFileNm) {
 		DeviceAPIFileUploadValidator.assertSafeStoredFileName(streFileNm);
 		File file = new File(propertiesService.getString("fileStorePath") + streFileNm);
 		
 		if(!file.exists()){
-			throw new FileNotFoundException(streFileNm);			
+			throw new BaseRuntimeException(streFileNm);
 		}
 		if(!file.isFile()){
-			throw new FileNotFoundException(streFileNm);
+			throw new BaseRuntimeException(streFileNm);
 		}
 		
 		
@@ -204,7 +210,11 @@ public class EgovFileMngiOSUtil extends EgovAbstractServiceImpl {
 		
 		
 		response.setContentType("video/quicktime");
-		response.setHeader("Content-Disposition:", "attachment; filename=" + new String(originalFileName.getBytes(), "UTF-8"));
+		try {
+			response.setHeader("Content-Disposition:", "attachment; filename=" + new String(originalFileName.getBytes(), "UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			throw new BaseRuntimeException(e);
+		}
 		response.setHeader("Content-Transfer-Encoding", "binary");
 		response.setHeader("Content-Length", ""+file.length());
 		response.setHeader("Pragma", "no-cache");
@@ -221,25 +231,23 @@ public class EgovFileMngiOSUtil extends EgovAbstractServiceImpl {
 			while ((read = fin.read(buffer)) != -1) {
 			    outs.write(buffer, 0, read);
 			}
+		} catch (IOException e) {
+			throw new BaseRuntimeException(e);
 		} finally {
 			if (outs != null) {
 				try {
 					outs.close();
 				//2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 188-188
-				}catch (IOException ignore){
-					LOGGER.error("["+ignore.getClass()+"] Try/Catch...outs : " , ignore.getMessage());
-				} catch (Exception ignore) {
-					LOGGER.error("["+ignore.getClass()+"] Try/Catch... : " + ignore.getMessage());
+				}catch (IOException e){
+					throw new BaseRuntimeException(e);
 				}
 			}
 			if (fin != null) {
 				try {
 					fin.close();
 				//2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 195-195
-				}catch (IOException ignore){
-					LOGGER.error("["+ignore.getClass()+"] Try/Catch...fin : " , ignore.getMessage());
-				} catch (Exception ignore) {
-					LOGGER.error("IGNORED: {}", ignore.getMessage());
+				}catch (IOException e){
+					throw new BaseRuntimeException(e);
 				}
 			}
 		}
@@ -250,9 +258,8 @@ public class EgovFileMngiOSUtil extends EgovAbstractServiceImpl {
 	/**
 	 * 선택된 파일에 대한 삭제 기능을 처리한다.
 	 * @param fileVO - 파일 정보가 담긴 FileReaderWriteriOSAPIVO 
-	 * @exception Exception
 	 */
-	public void deleteFile(FileReaderWriteriOSAPIVO fileVO) throws Exception{
+	public void deleteFile(FileReaderWriteriOSAPIVO fileVO) {
 		
 		File videoFile = new File(propertiesService.getString("fileStorePath") + fileVO.getStreFileNm());
 		
@@ -291,7 +298,6 @@ public class EgovFileMngiOSUtil extends EgovAbstractServiceImpl {
 	/**
 	 * yyyyMMddhhmmssSSS 패턴의 현재 날자를 반환한다.
 	 * @return String
-	 * @exception Exception
 	 */
 	private static String getTimeStamp(){
 		String rtnStr = null;
@@ -299,19 +305,10 @@ public class EgovFileMngiOSUtil extends EgovAbstractServiceImpl {
 		// 문자열로 변환하기 위한 패턴 설정(년도-월-일 시:분:초:초(자정이후 초))
 		String pattern = "yyyyMMddhhmmssSSS";
 
-		try {
-		    SimpleDateFormat sdfCurrent = new SimpleDateFormat(pattern, Locale.KOREA);
-		    Timestamp ts = new Timestamp(System.currentTimeMillis());
+	    SimpleDateFormat sdfCurrent = new SimpleDateFormat(pattern, Locale.KOREA);
+	    Timestamp ts = new Timestamp(System.currentTimeMillis());
 
-		    rtnStr = sdfCurrent.format(ts.getTime());
-		  //2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 261-261
-        }catch(NullPointerException e){
-        	LOGGER.error("["+e.getClass()+"] Try/Catch...sdfCurrent : " , e.getMessage());
-		} catch (Exception e) {			
-		    //e.printStackTrace();			
-		    //throw new RuntimeException(e);	// 보안점검 후속조치
-			LOGGER.error("["+e.getClass()+"] Try/Catch... : " + e.getMessage());
-		}
+	    rtnStr = sdfCurrent.format(ts.getTime());
 
 		return rtnStr;
 	}

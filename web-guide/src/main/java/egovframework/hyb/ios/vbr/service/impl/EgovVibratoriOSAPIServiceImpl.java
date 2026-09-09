@@ -59,9 +59,8 @@ public class EgovVibratoriOSAPIServiceImpl extends EgovAbstractServiceImpl imple
 	 * 알림 설정 정보를 등록한다.
 	 * @param vo - 등록할 정보가 담긴 VibratorAPIVO
 	 * @return 등록 결과
-	 * @exception Exception
 	 */
-    public int insertVibrator(VibratoriOSAPIVO vo) throws Exception {
+    public int insertVibrator(VibratoriOSAPIVO vo) {
     	LOGGER.debug(vo.toString());
     	
     	return (Integer)vibratorAPIDAO.insertVibrator(vo);    	
@@ -71,9 +70,8 @@ public class EgovVibratoriOSAPIServiceImpl extends EgovAbstractServiceImpl imple
 	 * 알림 설정 정보 목록을 조회한다.
 	 * @param VO - 조회할 정보가 담긴 VibratorAPIVO
 	 * @return 알림 설정 정보 목록
-	 * @exception Exception
 	 */
-    public List<?> selectVibratorList(VibratoriOSAPIDefaultVO searchVO) throws Exception {
+    public List<?> selectVibratorList(VibratoriOSAPIDefaultVO searchVO) {
         return vibratorAPIDAO.selectVibratorList(searchVO);
     }
 }

@@ -1,5 +1,7 @@
 package egovframework.com.cmm.interceptor;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -9,6 +11,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import egovframework.com.cmm.security.DeviceAPIAccessDeniedException;
 import egovframework.com.cmm.security.DeviceAPIAuthSupport;
+import egovframework.rte.fdl.cmmn.exception.BaseRuntimeException;
 
 /**
  * 인증여부 체크 인터셉터
@@ -33,7 +36,7 @@ public class CustomAuthenticInterceptor extends HandlerInterceptorAdapter {
     private final Logger log = LoggerFactory.getLogger(CustomAuthenticInterceptor.class);
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String servletPath = request.getServletPath();
 
         if (DeviceAPIAuthSupport.isPublicPath(servletPath)) {
@@ -49,7 +52,11 @@ public class CustomAuthenticInterceptor extends HandlerInterceptorAdapter {
             return true;
         } catch (DeviceAPIAccessDeniedException e) {
             log.warn("Device API access denied: {} {}", servletPath, e.getMessage());
-            response.sendError(HttpServletResponse.SC_FORBIDDEN, e.getMessage());
+            try {
+				response.sendError(HttpServletResponse.SC_FORBIDDEN, e.getMessage());
+			} catch (IOException e1) {
+				throw new BaseRuntimeException(e);
+			}
             return false;
         }
     }

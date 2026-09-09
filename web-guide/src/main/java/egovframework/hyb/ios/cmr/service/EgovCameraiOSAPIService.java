@@ -41,63 +41,55 @@ public interface EgovCameraiOSAPIService {
 	 * 이미지를 등록한다.
 	 * @param vo - 등록할 정보가 담긴 CameraAPIVO
 	 * @return void형
-	 * @exception Exception
 	 */
-	public int insertCameraPhotoAlbum(CameraiOSAPIVO vo, int fileSn) throws Exception;
+	public int insertCameraPhotoAlbum(CameraiOSAPIVO vo, int fileSn);
 	
 	/**
 	 * 이미지 파일을 등록한다.
 	 * @param vo - 등록할 정보가 담긴 CameraAPIVO
 	 * @return void형
-	 * @exception Exception
 	 */
-	public int insertCameraPhotoAlbumFile(CameraiOSAPIFileVO vo) throws Exception;
+	public int insertCameraPhotoAlbumFile(CameraiOSAPIFileVO vo);
     
     /**
 	 * 이미지를 수정한다.
 	 * @param vo - 등록할 정보가 담긴 CameraAPIVO
 	 * @return void형
-	 * @exception Exception
 	 */
-	public int updateCameraPhotoAlbumFile(CameraiOSAPIVO vo, int fileSn) throws Exception;
+	public int updateCameraPhotoAlbumFile(CameraiOSAPIVO vo, int fileSn);
     
     /**
 	 * 이미지를 삭제한다.
 	 * @param vo - 삭제할 정보가 담긴 CameraAPIVO
 	 * @return void형 
-	 * @exception Exception
 	 */
-	public boolean deleteCameraPhotoAlbum(CameraiOSAPIVO vo) throws Exception;
+	public boolean deleteCameraPhotoAlbum(CameraiOSAPIVO vo);
     
     /**
 	 * 이미지를 조회한다.
 	 * @param vo - 조회할 정보가 담긴 CameraAPIVO
 	 * @return 조회한 이미지 정보
-	 * @exception Exception
 	 */
-	public CameraiOSAPIVO selectCameraPhotoAlbum(CameraiOSAPIVO vo) throws Exception;
+	public CameraiOSAPIVO selectCameraPhotoAlbum(CameraiOSAPIVO vo);
     
     /**
 	 * 이미지 목록을 조회한다.
 	 * @param VO - 조회할 정보가 담긴 CameraAPIVO
 	 * @return 이미지 정보 목록
-	 * @exception Exception
 	 */
-	public List<?> selectCameraPhotoAlbumList(CameraiOSAPIDefaultVO searchVO) throws Exception;
+	public List<?> selectCameraPhotoAlbumList(CameraiOSAPIDefaultVO searchVO);
 	
 	/**
 	 * 이미지 파일을 조회한다.
 	 * @param VO - 조회할 정보가 담긴 CameraIOSAPIFileVO
 	 * @return 파일 정보
-	 * @exception Exception
 	 */
-	public boolean selectImageFileInf(HttpServletResponse response, CameraiOSAPIFileVO vo) throws Exception;
+	public boolean selectImageFileInf(HttpServletResponse response, CameraiOSAPIFileVO vo);
 	
 	/**
 	 * 이미지 제목 중복을 조회한다.
 	 * @param vo - 조회할 정보가 담긴 CameraAPIVO
 	 * @return 조회한 이미지 정보
-	 * @exception Exception
 	 */
-	public CameraiOSAPIFileVO selectCameraPhotoAlbumPhotoSj(CameraiOSAPIVO vo) throws Exception;
+	public CameraiOSAPIFileVO selectCameraPhotoAlbumPhotoSj(CameraiOSAPIVO vo);
 }  

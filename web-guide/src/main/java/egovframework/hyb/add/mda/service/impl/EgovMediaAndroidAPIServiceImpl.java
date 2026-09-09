@@ -33,6 +33,7 @@ import egovframework.hyb.add.mda.service.EgovMediaAndroidAPIService;
 import egovframework.hyb.add.mda.service.MediaAndroidAPIFileVO;
 import egovframework.hyb.add.mda.service.MediaAndroidAPIVO;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
+import egovframework.rte.fdl.cmmn.exception.BaseRuntimeException;
 
 /**  
  * @Class Name : EgovMediaAndroidAPIServiceImpl.java
@@ -63,9 +64,8 @@ public class EgovMediaAndroidAPIServiceImpl extends EgovAbstractServiceImpl impl
      * 녹음 Media를 등록한다.
      * @param vo - 등록할 정보가 담긴 MediaAndroidAPIVO
      * @return void형
-     * @exception Exception
      */
-    public int insertMediaInfo(MediaAndroidAPIVO vo, int fileSn) throws Exception {
+    public int insertMediaInfo(MediaAndroidAPIVO vo, int fileSn) {
         
         MediaAndroidAPIFileVO fileVO = new MediaAndroidAPIFileVO();
         fileVO.setUuid(vo.getUuid());
@@ -82,9 +82,8 @@ public class EgovMediaAndroidAPIServiceImpl extends EgovAbstractServiceImpl impl
      * 녹음 파일을 등록한다.
      * @param vo - 등록할 정보가 담긴 MediaAndroidAPIFileVO
      * @return void형
-     * @exception Exception
      */
-    public int insertMediaRecordFile(MediaAndroidAPIFileVO vo) throws Exception {
+    public int insertMediaRecordFile(MediaAndroidAPIFileVO vo) {
         return mediaAPIDAO.insertMediaRecordFile(vo);
     }
     
@@ -92,10 +91,9 @@ public class EgovMediaAndroidAPIServiceImpl extends EgovAbstractServiceImpl impl
      * 미디어 정보를 조회한다.
      * @param VO - 조회할 정보가 담긴 MediaAndroidAPIVO
      * @return 조회 목록
-     * @exception Exception
      */
         
-    public MediaAndroidAPIFileVO selectMediaInfoDetail(MediaAndroidAPIVO vo) throws Exception {
+    public MediaAndroidAPIFileVO selectMediaInfoDetail(MediaAndroidAPIVO vo) {
         mediaAPIDAO.updateMediaInfoRevivCo(vo);
         return mediaAPIDAO.selectMediaInfoDetail(vo);
     }
@@ -104,9 +102,8 @@ public class EgovMediaAndroidAPIServiceImpl extends EgovAbstractServiceImpl impl
      * 미디어 목록을 조회한다.
      * @param VO - 조회할 정보가 담긴 MediaAndroidAPIDefaultVO
      * @return 조회 목록
-     * @exception Exception
      */
-    public List<?> selectMediaInfoList(MediaAndroidAPIVO vo) throws Exception {
+    public List<?> selectMediaInfoList(MediaAndroidAPIVO vo) {
         
         return mediaAPIDAO.selectMediaInfoList(vo);
     }
@@ -116,9 +113,8 @@ public class EgovMediaAndroidAPIServiceImpl extends EgovAbstractServiceImpl impl
      * 미디어 파일을 조회한다.
      * @param VO - 조회할 정보가 담긴 MediaAndroidAPIFileVO
      * @return 파일 정보
-     * @exception Exception
      */
-    public boolean selectMediaFileInf(HttpServletResponse response, MediaAndroidAPIFileVO vo) throws Exception {
+    public boolean selectMediaFileInf(HttpServletResponse response, MediaAndroidAPIFileVO vo) {
         File file = null;
         FileInputStream fis = null;
     
@@ -127,7 +123,11 @@ public class EgovMediaAndroidAPIServiceImpl extends EgovAbstractServiceImpl impl
         
         MediaAndroidAPIFileVO fileVO = mediaAPIDAO.selectMediaFileInfo(vo);
         if (fileVO == null) {
-            response.sendError(HttpServletResponse.SC_FORBIDDEN, "File access denied.");
+            try {
+				response.sendError(HttpServletResponse.SC_FORBIDDEN, "File access denied.");
+			} catch (IOException e) {
+				throw new BaseRuntimeException(e);
+			}
             return false;
         }
 
@@ -164,20 +164,14 @@ public class EgovMediaAndroidAPIServiceImpl extends EgovAbstractServiceImpl impl
             response.getOutputStream().close();
         //2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 162-162
         } catch(IOException e){
-        	LOGGER.error("["+e.getClass()+"] Try/Catch... file : " ,e.getMessage());	
-        }catch(Exception e) {
-        	LOGGER.error("["+e.getClass()+"] Try/Catch... : ", e.getMessage());
-            errorFlag = false;
+        	throw new BaseRuntimeException(e);
         } finally {
             if (bStream != null) {
                 try {
                     bStream.close();
             //2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 169-169
                 }catch(IOException e){
-                	LOGGER.error("["+e.getClass()+"] Try/Catch... bStream : " ,e.getMessage());
-                } catch (Exception e) {
-                	LOGGER.error("["+e.getClass()+"] Try/Catch... : ", e.getMessage());
-                    errorFlag = false;
+                	throw new BaseRuntimeException(e);
                 }
             }
             if (in != null) {
@@ -185,10 +179,7 @@ public class EgovMediaAndroidAPIServiceImpl extends EgovAbstractServiceImpl impl
                     in.close();
             //2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 177-177
                 }catch(IOException e){
-                	LOGGER.error("["+e.getClass()+"] Try/Catch...in : " ,e.getMessage());
-                }catch (Exception e) {
-                	LOGGER.debug("IGNORE: {}", e.getMessage());
-                    errorFlag = false;
+                	throw new BaseRuntimeException(e);
                 }
             }
             if (fis != null) {
@@ -196,10 +187,7 @@ public class EgovMediaAndroidAPIServiceImpl extends EgovAbstractServiceImpl impl
                     fis.close();
             //2017-02-27 최두영 시큐어코딩(ES)-36. 부적절한 예외 처리[CWE253, CWE-440, CWE-754] 185-185
                 }catch(IOException e){
-                	LOGGER.error("["+e.getClass()+"] Try/Catch...fis : " ,e.getMessage());                
-                } catch (Exception e) {
-                	LOGGER.error("["+e.getClass()+"] Try/Catch... : ", e.getMessage());
-                    errorFlag = false;
+                	throw new BaseRuntimeException(e);
                 }
             }
         }

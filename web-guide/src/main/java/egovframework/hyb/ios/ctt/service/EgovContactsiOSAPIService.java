@@ -26,43 +26,37 @@ public interface EgovContactsiOSAPIService {
 	/**
 	 * 연락처  정보를 입력한다.
 	 * @param vo - 연락처 정보가 담긴 ContactsiOSAPIVO 
-	 * @exception Exception
 	 */	
-	public void insertContactsInfo(ContactsiOSAPIVO vo) throws Exception;
+	public void insertContactsInfo(ContactsiOSAPIVO vo);
 	
 	/**
 	 * 연락처  정보를 수정한다.
 	 * @param vo - 연락처 정보가 담긴 ContactsiOSAPIVO 
-	 * @exception Exception
 	 */
-	public void updateContactsInfo(ContactsiOSAPIVO vo) throws Exception;
+	public void updateContactsInfo(ContactsiOSAPIVO vo);
 	
 	/**
 	 * 연락처 정보 리스트를 조회한다.
 	 * @param vo - 연락처 정보가 담긴 ContactsiOSAPIVO 
-	 * @exception Exception
 	 */
-	public List<?> selectContactsInfoList(ContactsiOSAPIVO vo) throws Exception;
+	public List<?> selectContactsInfoList(ContactsiOSAPIVO vo);
 	
 	/**
 	 * 연락처 정보를 조회한다.
 	 * @param vo - 연락처 정보가 담긴 ContactsiOSAPIVO 
-	 * @exception Exception
 	 */
-	public ContactsiOSAPIVO selectContactsInfo(ContactsiOSAPIVO vo) throws Exception;
+	public ContactsiOSAPIVO selectContactsInfo(ContactsiOSAPIVO vo);
 	
 	/**
 	 * 연락처 정보를 삭제한다.
 	 * @param vo - 연락처 정보가 담긴 ContactsiOSAPIVO 
-	 * @exception Exception
 	 */
-	public int deleteContactsInfo(ContactsiOSAPIVO vo) throws Exception;
+	public int deleteContactsInfo(ContactsiOSAPIVO vo);
 	
 	
 	/**
 	 * 연락처 디테일 정보를 삭제한다.
 	 * @param vo - 연락처 정보가 담긴 ContactsiOSAPIVO 
-	 * @exception Exception
 	 */
-	public int selectContactsCount(ContactsiOSAPIVO vo) throws Exception;
+	public int selectContactsCount(ContactsiOSAPIVO vo);
 }

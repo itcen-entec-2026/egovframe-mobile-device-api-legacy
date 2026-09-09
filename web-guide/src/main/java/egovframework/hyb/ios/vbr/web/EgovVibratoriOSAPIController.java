@@ -71,13 +71,11 @@ public class EgovVibratoriOSAPIController {
 	 * @param searchVO - 조회할 정보가 담긴 VibratorAPIDefaultVO
 	 * @param model
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="Vibrator 알림설정 정보 목록조회", notes="[iOS] Vibrator 알림설정 정보 목록을 조회한다.", response=VibratoriOSAPIVO.class, responseContainer="List")
     @RequestMapping(value="/vbr/VibratoriOSInfoList.do")
     public ModelAndView selectVibratorInfoList(@ModelAttribute("searchVibratorVO") VibratoriOSAPIDefaultVO searchVO, 
-    		ModelMap model)
-            throws Exception {
+    		ModelMap model) {
  
 		ModelAndView jsonView = new ModelAndView("jsonView");
 		List<?> VibratorInfoList = egovVibratoriOSAPIService.selectVibratorList(searchVO);
@@ -93,7 +91,6 @@ public class EgovVibratoriOSAPIController {
 	 * @param searchVO - 등록할 정보가 담긴 VibratorAPIDefaultVO
 	 * @param status
 	 * @return ModelAndView
-	 * @exception Exception
 	 */
     @ApiOperation(value="Vibrator 알림설정 정보 등록", notes="[iOS] Vibrator 알림설정 정보를 등록한다.\nresponseOK = {\"message\",\"OK\"}")
     @ApiImplicitParams({
@@ -102,8 +99,7 @@ public class EgovVibratoriOSAPIController {
     @RequestMapping("/vbr/addVibratoriOSInfo.do")
     public ModelAndView insertVibratorInfo(
        	 	VibratoriOSAPIVO sampleVO,
-            BindingResult bindingResult, Model model, SessionStatus status) 
-    throws Exception {
+            BindingResult bindingResult, Model model, SessionStatus status) {
     	
     	ModelAndView jsonView = new ModelAndView("jsonView");
     	
